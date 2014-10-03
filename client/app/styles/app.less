@@ -1,0 +1,68 @@
+@import 'globals/lesshat.less';
+@import 'globals/variables.less';
+@import 'globals/mixins.less';
+@import 'globals/reset.less';
+
+html {
+    font-family: @font-family;
+    background-color: @page-background;
+    color: #555;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 60%;
+
+    @media screen and (min-width: 960px) {
+        display: inline-block;
+        font-size: 62.5%;
+    }
+}
+
+input {
+    outline: none;
+    border: 1px solid #444;
+    font-family: @font-family;
+}
+
+a {
+    color: @link-colour;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.view {
+    .font-size(1.5);
+    margin: 0 auto;
+    line-height: 1.4;
+    padding: 5px;
+    @media screen and (min-width: 768px) {
+        max-width: 730px;
+        padding: 0;
+    }
+
+    @media screen and (min-width: 960px) {
+        max-width: 930px;
+    }
+}
+
+form fieldset {
+    text-align: left;
+    span.error-message {
+        color: red;
+        display: block;
+
+    }
+}
+
+form.ng-submitted {
+    input.ng-invalid, input.ng-invalid:focus {
+        outline: none;
+        border: 1px solid #ff7575;
+    }
+}
+
+@import '/client/app/login/login.less';

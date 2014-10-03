@@ -4,7 +4,7 @@ var app = express();
 var port = process.env.PORT || 9000;
 
 var rootPath = path.normalize(__dirname + '/..');
-var appPath = path.join(rootPath, 'client');
+var appPath = path.join(rootPath, 'build');
 
 app.use(express.static(appPath));
 app.set("appPath", appPath);

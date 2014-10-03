@@ -1,0 +1,60 @@
+.login-section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    vertical-align: middle;
+    width: 100%;
+    display: table;
+    text-align: center;
+    padding: 10px;
+
+    @media screen and (min-width: 960px) {
+        width: 400px;
+    }
+
+    h1 {
+        font-weight: 300;
+        font-size: 4rem;
+
+        span {
+            font-size: 1.5rem;
+        }
+    }
+
+    h2 {
+        font-weight: 300;
+        font-size: 3rem;
+    }
+
+    form {
+        &.login-form {
+            margin: auto;
+            width: 300px;
+            input {
+                display: block;
+                font-size: 1.6rem;
+                width: 100%;
+                padding: 5px;
+                margin-top: 15px;
+
+                &.button {
+                    background: @button-colout;
+                    border: 1px solid @page-background;
+                    transition: 0.3s;
+
+                    &:focus {
+                        outline: none;
+                    }
+                    &:hover {
+                        background: darken(@button-colout, 2%);
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+    }
+}

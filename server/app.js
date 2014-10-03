@@ -6,17 +6,14 @@ var port = process.env.PORT || 9000;
 var rootPath = path.normalize(__dirname + '/..');
 var appPath = path.join(rootPath, 'build');
 
-if (app.get("env" === "development")) {
+if (app.get("env") === "development") {
     app.use(require('connect-livereload')());
 };
 app.use(express.static(appPath));
 app.set("appPath", appPath);
 
-app.route('/*')
-    .get(function(req, res) {
-        res.sendFile(app.get('appPath') + '/index.html');
-    });
-console.log(appPath);
+// setup routes
+require("./routes")(app);
 
 app.listen(port, function() {
     console.log('Listening on port ' +  port + " in mode: " + process.env.NODE_ENV);

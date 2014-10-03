@@ -1,0 +1,21 @@
+{
+  "name": "HousePointApp",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.9.5",
+    "connect-livereload": "^0.4.0"
+  },
+  "engines": {
+    "node": "0.10.26"
+  },
+  "devDependencies": {
+
+  }
+}

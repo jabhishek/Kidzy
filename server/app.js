@@ -6,6 +6,9 @@ var port = process.env.PORT || 9000;
 var rootPath = path.normalize(__dirname + '/..');
 var appPath = path.join(rootPath, 'build');
 
+if (app.get("env" === "development")) {
+    app.use(require('connect-livereload')());
+};
 app.use(express.static(appPath));
 app.set("appPath", appPath);
 

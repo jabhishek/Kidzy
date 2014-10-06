@@ -45,8 +45,7 @@ gulp.task('karma', ['set-env:test'], function() {
         'client/bower_components/angular-mocks/angular-mocks.js',
         'client/bower_components/angular-ui-router/release/angular-ui-router.js',
         'client/bower_components/angular-cookies/angular-cookies.js',
-        'client/app/**/*.js',
-        'tests/unit/**/*.js'
+        'client/app/**/*.js'
     ])
         .pipe($gulp.using())
         .pipe($gulp.karma({

@@ -59,3 +59,53 @@ describe("routes", function () {
     });
 });
 
+describe("interceptor", function () {
+    var AuthService, authInterceptor, $httpProvider, $httpBackend, $timeout, $cookieStore;
+    var appName = 'HousePointsApp';
+    beforeEach(module(appName, function (_$httpProvider_) {
+        "use strict";
+        $httpProvider = _$httpProvider_;
+    }));
+
+    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, _$cookieStore_) {
+        $httpBackend = _$httpBackend_;
+        authInterceptor = _authInterceptor_;
+        AuthService = _AuthService_;
+        $timeout = _$timeout_;
+        $cookieStore = _$cookieStore_;
+    }));
+
+    afterEach(function() {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it("should have authInterceptor registered", function () {
+        expect($httpProvider.interceptors).toContain('authInterceptor');
+    });
+
+    it("should call authInterceptor.request when sending a request", function() {
+        "use strict";
+        $httpBackend.when('POST', '/auth/local', {}).respond(200, { data: { token: 'token'}});
+        spyOn(authInterceptor, "request");
+        $timeout(function() {
+            AuthService.login({});
+            $httpBackend.flush();
+            expect(authInterceptor.request).toHaveBeenCalled();
+        })
+    });
+
+    it("should set the token in authorization header if token set in cookie", function() {
+        "use strict";
+        $cookieStore.put("token", "someToken");
+        var config = authInterceptor.request({ header: {}});
+        expect(config.headers["Authorization"]).toBe("Bearer someToken")
+    });
+
+    it("should not set the token in authorization header if token not present in cookie", function() {
+        "use strict";
+        $cookieStore.remove("token");
+        var config = authInterceptor.request({ header: {}});
+        expect(config.headers["Authorization"]).toBe(undefined);
+    });
+});

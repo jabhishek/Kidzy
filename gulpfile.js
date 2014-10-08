@@ -15,15 +15,17 @@ var prependBowerPath = function (packageName) {
 
 var vendors = ['angular/angular.js',
                'angular-ui-router/release/angular-ui-router.js',
+               'lodash/dist/lodash.js',
+               'restangular/dist/restangular.js',
                'angular-cookies/angular-cookies.js']
                .map(prependBowerPath);
 
-var appScripts = ['client/app/**/*.js'];
+var appScripts = ['client/app/**/*.js', '!client/app/**/*spec.js'];
 
 gulp.task('clean', ['clean:js', 'clean:css']);
 
 gulp.task('jshint', function () {
-    return gulp.src(['client/app/**/*.js', 'tests/**/*.js'])
+    return gulp.src(appScripts)
         .pipe($gulp.jshint())
         .pipe($gulp.jshint.reporter('default'));
 
@@ -45,6 +47,9 @@ gulp.task('karma', ['set-env:test'], function() {
         'client/bower_components/angular-mocks/angular-mocks.js',
         'client/bower_components/angular-ui-router/release/angular-ui-router.js',
         'client/bower_components/angular-cookies/angular-cookies.js',
+        'client/bower_components/lodash/dist/lodash.js',
+        'client/bower_components/restangular/dist/restangular.js',
+
         'client/app/**/*.js'
     ])
         .pipe($gulp.using())
@@ -58,16 +63,16 @@ gulp.task('karma', ['set-env:test'], function() {
         });
 });
 
-gulp.task('protractor', function () {
-    server.listen({path: 'server/app.js'});
-    return gulp.src(["./tests/e2e/**/*e2e.spec.js"])
+gulp.task('protractor', ['set-env:test'], function () {
+    server.listen({ env: { NODE_ENV: 'test'}, path: 'server/app.js'});
+    return gulp.src(["./tests/e2e/PageObjects/*.js", "./tests/e2e/**/*e2e.spec.js"])
+        .pipe($gulp.using())
         .pipe(protractor({
             configFile: "protractor.config.js"
-        }))
-        .on('error', $gulp.util.log);
+        }));
 });
 
-gulp.task('test:server', ['set-env:test'], function() {
+gulp.task('test:server', function() {
     "use strict";
     return gulp.src('tests/server/**/*.spec.js', {read: false})
         .pipe($gulp.mocha({reporter: 'spec'}))

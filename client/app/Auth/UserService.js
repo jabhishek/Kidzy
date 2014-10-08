@@ -1,13 +1,18 @@
 (function (app) {
     'use strict';
-    app.factory('UserService', function () {
+    app.factory('UserService', function (Restangular) {
+        var users = Restangular.all('api/users');
         return {
-            getLoggedInUser: getLoggedInUser
+            getLoggedInUser: getLoggedInUser,
+            getAllUsers: getAllUsers
         };
 
         function getLoggedInUser() {
-            return $http.get("api/users/me");
+            return users.one('me').get();
+        }
+
+        function getAllUsers() {
+            return users.getList();
         }
     });
 })(angular.module('HousePointsApp'));
-

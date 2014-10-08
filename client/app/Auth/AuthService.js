@@ -1,20 +1,8 @@
 (function (app) {
     'use strict';
-
-
     app.factory('AuthService', function ($http, $q, $cookieStore) {
-        var isLoggedIn = false;
         return {
-            login: login,
-            logout: logout,
-            isLoggedIn: function () {
-                return isLoggedIn;
-            }
-        };
-
-        function logout() {
-            $cookieStore.remove('token');
-            isLoggedIn = false;
+            login: login
         };
 
         function login(user) {
@@ -22,13 +10,10 @@
             $http.post('/auth/local', user)
                 .success(function (data) {
                     $cookieStore.put('token', data.token);
-                    isLoggedIn = true;
-                    // todo-abhi - get user
-                    deferred.resolve(data);
+                    deferred.resolve();
                 })
                 .error(function (err) {
-                    // todo-abhi - delete the token
-                    logout();
+                    $cookieStore.remove('token');
                     deferred.reject(err);
                 });
             return deferred.promise;

@@ -1,7 +1,11 @@
 (function (app) {
     'use strict';
-    app.controller('mainController', [function() {
+    app.controller('mainController', function(UserService) {
         var vm = this;
-        vm.message = 'Hello from controller';
-    }]);
+        vm.message = '';
+
+        UserService.getLoggedInUser().then(function(data) {
+           vm.message = 'Hello ' +  data.user.name;
+        });
+    });
 })(angular.module('HousePointsApp'));

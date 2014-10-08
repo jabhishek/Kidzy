@@ -28,6 +28,12 @@ describe('App', function () {
         it("should have ui.router as a dependency", function () {
             expect(hasModule('ui.router')).toBe(true);
         });
+        it("should have restangular as a dependency", function () {
+            expect(hasModule('restangular')).toBe(true);
+        });
+        it("should have ngCookies as a dependency", function () {
+            expect(hasModule('ngCookies')).toBe(true);
+        });
     });
 });
 
@@ -75,7 +81,7 @@ describe("interceptor", function () {
         $cookieStore = _$cookieStore_;
     }));
 
-    afterEach(function() {
+    afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     });
@@ -84,28 +90,19 @@ describe("interceptor", function () {
         expect($httpProvider.interceptors).toContain('authInterceptor');
     });
 
-    it("should call authInterceptor.request when sending a request", function() {
-        "use strict";
-        $httpBackend.when('POST', '/auth/local', {}).respond(200, { data: { token: 'token'}});
-        spyOn(authInterceptor, "request");
-        $timeout(function() {
-            AuthService.login({});
-            $httpBackend.flush();
-            expect(authInterceptor.request).toHaveBeenCalled();
-        })
-    });
-
-    it("should set the token in authorization header if token set in cookie", function() {
+    it("should set the token in authorization header if token set in cookie", function () {
         "use strict";
         $cookieStore.put("token", "someToken");
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe("Bearer someToken")
     });
 
-    it("should not set the token in authorization header if token not present in cookie", function() {
+    it("should not set the token in authorization header if token not present in cookie", function () {
         "use strict";
         $cookieStore.remove("token");
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe(undefined);
     });
 });
+
+

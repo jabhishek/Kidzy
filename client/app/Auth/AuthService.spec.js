@@ -1,21 +1,22 @@
 describe("AuthService", function () {
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore;
+    var AuthService, $httpBackend, $cookieStore, UserService;
     var correctUser = { email: 'correctEmail@email.com'};
     var incorrectUser = { email: 'wrongEmail@email.com'};
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
         AuthService = _AuthService_;
-        $httpBackend= _$httpBackend_;
+        $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
+        UserService = _UserService_;
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
-    }));
 
-    afterEach(function() {
+    }));
+    afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
     });
@@ -28,18 +29,6 @@ describe("AuthService", function () {
         expect(AuthService.login).toBeDefined();
     });
 
-    it('login method should set isLoggedIn to true if user authenticated', function () {
-        AuthService.login(correctUser);
-        $httpBackend.flush();
-        expect(AuthService.isLoggedIn()).toBe(true);
-    });
-
-    it('login method should set isLoggedIn to false if user not authenticated', function () {
-        AuthService.login(incorrectUser);
-        $httpBackend.flush();
-        expect(AuthService.isLoggedIn()).toBe(false);
-    });
-
     it('login method should put token in cookieStore if user authenticated', function () {
         $cookieStore.remove('token');
         AuthService.login(correctUser);
@@ -47,11 +36,10 @@ describe("AuthService", function () {
         expect($cookieStore.get('token')).toBe("someToken");
     });
 
-    it('login method should put token in cookieStore if user authenticated', function () {
+    it('login method should not put token in cookieStore if user not authenticated', function () {
         $cookieStore.remove('token');
         AuthService.login(incorrectUser);
         $httpBackend.flush();
         expect($cookieStore.get('token')).toBe(undefined);
     });
 });
-

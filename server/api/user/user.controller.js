@@ -11,4 +11,14 @@ users.index = function (req, res) {
     });
 };
 
+users.getLoggedInUser = function (req, res) {
+    data.users.getById(req.user._id, function processResults(err, result) {
+        console.log(result);
+        res.json({
+            err: err,
+            user: result
+        });
+    });
+};
+
 module.exports = users;

@@ -1,9 +1,11 @@
 /**
  * Created by ajain on 04/09/2014.
  */
+
 (function (users) {
     "use strict";
     var database = require("./database");
+    var ObjectID = require('mongodb').ObjectID;
 
     users.getAll = function (next) {
         database.getDb(function getDbBack (err, theDb) {
@@ -56,7 +58,7 @@
             if (err) {
                 next(err);
             } else {
-                theDb.users.findOne({_id: id}, next);
+                theDb.users.findOne({'_id': new ObjectID(id)}, next);
             }
         });
     };

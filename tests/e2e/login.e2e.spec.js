@@ -8,13 +8,9 @@
  });*/
 
 describe('login', function() {
-    var PageObjects= require("./PageObjects/LoginPage");
-    var loginPage;
-
-    beforeEach(function() {
-        "use strict";
-        loginPage = new PageObjects.LoginPage();
-    });
+    var users = require("./config/users");
+    var loginPageObject = require("./PageObjects/LoginPage");
+    var loginPage = new loginPageObject();
 
     it('should load the login page', function() {
         loginPage.get();
@@ -22,8 +18,31 @@ describe('login', function() {
     });
 
     it('should redirect to main page if login succeeds', function() {
-        loginPage.login();
+        loginPage.login(users.parent);
         expect(browser.getLocationAbsUrl()).toBe('/');
+    });
+
+    it('should show error if empty user passed', function() {
+        loginPage.login({});
+        expect(loginPage.emailErrorSpan.isPresent()).toBe(true);
+        expect(loginPage.passwordErrorSpan.isPresent()).toBe(true);
+    });
+
+    it('should show email error if no email passed', function() {
+        loginPage.login({email: '', password: 'hjhjkhkj'});
+        expect(loginPage.emailErrorSpan.isPresent()).toBe(true);
+        expect(loginPage.passwordErrorSpan.isPresent()).toBe(false);
+    });
+    it('should show email error if invalid email passed', function() {
+        loginPage.login({email: 'wrongEmail', password: 'hjhjkhkj'});
+        expect(loginPage.emailErrorSpan.isPresent()).toBe(true);
+        expect(loginPage.passwordErrorSpan.isPresent()).toBe(false);
+    });
+
+    it('should show password error if no password passed', function() {
+        loginPage.login({email: 'wrongEmail@abc.com', password: ''});
+        expect(loginPage.emailErrorSpan.isPresent()).toBe(false);
+        expect(loginPage.passwordErrorSpan.isPresent()).toBe(true);
     });
 });
 

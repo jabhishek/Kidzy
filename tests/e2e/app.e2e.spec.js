@@ -8,13 +8,15 @@
  });*/
 
 describe('homepage', function () {
-    var PageObjects = require("./PageObjects/LoginPage");
-    var loginPage = new PageObjects.LoginPage();
+    var users = require("./config/users");
+    var loginPageObject = require("./PageObjects/LoginPage");
+    var loginPage = new loginPageObject();
+
     var mainPageObject = require("./PageObjects/MainPage");
     var mainPage = new mainPageObject();
 
     beforeEach(function () {
-        loginPage.login();
+        loginPage.login(users.parent);
     });
     it('should load the home page', function () {
         mainPage.get();

@@ -4,11 +4,11 @@
         <fieldset>
             <div class="field">
                 <input type="email" id="email" name="email" placeholder="Email" required maxlength="50" ng-model="loginVm.user.email"/>
-                <span class="error-message" ng-if="loginform.$submitted && loginform.email.$invalid">Please enter a valid email address.</span>
+                <span class="error-message email-error" ng-if="loginform.$submitted && loginform.email.$invalid">Please enter a valid email address.</span>
             </div>
             <div class="field">
                 <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="loginVm.user.password"/>
-                <span class="error-message" ng-if="loginform.$submitted && loginform.password.$error.required">Please enter a password.</span>
+                <span class="error-message password-error" ng-if="loginform.$submitted && loginform.password.$error.required">Please enter a password.</span>
             </div>
             <input type="submit" class="button"/>
         </fieldset>

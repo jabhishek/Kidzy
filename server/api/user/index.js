@@ -4,6 +4,6 @@ var controller = require('./user.controller');
 var auth = require('../auth/auth.service');
 
 router.get('/me', auth.isAuthenticated(), controller.getLoggedInUser);
-router.get('/', auth.isAuthenticated(), controller.index);
+router.get('/', auth.hasRole('admin'), controller.index);
 
 module.exports = router;

@@ -18,7 +18,7 @@ function authenticateUser(email, password, next) {
         }
         next(null, false, {message: "Invalid credentials!!"});
     });
-};
+}
 
 passport.use(new localStrategy({
         usernameField: 'email',
@@ -36,10 +36,10 @@ router.post('/', function (req, res, next) {
             if (!user) return res.json(404, {message: 'Something went wrong, please try again.'});
 
             var token = auth.signToken(user._id, user.role);
-            res.json(200, {token: token});
+            res.status(200).json({token: token});
         })(req, res, next)
     } else {
-        return res.json(401, {});
+        return res.status(401).json({});
     }
 });
 

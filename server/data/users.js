@@ -54,6 +54,7 @@
     };
 
     users.getById = function (id, next) {
+        id = id.toString();
         database.getDb(function getDbBack (err, theDb) {
             if (err) {
                 next(err);

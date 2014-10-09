@@ -72,9 +72,9 @@ gulp.task('protractor', ['set-env:test'], function () {
         }));
 });
 
-gulp.task('test:server', function() {
+gulp.task('test:server', ['set-env:test'], function() {
     "use strict";
-    return gulp.src('tests/server/**/*.spec.js', {read: false})
+    return gulp.src('server/**/*.spec.js')
         .pipe($gulp.mocha({reporter: 'spec'}))
         .on('error', $gulp.util.log);
 });

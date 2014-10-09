@@ -12,8 +12,9 @@ users.index = function (req, res) {
 };
 
 users.getLoggedInUser = function (req, res) {
+    console.log("getLoggedInUser called");
     data.users.getById(req.user._id, function processResults(err, result) {
-        console.log(result);
+        console.log("user retrieved");
         res.json({
             err: err,
             user: result

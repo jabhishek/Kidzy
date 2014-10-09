@@ -14,7 +14,7 @@ var hasher = require("../api/auth/hasher");
                 console.log(err);
         });
 
-        var salt = hasher.createSalt(8)
+        var salt = hasher.createSalt(8);
         users.add({
             email: 'test@test.com',
             provider: 'local',
@@ -27,7 +27,7 @@ var hasher = require("../api/auth/hasher");
                 console.log(err);
         });
 
-        salt = hasher.createSalt(8)
+        salt = hasher.createSalt(8);
         users.add({
             email: 'admin@admin.com',
             provider: 'local',
@@ -39,7 +39,20 @@ var hasher = require("../api/auth/hasher");
             if (err)
                 console.log(err);
         });
+
+        salt = hasher.createSalt(8);
+        users.add({
+            email: 'child@child.com',
+            provider: 'local',
+            role: 'child',
+            name: 'kiddo',
+            salt: salt,
+            hashedPassword: hasher.computeHash("child", salt)
+        }, function (err) {
+            if (err)
+                console.log(err);
+        });
     }
 
- //   seedDatabase();
+    //seedDatabase();
 })(module.exports);

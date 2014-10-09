@@ -25,21 +25,38 @@ describe("AuthService", function () {
         expect(AuthService).toBeDefined();
     });
 
-    it('should have login method defined', function () {
-        expect(AuthService.login).toBeDefined();
-    });
+    describe("login", function() {
+        "use strict";
 
-    it('login method should put token in cookieStore if user authenticated', function () {
-        $cookieStore.remove('token');
-        AuthService.login(correctUser);
-        $httpBackend.flush();
-        expect($cookieStore.get('token')).toBe("someToken");
-    });
+        it('should have login method defined', function () {
+            expect(AuthService.login).toBeDefined();
+        });
 
-    it('login method should not put token in cookieStore if user not authenticated', function () {
-        $cookieStore.remove('token');
-        AuthService.login(incorrectUser);
-        $httpBackend.flush();
-        expect($cookieStore.get('token')).toBe(undefined);
+        it('login method should put token in cookieStore if user authenticated', function () {
+            $cookieStore.remove('token');
+            AuthService.login(correctUser);
+            $httpBackend.flush();
+            expect($cookieStore.get('token')).toBe("someToken");
+        });
+
+        it('login method should not put token in cookieStore if user not authenticated', function () {
+            $cookieStore.remove('token');
+            AuthService.login(incorrectUser);
+            $httpBackend.flush();
+            expect($cookieStore.get('token')).toBe(undefined);
+        });
     });
+    describe("logout", function() {
+        "use strict";
+
+        it('should have login method defined', function () {
+            expect(AuthService.logout).toBeDefined();
+        });
+
+        it('login method should delete token from cookieStore', function () {
+            $cookieStore.put('token', "someToken");
+            AuthService.logout();
+            expect($cookieStore.get('token')).toBe(undefined);
+        });
+    })
 });

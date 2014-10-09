@@ -7,8 +7,6 @@
             if (!valid) {
                 return;
             }
-            console.log(valid);
-            console.log(user);
             AuthService.login(user)
                 .then(function () {
                     $state.go('main');
@@ -21,6 +19,7 @@
                 email: '',
                 password: ''
             };
+            AuthService.logout();
         }
     });
 })(angular.module('HousePointsApp'));

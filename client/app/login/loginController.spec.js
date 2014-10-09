@@ -8,6 +8,7 @@ describe("loginController", function () {
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, _AuthService_, _$q_, _$state_, _$timeout_) {
         AuthService = _AuthService_;
+        spyOn(AuthService, 'logout');
         $q = _$q_;
         $state = _$state_;
         $timeout = _$timeout_;
@@ -16,6 +17,10 @@ describe("loginController", function () {
 
     it('should have user defined', function () {
         expect(LoginCtrl.user).toBeDefined();
+    });
+
+    it('should have no token in cookieStore', function () {
+        expect(AuthService.logout).toHaveBeenCalled();
     });
 
     it('should call AuthService.login if form is valid', function () {

@@ -2,8 +2,13 @@
     'use strict';
     app.factory('AuthService', function ($http, $q, $cookieStore) {
         return {
-            login: login
+            login: login,
+            logout: logout
         };
+
+        function logout () {
+            $cookieStore.remove('token');
+        }
 
         function login(user) {
             var deferred = $q.defer();

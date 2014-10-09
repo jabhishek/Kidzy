@@ -1,0 +1,19 @@
+<header class="navbar">
+    <div class="navbar-header clearfix">
+        <h1 class="left">Kidzy</h1>
+        <span class="nav-toggle right visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
+             <i class="fa fa-lg fa-bars"></i>
+        </span>
+        <div style="clear:both"></div>
+    </div>
+    <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">
+        <ul class="items">
+            <li>
+                <a ui-sref="main">Main</a>
+            </li>
+            <li>
+                <a ui-sref="admin">Admin</a>
+            </li>
+        </ul>
+    </nav>
+</header>

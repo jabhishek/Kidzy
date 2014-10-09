@@ -12,8 +12,7 @@ var ngAnnotate = require('gulp-ng-annotate');
 var prependBowerPath = function (packageName) {
     return path.join('./client/bower_components/', packageName);
 };
-
-var vendors = ['angular/angular.js',
+var vendorScripts = ['angular/angular.js',
                'angular-ui-router/release/angular-ui-router.js',
                'lodash/dist/lodash.js',
                'restangular/dist/restangular.js',
@@ -106,8 +105,8 @@ gulp.task('css', ['clean:css'], function () {
         .pipe($gulp.size({showFiles: true}));
 });
 
-gulp.task('vendors', ['clean:js'], function () {
-    return gulp.src(vendors)
+gulp.task('vendors:js', ['clean:js'], function () {
+    return gulp.src(vendorScripts)
         .pipe($gulp.uglify())
         .pipe($gulp.concat('vendors.min.js'))
         .pipe($gulp.rev())
@@ -117,6 +116,7 @@ gulp.task('vendors', ['clean:js'], function () {
 
 gulp.task('js', ['clean:js', 'jshint'], function () {
     return gulp.src(appScripts)
+        .pipe($gulp.using())
         .pipe(ngAnnotate())
         .pipe($gulp.uglify())
         .pipe($gulp.concat('app.min.js'))
@@ -128,6 +128,7 @@ gulp.task('js', ['clean:js', 'jshint'], function () {
 
 gulp.task('templates', ['clean:js'], function () {
     return gulp.src('client/app/**/*.html')
+        .pipe($gulp.using())
         .pipe(templateCache({ module: 'HousePointsApp' }))
         .pipe(ngAnnotate())
         .pipe($gulp.uglify())
@@ -156,7 +157,7 @@ gulp.task('server:restart', ['build'], function () {
     restart();
 });
 
-gulp.task('html', ['css', 'vendors', 'js', 'templates'], function () {
+gulp.task('html', ['css', 'vendors:js', 'js', 'templates'], function () {
     return gulp.src('./client/index.html')
         .pipe($gulp.inject(gulp.src(['./build/css/app*'], { read: false }), {
             addRootSlash: false,
@@ -164,7 +165,7 @@ gulp.task('html', ['css', 'vendors', 'js', 'templates'], function () {
         }))
         .pipe($gulp.inject(gulp.src(['./build/js/vendors*'], { read: false }), {
             addRootSlash: false,
-            ignorePath: 'build', name: 'vendors'
+            ignorePath: 'build', name: 'jsvendors'
         }))
         .pipe($gulp.inject(gulp.src(['./build/js/templates*'], { read: false }), {
             addRootSlash: false,

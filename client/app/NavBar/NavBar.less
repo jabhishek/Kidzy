@@ -1,0 +1,60 @@
+.navbar {
+    background: @header-background;
+    color: @header-color;
+    padding: 0.5rem;
+    display: block;
+    line-height: 4rem;
+    position: relative;
+    //min-height: 50px;
+    h1 {
+      //  height: 50px;
+    }
+
+    .left {
+        display: block;
+        float: left;
+    }
+
+    .right {
+        display: inline-block;
+        float: right;
+    }
+
+    .nav-toggle {
+        cursor: pointer;
+        @media screen and (min-width: 768px) {
+            display: none;
+        }
+    }
+
+    .navbar-header {
+        @media screen and (min-width: 768px) {
+            display: inline-block;
+        }
+    }
+
+    nav {
+        display: block;
+        &.collapsed {
+            display: none;
+        }
+
+        @media screen and (min-width: 768px) {
+            display: inline-block !important;
+            float: right;
+            ul {
+                li {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    a {
+        color: @header-color;
+    }
+
+
+}
+
+

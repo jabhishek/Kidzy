@@ -3,11 +3,39 @@
 @import 'globals/mixins.less';
 @import 'globals/reset.less';
 
+.clearfix {
+    &:after, &:before {
+        content: " ";
+        clear: both;
+    }
+}
+
+.visible-desktop {
+    display: none;
+    @media screen and (min-width: 960px) {
+        display: inline-block;
+    }
+}
+
+.visible-tablet {
+    display: none;
+    @media screen and (min-width: 768px) {
+        display: inline-block;
+    }
+}
+
+.visible-mobile {
+    display: inline-block;
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
 html {
     font-family: @font-family;
     background-color: @page-background;
     color: #555;
-    color: rgba(0, 0, 0, 0.65);
+    color: @page-color;
     font-size: 60%;
 
     @media screen and (min-width: 960px) {
@@ -34,10 +62,13 @@ h2 {
     font-size: 2rem;
 }
 
-.view {
+body {
     .font-size(1.5);
-    margin: 0 auto;
     line-height: 1.4;
+}
+
+.view {
+    margin: 0 auto;
     padding: 5px;
     @media screen and (min-width: 768px) {
         max-width: 730px;
@@ -66,3 +97,4 @@ form.ng-submitted {
 }
 
 @import '/client/app/login/login.less';
+@import '/client/app/NavBar/NavBar.less';

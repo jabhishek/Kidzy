@@ -13,6 +13,7 @@ var prependBowerPath = function (packageName) {
     return path.join('./client/bower_components/', packageName);
 };
 var vendorScripts = ['angular/angular.js',
+               'angular-animate/angular-animate.js',
                'angular-ui-router/release/angular-ui-router.js',
                'lodash/dist/lodash.js',
                'restangular/dist/restangular.js',
@@ -43,12 +44,12 @@ gulp.task('karma', ['set-env:test'], function() {
     // Be sure to return the stream
     return gulp.src([
         'client/bower_components/angular/angular.js',
+        'client/bower_components/angular-animate/angular-animate.js',
         'client/bower_components/angular-mocks/angular-mocks.js',
         'client/bower_components/angular-ui-router/release/angular-ui-router.js',
         'client/bower_components/angular-cookies/angular-cookies.js',
         'client/bower_components/lodash/dist/lodash.js',
         'client/bower_components/restangular/dist/restangular.js',
-
         'client/app/**/*.js'
     ])
         .pipe($gulp.using())
@@ -107,6 +108,7 @@ gulp.task('css', ['clean:css'], function () {
 
 gulp.task('vendors:js', ['clean:js'], function () {
     return gulp.src(vendorScripts)
+        .pipe($gulp.using())
         .pipe($gulp.uglify())
         .pipe($gulp.concat('vendors.min.js'))
         .pipe($gulp.rev())

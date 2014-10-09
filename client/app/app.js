@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('HousePointsApp', ['ui.router', 'ngCookies','restangular'])
+    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate'])
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
             $stateProvider
                 .state('main', {
@@ -32,11 +32,11 @@
                     }
                     return config;
                 },
-                responseError: function(response) {
+                responseError: function (response) {
                     console.group('response error');
                     console.log(response);
                     console.groupEnd();
-                    if(response.status === 401) {
+                    if (response.status === 401) {
                         $location.path('/login');
                         // remove any stale tokens
                         $cookieStore.remove('token');

@@ -34,6 +34,9 @@ describe('App', function () {
         it("should have ngCookies as a dependency", function () {
             expect(hasModule('ngCookies')).toBe(true);
         });
+        it("should have ngAnimate as a dependency", function () {
+            expect(hasModule('ngAnimate')).toBe(true);
+        });
     });
 });
 

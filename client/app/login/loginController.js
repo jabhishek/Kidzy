@@ -2,8 +2,15 @@
     'use strict';
     app.controller('loginController', function (AuthService, $state) {
         var vm = this;
-        initForm();
-        vm.submit = function (valid, user) {
+
+        vm.user = {};
+        vm.submit = submit;
+
+        init();
+
+        /// Private methods ///
+
+        function submit(valid, user) {
             if (!valid) {
                 return;
             }
@@ -11,10 +18,9 @@
                 .then(function () {
                     $state.go('main');
                 });
+        }
 
-        };
-
-        function initForm() {
+        function init() {
             vm.user = {
                 email: '',
                 password: ''

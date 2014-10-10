@@ -11,7 +11,7 @@
     text-align: center;
     padding: 10px;
 
-    @media screen and (min-width: 960px) {
+    @media @tablets {
         width: 400px;
     }
 
@@ -32,7 +32,10 @@
     form {
         &.login-form {
             margin: auto;
-            width: 300px;
+            width: 100%;
+            @media @largeMobile {
+                width: 400px;
+            }
             input {
                 display: block;
                 font-size: 1.6rem;
@@ -49,7 +52,7 @@
                         outline: none;
                     }
                     &:hover {
-                        background: darken(@button-colour, 2%);
+                        background: darken(@button-colour, 10%);
                         cursor: pointer;
                     }
                 }

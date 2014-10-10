@@ -7,7 +7,7 @@
     position: relative;
     z-index: 999;
 
-    @media screen and (min-width: 768px) {
+    @media @tablets {
         padding: 0;
         height: 5rem;
     }
@@ -27,13 +27,13 @@
         background: @button-colour;
         padding: 0 1.5rem;
         height: 5rem;
-        @media screen and (min-width: 768px) {
+        @media @tablets {
             display: none;
         }
     }
 
     .navbar-header {
-        @media screen and (min-width: 768px) {
+        @media @tablets {
             display: inline-block;
         }
     }
@@ -43,16 +43,17 @@
         &.collapsed {
             display: none;
         }
-        @media screen and (min-width: 768px) {
+        @media @tablets {
             display: inline-block !important;
             float: right;
         }
         ul {
-            @media screen and (max-width: 768px) {
-                line-height: 2.2rem;
+            line-height: 2.2rem;
+            @media @tablets {
+                line-height: 5rem;
             }
             li {
-                @media screen and (min-width: 768px) {
+                @media @tablets {
                     display: inline-block;
                 }
             }
@@ -61,8 +62,9 @@
 
     a {
         color: @header-color;
-        @media screen and (max-width: 768px) {
-            display: block;
+        display: block;
+        @media @tablets {
+            display: inline-block;
         }
     }
 

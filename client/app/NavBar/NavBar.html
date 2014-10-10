@@ -1,9 +1,12 @@
 <header class="navbar">
     <div class="navbar-header clearfix">
         <h1 class="left">Kidzy</h1>
-        <span class="nav-toggle right visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
-             <i class="fa fa-lg fa-bars"></i>
-        </span>
+        <div class="right">
+            <span class="user"> {{ navBarVm.Auth.currentUser.name }} </span>
+            <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
+                 <i class="fa fa-lg fa-bars"></i>
+            </span>
+        </div>
         <div style="clear:both"></div>
     </div>
     <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">

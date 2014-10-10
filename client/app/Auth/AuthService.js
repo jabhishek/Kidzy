@@ -1,12 +1,22 @@
 (function (app) {
     'use strict';
-    app.factory('AuthService', function ($http, $q, $cookieStore) {
-        return {
+    app.factory('AuthService', function ($http, $q, $cookieStore, UserService) {
+        var obj = {
             login: login,
-            logout: logout
+            logout: logout,
+            currentUser: getCurrentUser()
         };
 
-        function logout () {
+        function getCurrentUser() {
+            UserService.getLoggedInUser().then(function (userData) {
+                obj.currentUser = userData.user;
+            });
+        }
+
+        return obj;
+
+        function logout() {
+            obj.currentUser = {};
             $cookieStore.remove('token');
         }
 
@@ -16,6 +26,7 @@
                 .success(function (data) {
                     $cookieStore.put('token', data.token);
                     deferred.resolve();
+                    getCurrentUser();
                 })
                 .error(function (err) {
                     $cookieStore.remove('token');

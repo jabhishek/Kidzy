@@ -1,20 +1,21 @@
 describe("AuthService", function () {
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService;
+    var AuthService, $httpBackend, $cookieStore, UserService, $q;
     var correctUser = { email: 'correctEmail@email.com'};
     var incorrectUser = { email: 'wrongEmail@email.com'};
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
+        UserService = _UserService_;
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
-        UserService = _UserService_;
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
-
+        $httpBackend.when('GET', '/api/users/me').respond(200, {});
+        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
@@ -53,10 +54,16 @@ describe("AuthService", function () {
             expect(AuthService.logout).toBeDefined();
         });
 
-        it('login method should delete token from cookieStore', function () {
+        it('should delete token from cookieStore', function () {
             $cookieStore.put('token', "someToken");
             AuthService.logout();
             expect($cookieStore.get('token')).toBe(undefined);
+        });
+
+        it('should clear currentUser', function () {
+            AuthService.currentUser = { name: ""};
+            AuthService.logout();
+            expect(AuthService.currentUser.name).toBe(undefined);
         });
     })
 });

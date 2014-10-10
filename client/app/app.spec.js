@@ -82,6 +82,9 @@ describe("interceptor", function () {
         AuthService = _AuthService_;
         $timeout = _$timeout_;
         $cookieStore = _$cookieStore_;
+
+        $httpBackend.when('GET', '/api/users/me').respond(200, {});
+        $httpBackend.flush();
     }));
 
     afterEach(function () {

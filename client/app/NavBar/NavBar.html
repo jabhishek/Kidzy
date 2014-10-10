@@ -9,10 +9,10 @@
     <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">
         <ul class="items">
             <li>
-                <a ui-sref="main">Main</a>
+                <a ui-sref="main" ng-click="navBarVm.isCollapsed = true">Main</a>
             </li>
             <li>
-                <a ui-sref="admin">Admin</a>
+                <a ui-sref="admin" ng-click="navBarVm.isCollapsed = true">Admin</a>
             </li>
         </ul>
     </nav>

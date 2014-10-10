@@ -1,13 +1,15 @@
 .navbar {
     background: @header-background;
     color: @header-color;
-    padding: 0.5rem;
+    //padding: 0.5rem;
     display: block;
-    line-height: 4rem;
+    line-height: 5rem;
     position: relative;
-    //min-height: 50px;
-    h1 {
-      //  height: 50px;
+    z-index: 999;
+
+    @media screen and (min-width: 768px) {
+        padding: 0;
+        height: 5rem;
     }
 
     .left {
@@ -22,6 +24,9 @@
 
     .nav-toggle {
         cursor: pointer;
+        background: @button-colour;
+        padding: 0 1.5rem;
+        height: 5rem;
         @media screen and (min-width: 768px) {
             display: none;
         }
@@ -38,12 +43,16 @@
         &.collapsed {
             display: none;
         }
-
         @media screen and (min-width: 768px) {
             display: inline-block !important;
             float: right;
-            ul {
-                li {
+        }
+        ul {
+            @media screen and (max-width: 768px) {
+                line-height: 2.2rem;
+            }
+            li {
+                @media screen and (min-width: 768px) {
                     display: inline-block;
                 }
             }
@@ -52,9 +61,32 @@
 
     a {
         color: @header-color;
+        @media screen and (max-width: 768px) {
+            display: block;
+        }
     }
 
+    nav.collapsed-add,
+    nav.collapsed-remove {
+        transition: 0.3s linear all;
+        display: block !important;
+    }
 
+    nav.collapsed-add {
+        opacity: 1;
+    }
+
+    nav.collapsed-add.collapsed-add-active {
+        opacity: 0;
+    }
+
+    nav.collapsed-remove {
+        opacity: 0;
+    }
+
+    nav.collapsed-remove.collapsed-remove-active {
+        opacity: 1;
+    }
 }
 
 

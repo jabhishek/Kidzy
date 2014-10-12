@@ -19,6 +19,7 @@ module.exports = function (config) {
             'client/bower_components/angular-ui-router/release/angular-ui-router.js',
             'client/bower_components/angular-cookies/angular-cookies.js',
             'client/app/**/*.js',
+            'client/app/**/*.html',
             'tests/unit/**/*.js'
         ],
 
@@ -29,7 +30,18 @@ module.exports = function (config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
+            "client/app/NavBar/NavBar.html": ["ng-html2js"]
         },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'client/app/'
+        },
+
+        plugins: [
+            'karma-chrome-launcher',
+            'karma-jasmine',
+            'karma-ng-html2js-preprocessor'
+        ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

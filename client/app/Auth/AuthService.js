@@ -4,8 +4,15 @@
         var obj = {
             login: login,
             logout: logout,
-            currentUser: getCurrentUser()
+            currentUser: {}
         };
+
+        init();
+
+
+        function init() {
+            getCurrentUser();
+        }
 
         function getCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {

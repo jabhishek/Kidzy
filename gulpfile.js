@@ -50,7 +50,8 @@ gulp.task('karma', ['set-env:test'], function() {
         'client/bower_components/angular-cookies/angular-cookies.js',
         'client/bower_components/lodash/dist/lodash.js',
         'client/bower_components/restangular/dist/restangular.js',
-        'client/app/**/*.js'
+        'client/app/**/*.js',
+        'client/app/**/*.html'
     ])
         .pipe($gulp.using())
         .pipe($gulp.karma({

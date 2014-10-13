@@ -8,6 +8,11 @@
                     templateUrl: 'main/main.html',
                     controller: 'mainController as mainVm'
                 })
+                .state('admin', {
+                    url: '/admin',
+                    templateUrl: 'admin/admin.html',
+                    controller: 'adminController as adminVm'
+                })
                 .state('login', {
                     url: '/login',
                     templateUrl: 'login/login.html',

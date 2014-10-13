@@ -49,22 +49,38 @@ describe("routes", function () {
         $state = _$state_;
         $rootScope = _$rootScope_;
         $templateCache.put('main/main.html', '');
+        $templateCache.put('admin/admin.html', '');
+        $templateCache.put('login/login.html', '');
     }));
 
     it("should have url / configured for state main", function () {
         expect($state.href('main')).toEqual('/');
     });
 
-    it("should have controller mainController configured for state main", function () {
-        $state.go('main');
-        $rootScope.$digest();
-        expect($state.current.controller).toEqual('mainController as mainVm');
+    it("should have url /admin configured for state admin", function () {
+        expect($state.href('admin')).toEqual('/admin');
+    });
+
+    it("should have url /login configured for state login", function () {
+        expect($state.href('login')).toEqual('/login');
     });
 
     it("should have controller mainController configured for state main", function () {
         $state.go('main');
         $rootScope.$digest();
         expect($state.current.controller).toEqual('mainController as mainVm');
+    });
+
+    it("should have controller loginController configured for state login", function () {
+        $state.go('login');
+        $rootScope.$digest();
+        expect($state.current.controller).toEqual('loginController as loginVm');
+    });
+
+    it("should have controller adminController configured for state admin", function () {
+        $state.go('admin');
+        $rootScope.$digest();
+        expect($state.current.controller).toEqual('adminController as adminVm');
     });
 });
 

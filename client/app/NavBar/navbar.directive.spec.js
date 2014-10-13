@@ -18,6 +18,7 @@ describe("navBar directive", function () {
     }));
 
     it("should have header", function() {
+        console.log(element);
         expect(element.find('header')).toBeDefined();
     })
 });

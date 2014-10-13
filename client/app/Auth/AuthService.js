@@ -16,7 +16,6 @@
 
         function setCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {
-                console.log(userData.user);
                 obj.currentUser = userData.user;
             });
         }

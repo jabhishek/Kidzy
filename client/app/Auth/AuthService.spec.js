@@ -1,7 +1,7 @@
 describe("AuthService", function () {
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService, $q;
+    var AuthService, $httpBackend, $cookieStore, UserService;
     var correctUser = { email: 'correctEmail@email.com'};
     var incorrectUser = { email: 'wrongEmail@email.com'};
     beforeEach(module(appName));
@@ -9,12 +9,13 @@ describe("AuthService", function () {
     // Initialize the controller and a mock scope
     beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
         UserService = _UserService_;
+        spyOn(UserService, 'getLoggedInUser').and.callThrough();
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
-        $httpBackend.when('GET', '/api/users/me').respond(200, {});
+        $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
         $httpBackend.flush();
     }));
     afterEach(function () {
@@ -29,8 +30,20 @@ describe("AuthService", function () {
     describe("login", function() {
         "use strict";
 
-        it('should have login method defined', function () {
+        it('should have logout method defined', function () {
             expect(AuthService.login).toBeDefined();
+        });
+
+        it('should have login method defined', function () {
+            expect(AuthService.logout).toBeDefined();
+        });
+
+        it('should have currentUser method defined', function () {
+            expect(AuthService.currentUser).toBeDefined();
+        });
+
+        it('should set currentUser', function () {
+            expect(AuthService.currentUser).toEqual({name: 'test'});
         });
 
         it('login method should put token in cookieStore if user authenticated', function () {

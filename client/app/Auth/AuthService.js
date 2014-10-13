@@ -11,11 +11,12 @@
 
 
         function init() {
-            getCurrentUser();
+            setCurrentUser();
         }
 
-        function getCurrentUser() {
+        function setCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {
+                console.log(userData.user);
                 obj.currentUser = userData.user;
             });
         }
@@ -33,7 +34,7 @@
                 .success(function (data) {
                     $cookieStore.put('token', data.token);
                     deferred.resolve();
-                    getCurrentUser();
+                    setCurrentUser();
                 })
                 .error(function (err) {
                     $cookieStore.remove('token');

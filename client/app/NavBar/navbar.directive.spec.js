@@ -56,7 +56,6 @@ describe("navBar directive", function () {
     });
 
     it("should display admin tab if user is admin", function () {
-        console.log(scope.navBarVm.Auth.currentUser);
         scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         var elem = element[0];
@@ -64,7 +63,6 @@ describe("navBar directive", function () {
     });
 
     it("should not display admin tab if user is logged in but not admin", function () {
-        console.log(scope.navBarVm.Auth.currentUser);
         scope.navBarVm.Auth.currentUser = { name: 'test', role: 'parent'};
         scope.$digest();
         var elem = element[0];
@@ -72,7 +70,6 @@ describe("navBar directive", function () {
     });
 
     it("should display main tab if user is logged in", function () {
-        console.log(scope.navBarVm.Auth.currentUser);
         scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         var elem = element[0];
@@ -80,11 +77,33 @@ describe("navBar directive", function () {
     });
 
     it("should not display main tab if user is not logged in", function () {
-        console.log(scope.navBarVm.Auth.currentUser);
         scope.navBarVm.Auth.currentUser = {};
         scope.$digest();
         var elem = element[0];
         expect(angular.element(elem.querySelector('nav .main')).length).toEqual(0);
+    });
+
+    it("should display logout tab if user is logged in", function () {
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .logout')).length).toEqual(1);
+    });
+
+    it("should not display logout tab if user is not logged in", function () {
+        scope.navBarVm.Auth.currentUser = {};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .logout')).length).toEqual(0);
+    });
+
+    it("should call AuthService.logout if logout called", function () {
+        inject(function(AuthService) {
+            spyOn(AuthService, 'logout');
+            scope.navBarVm.logout();
+            expect(AuthService.logout).toHaveBeenCalled();
+            expect(scope.navBarVm.isCollapsed).toBe(true);
+        });
     });
 });
 

@@ -21,26 +21,22 @@
         function hasRole(roleRequired) {
             if (!obj.currentUser) return false;
             if (!obj.isLoggedIn()) return false;
-            if (obj.currentUser.role === roleRequired) return true;
-            return false;
+            return obj.currentUser.role === roleRequired;
         }
 
         function init() {
-            console.log('init');
             setCurrentUser();
         }
 
         function setCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {
                 if ($cookieStore.get('token')) {
-                    console.log('setting user');
                     obj.currentUser = userData.user;
                 }
             });
         }
 
         function logout() {
-            console.log('logging out');
             obj.currentUser = {};
             $cookieStore.remove('token');
         }

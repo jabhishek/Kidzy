@@ -5,6 +5,7 @@
 
         vm.user = {};
         vm.submit = submit;
+        vm.Auth = AuthService;
 
         init();
 
@@ -25,7 +26,7 @@
                 email: '',
                 password: ''
             };
-            AuthService.logout();
+            vm.Auth.logout();
         }
     });
 })(angular.module('HousePointsApp'));

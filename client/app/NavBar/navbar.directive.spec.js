@@ -6,7 +6,7 @@ describe("navBar directive", function () {
     beforeEach(module('NavBar/NavBar.html'));
 
     beforeEach(inject(function ($rootScope, _$compile_, $httpBackend) {
-        $httpBackend.when('GET', '/api/users/me').respond(200, { user: {}});
+        $httpBackend.when('GET', '/api/users/me').respond(200, { user: { role: 'parent'}});
         scope = $rootScope.$new();
 
         $compile = _$compile_;
@@ -21,23 +21,70 @@ describe("navBar directive", function () {
     });
 
     it("nav should have class collapsed", function () {
-        scope.navBarVm = {isCollapsed: true};
+        scope.navBarVm.isCollapsed = true;
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         expect(element.find('nav').attr('class')).toContain('collapsed');
     });
 
+    it("nav-toggle should not be displayed if user not logged in", function () {
+        scope.navBarVm.Auth.currentUser = { };
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('.nav-toggle')).length).toEqual(0);
+    });
+
     it("nav should not have class collapsed if isCollapsed is false", function () {
-        console.log(scope.navBarVm);
-        scope.navBarVm = {isCollapsed: false};
+        scope.navBarVm.isCollapsed = false;
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         expect(element.find('nav').attr('class')).not.toContain('collapsed');
     });
 
-    it("should have user name populated if auth has currentUser populated", function () {
-        scope.navBarVm = {Auth: { currentUser: { name: 'test'}}};
+    it("should have user name populated if user is logged in", function () {
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         var elem = element[0];
         expect(angular.element(elem.querySelector('.user')).text()).toEqual('test');
+    });
+
+    it("should not display admin tab if user is not logged in", function () {
+        scope.navBarVm.Auth.currentUser = {};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(0);
+    });
+
+    it("should display admin tab if user is admin", function () {
+        console.log(scope.navBarVm.Auth.currentUser);
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(1);
+    });
+
+    it("should not display admin tab if user is logged in but not admin", function () {
+        console.log(scope.navBarVm.Auth.currentUser);
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'parent'};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(0);
+    });
+
+    it("should display main tab if user is logged in", function () {
+        console.log(scope.navBarVm.Auth.currentUser);
+        scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .main')).length).toEqual(1);
+    });
+
+    it("should not display main tab if user is not logged in", function () {
+        console.log(scope.navBarVm.Auth.currentUser);
+        scope.navBarVm.Auth.currentUser = {};
+        scope.$digest();
+        var elem = element[0];
+        expect(angular.element(elem.querySelector('nav .main')).length).toEqual(0);
     });
 });
 

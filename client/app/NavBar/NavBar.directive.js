@@ -1,11 +1,11 @@
 (function (app) {
     'use strict';
     // todo-abhi - show navbar conditionslly
-    app.directive('ajNavbar', function () {
+    app.directive('ajNavbar', function (AuthService) {
         return {
             restrict: 'EA',
             templateUrl: 'NavBar/NavBar.html',
-            controller: function(AuthService) {
+            controller: function() {
                 var vm = this;
                 vm.isCollapsed = true;
                 vm.Auth = AuthService;

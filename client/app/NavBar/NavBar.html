@@ -1,7 +1,7 @@
 <header class="navbar flex">
     <div class="navbar-header clearfix">
         <h1 class="left">Kidzy</h1>
-        <div class="right">
+        <div class="right" ng-if="navBarVm.Auth.isLoggedIn()">
             <span class="user">{{ navBarVm.Auth.currentUser.name }}</span>
             <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
                  <i class="fa fa-lg fa-bars"></i>
@@ -9,12 +9,12 @@
         </div>
         <div style="clear:both"></div>
     </div>
-    <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">
+    <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}"  ng-if="navBarVm.Auth.isLoggedIn()">
         <ul class="items">
             <li class="main">
                 <a ui-sref="main" ng-click="navBarVm.isCollapsed = true">Main</a>
             </li>
-            <li class="admin">
+            <li class="admin" ng-if="navBarVm.Auth.hasRole('admin')">
                 <a ui-sref="admin" ng-click="navBarVm.isCollapsed = true">Admin</a>
             </li>
         </ul>

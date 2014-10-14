@@ -4,25 +4,43 @@
         var obj = {
             login: login,
             logout: logout,
-            currentUser: {}
+            currentUser: {},
+            isLoggedIn: isLoggedIn,
+            hasRole: hasRole
         };
 
         init();
+        return obj;
 
+        /// local methods ////
+
+        function isLoggedIn() {
+            return obj.currentUser.hasOwnProperty("role");
+        }
+
+        function hasRole(roleRequired) {
+            if (!obj.currentUser) return false;
+            if (!obj.isLoggedIn()) return false;
+            if (obj.currentUser.role === roleRequired) return true;
+            return false;
+        }
 
         function init() {
+            console.log('init');
             setCurrentUser();
         }
 
         function setCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {
-                obj.currentUser = userData.user;
+                if ($cookieStore.get('token')) {
+                    console.log('setting user');
+                    obj.currentUser = userData.user;
+                }
             });
         }
 
-        return obj;
-
         function logout() {
+            console.log('logging out');
             obj.currentUser = {};
             $cookieStore.remove('token');
         }

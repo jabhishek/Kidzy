@@ -1,3 +1,5 @@
+// Reference:- https://gist.github.com/pgilad/11256601#file-gulpfile-js-L56
+
 var gulp = require('gulp');
 var path = require('path');
 var minify = require('gulp-minify-css');

@@ -2,7 +2,7 @@
     <div class="navbar-header clearfix">
         <h1 class="left">Kidzy</h1>
         <div class="right">
-            <span class="user"> {{ navBarVm.Auth.currentUser.name }} </span>
+            <span class="user">{{ navBarVm.Auth.currentUser.name }}</span>
             <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
                  <i class="fa fa-lg fa-bars"></i>
             </span>
@@ -11,10 +11,10 @@
     </div>
     <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">
         <ul class="items">
-            <li>
+            <li class="main">
                 <a ui-sref="main" ng-click="navBarVm.isCollapsed = true">Main</a>
             </li>
-            <li>
+            <li class="admin">
                 <a ui-sref="admin" ng-click="navBarVm.isCollapsed = true">Admin</a>
             </li>
         </ul>

@@ -45,7 +45,8 @@ describe("navBar directive", function () {
         scope.navBarVm.Auth.currentUser = { name: 'test', role: 'admin'};
         scope.$digest();
         var elem = element[0];
-        expect(angular.element(elem.querySelector('.user')).text()).toEqual('test');
+        // converted to uppercase because of the filter
+        expect(angular.element(elem.querySelector('.user')).text()).toEqual('Test');
     });
 
     it("should not display admin tab if user is not logged in", function () {

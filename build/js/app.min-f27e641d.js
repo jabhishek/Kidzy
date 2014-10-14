@@ -5,3 +5,4 @@
 !function(t){"use strict";t.controller("adminController",["AuthService",function(t){var n=this;n.Auth=t}])}(angular.module("HousePointsApp"));
 !function(o){"use strict";o.controller("loginController",["AuthService","$state",function(o,n){function t(t,r){t&&o.login(r).then(function(){n.go("main")},function(o){u.error=o})}function r(){u.user={email:"",password:""},u.error=void 0,u.Auth.logout()}var u=this;u.user={},u.submit=t,u.Auth=o,r()}])}(angular.module("HousePointsApp"));
 !function(t){"use strict";t.controller("mainController",["AuthService",function(t){var n=this;n.Auth=t}])}(angular.module("HousePointsApp"));
+!function(t){t.filter("capitalize",function(){"use strict";return function(t){if(!t)return"";var n=t.substring(0,1).toUpperCase();return n+t.substring(1)}})}(angular.module("HousePointsApp"));

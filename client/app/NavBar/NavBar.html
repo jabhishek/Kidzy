@@ -2,7 +2,7 @@
     <div class="navbar-header clearfix">
         <h1 class="left">Kidzy</h1>
         <div class="right" ng-if="navBarVm.Auth.isLoggedIn()">
-            <span class="user">{{ navBarVm.Auth.currentUser.name }}</span>
+            <span class="user">{{ navBarVm.Auth.currentUser.name | capitalize}}</span>
             <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
                  <i class="fa fa-lg fa-bars"></i>
             </span>

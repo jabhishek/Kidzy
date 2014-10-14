@@ -62,16 +62,21 @@ body {
     line-height: 1.4;
 }
 
-.view {
+.view, .container {
     margin: 0 auto;
-    padding: 5px;
     @media @tablets {
         max-width: 730px;
-        padding: 0;
     }
-
     @media @desktop {
         max-width: 930px;
+    }
+}
+
+.view {
+    padding: 0 5px;
+    display: block;
+    @media @tablets {
+        padding: 0;
     }
 }
 
@@ -80,7 +85,6 @@ form fieldset {
     span.error-message {
         color: red;
         display: block;
-
     }
 }
 

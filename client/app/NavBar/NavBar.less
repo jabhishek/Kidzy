@@ -1,19 +1,25 @@
 .navbar.flex {
     background: @header-background;
     color: @header-color;
-    //padding: 0.5rem;
-    .display(flex);
-    .flex-direction(column);
     line-height: 5rem;
     position: relative;
     z-index: 999;
 
-    @media @tablets {
-        .flex-direction(row);
+    .container {
+        .display(flex);
+        .flex-direction(column);
+        @media @tablets {
+            .flex-direction(row);
+        }
     }
+
     .navbar-header {
+        padding-left: .5rem;
         .display(flex);
         .flex-grow(1);
+        @media @tablets {
+            padding-left: 0;
+        }
         .user {
             margin-right: 1rem;
         }
@@ -60,6 +66,7 @@
                     color: @header-color;
                     display: block;
                     text-decoration: none;
+                    padding: 0 0.5rem;
                     @media @tablets {
                         display: inline-block;
                         padding: 0 1rem;
@@ -75,30 +82,30 @@
             }
         }
     }
-/*
+    /*
 
-    nav.collapsed-add,
-    nav.collapsed-remove {
-        transition: 0.3s linear all;
-        display: block !important;
-    }
+        nav.collapsed-add,
+        nav.collapsed-remove {
+            transition: 0.3s linear all;
+            display: block !important;
+        }
 
-    nav.collapsed-add {
-        opacity: 1;
-    }
+        nav.collapsed-add {
+            opacity: 1;
+        }
 
-    nav.collapsed-add.collapsed-add-active {
-        opacity: 0;
-    }
+        nav.collapsed-add.collapsed-add-active {
+            opacity: 0;
+        }
 
-    nav.collapsed-remove {
-        opacity: 0;
-    }
+        nav.collapsed-remove {
+            opacity: 0;
+        }
 
-    nav.collapsed-remove.collapsed-remove-active {
-        opacity: 1;
-    }
-*/
+        nav.collapsed-remove.collapsed-remove-active {
+            opacity: 1;
+        }
+    */
 
 }
 

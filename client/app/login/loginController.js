@@ -18,6 +18,8 @@
             AuthService.login(user)
                 .then(function () {
                     $state.go('main');
+                }, function(err) {
+                    vm.error = err;
                 });
         }
 
@@ -26,6 +28,7 @@
                 email: '',
                 password: ''
             };
+            vm.error = undefined;
             vm.Auth.logout();
         }
     });

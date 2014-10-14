@@ -12,10 +12,10 @@
     <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}"  ng-if="navBarVm.Auth.isLoggedIn()">
         <ul class="items">
             <li class="main">
-                <a ui-sref="main" ng-click="navBarVm.isCollapsed = true">Main</a>
+                <a ui-sref="main" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Main</a>
             </li>
             <li class="admin" ng-if="navBarVm.Auth.hasRole('admin')">
-                <a ui-sref="admin" ng-click="navBarVm.isCollapsed = true">Admin</a>
+                <a ui-sref="admin" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Admin</a>
             </li>
             <li class="logout">
                 <a href="#" ng-click="navBarVm.logout()">Logout</a>

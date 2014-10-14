@@ -14,7 +14,7 @@
                     vm.Auth.logout();
                     vm.isCollapsed = true;
                     $state.go('login');
-                }
+                };
             },
             controllerAs: 'navBarVm'
         };

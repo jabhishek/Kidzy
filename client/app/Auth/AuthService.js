@@ -15,12 +15,16 @@
         /// local methods ////
 
         function isLoggedIn() {
-            return obj.currentUser.hasOwnProperty("role");
+            return obj.currentUser.hasOwnProperty('role');
         }
 
         function hasRole(roleRequired) {
-            if (!obj.currentUser) return false;
-            if (!obj.isLoggedIn()) return false;
+            if (!obj.currentUser) {
+                return false;
+            }
+            if (!obj.isLoggedIn()) {
+                return false;
+            }
             return obj.currentUser.role === roleRequired;
         }
 

@@ -39,7 +39,6 @@
                 }
             });
         }
-
         function logout() {
             obj.currentUser = {};
             $cookieStore.remove('token');
@@ -50,8 +49,13 @@
             $http.post('/auth/local', user)
                 .success(function (data) {
                     $cookieStore.put('token', data.token);
-                    deferred.resolve();
-                    setCurrentUser();
+                    UserService.getLoggedInUser().then(function (userData) {
+                        obj.currentUser = userData.user;
+                        console.log("resolved");
+                        deferred.resolve();
+                    }, function(err) {
+                        deferred.reject(err);
+                    });
                 })
                 .error(function (err) {
                     $cookieStore.remove('token');

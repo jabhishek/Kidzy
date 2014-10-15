@@ -1,10 +1,17 @@
 (function (app) {
     'use strict';
     app.factory('AuthService', function ($http, $q, $cookieStore, UserService) {
+        var currUser = {};
+
         var obj = {
             login: login,
             logout: logout,
-            currentUser: {},
+            getCurrentUser: function() {
+                return currUser;
+            },
+            setCurrentUser: function(user) {
+                currUser = user;
+            },
             isLoggedIn: isLoggedIn,
             hasRole: hasRole
         };
@@ -15,32 +22,29 @@
         /// local methods ////
 
         function isLoggedIn() {
-            return obj.currentUser.hasOwnProperty('role');
+            return currUser.hasOwnProperty('role');
         }
 
         function hasRole(roleRequired) {
-            if (!obj.currentUser) {
+            if (!currUser) {
                 return false;
             }
             if (!obj.isLoggedIn()) {
                 return false;
             }
-            return obj.currentUser.role === roleRequired;
+            return currUser.role === roleRequired;
         }
 
         function init() {
-            setCurrentUser();
-        }
-
-        function setCurrentUser() {
             UserService.getLoggedInUser().then(function (userData) {
                 if ($cookieStore.get('token')) {
-                    obj.currentUser = userData.user;
+                    currUser = userData.user;
                 }
             });
         }
+
         function logout() {
-            obj.currentUser = {};
+            currUser = {};
             $cookieStore.remove('token');
         }
 
@@ -50,7 +54,7 @@
                 .success(function (data) {
                     $cookieStore.put('token', data.token);
                     UserService.getLoggedInUser().then(function (userData) {
-                        obj.currentUser = userData.user;
+                        currUser = userData.user;
                         console.log("resolved");
                         deferred.resolve();
                     }, function(err) {

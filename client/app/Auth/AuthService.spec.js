@@ -37,11 +37,11 @@ describe("AuthService", function () {
     });
 
     it('should have currentUser method defined', function () {
-        expect(AuthService.currentUser).toBeDefined();
+        expect(AuthService.getCurrentUser).toBeDefined();
     });
 
     it('should set currentUser', function () {
-        expect(AuthService.currentUser).toEqual({name: 'test'});
+        expect(AuthService.getCurrentUser()).toEqual({name: 'test'});
     });
 
 /*
@@ -76,9 +76,9 @@ describe("AuthService", function () {
         });
 
         it('should clear currentUser', function () {
-            AuthService.currentUser = { name: ""};
+            AuthService.setCurrentUser({ name: ""});
             AuthService.logout();
-            expect(AuthService.currentUser.name).toBe(undefined);
+            expect(AuthService.getCurrentUser().name).toBe(undefined);
         });
     })
 });
@@ -105,11 +105,11 @@ describe("isLoggedIn", function() {
     });
 
     it('should return false if currentUser doesnt have role', function () {
-        AuthService.currentUser = {};
+        AuthService.setCurrentUser({});
         expect(AuthService.isLoggedIn()).toBe(false);
     });
     it('should return true if currentUser has role', function () {
-        AuthService.currentUser = { role: 'admin'};
+        AuthService.setCurrentUser({ role: 'admin'});
         expect(AuthService.isLoggedIn()).toBe(true);
     });
 });

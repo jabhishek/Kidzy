@@ -14,7 +14,9 @@
                 currUser = user;
             },
             isLoggedIn: isLoggedIn,
-            isLoggedInPromise: isLoggedInPromise,
+            isLoggedInPromise: function() {
+                return isLoggedInPromise;
+            },
             hasRole: hasRole
         };
 
@@ -59,7 +61,6 @@
                     isLoggedInPromise = UserService.getLoggedInUser();
                     isLoggedInPromise.then(function (userData) {
                         currUser = userData.user;
-                        console.log("resolved");
                         deferred.resolve();
                     }, function(err) {
                         deferred.reject(err);

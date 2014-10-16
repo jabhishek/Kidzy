@@ -29,7 +29,7 @@
                 password: ''
             };
             vm.error = undefined;
-            vm.Auth.logout();
+            //vm.Auth.logout();
         }
     });
 })(angular.module('HousePointsApp'));

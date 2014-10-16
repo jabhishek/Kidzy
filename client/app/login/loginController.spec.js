@@ -19,10 +19,6 @@ describe("loginController", function () {
         expect(LoginCtrl.user).toBeDefined();
     });
 
-    it('should have no token in cookieStore', function () {
-        expect(AuthService.logout).toHaveBeenCalled();
-    });
-
     it('should call AuthService.login if form is valid', function () {
         var deferred = $q.defer();
         deferred.resolve();

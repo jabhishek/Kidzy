@@ -7,7 +7,11 @@ describe("AuthService", function () {
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+        $templateCache.put('main/main.html', '');
+        $templateCache.put('admin/admin.html', '');
+        $templateCache.put('login/login.html', '');
+
         UserService = _UserService_;
         spyOn(UserService, 'getLoggedInUser').and.callThrough();
         AuthService = _AuthService_;
@@ -17,7 +21,7 @@ describe("AuthService", function () {
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
-        $httpBackend.flush();
+//        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
@@ -40,16 +44,10 @@ describe("AuthService", function () {
         expect(AuthService.getCurrentUser).toBeDefined();
     });
 
-    it('should set currentUser', function () {
-        expect(AuthService.getCurrentUser()).toEqual({name: 'test'});
-    });
-
-/*
     it('should have hasRole method defined', function () {
         expect(AuthService.hasRole).toBeDefined();
     });
 
-*/
     describe("login", function() {
         "use strict";
 
@@ -91,13 +89,17 @@ describe("isLoggedIn", function() {
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+        $templateCache.put('main/main.html', '');
+        $templateCache.put('admin/admin.html', '');
+        $templateCache.put('login/login.html', '');
+
         UserService = _UserService_;
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
-        $httpBackend.flush();
+//        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
@@ -122,13 +124,17 @@ describe("hasRole", function() {
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+        $templateCache.put('main/main.html', '');
+        $templateCache.put('admin/admin.html', '');
+        $templateCache.put('login/login.html', '');
+
         UserService = _UserService_;
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
-        $httpBackend.flush();
+//        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();

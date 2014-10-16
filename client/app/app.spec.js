@@ -41,11 +41,12 @@ describe('App', function () {
 });
 
 describe("routes", function () {
-    var app, $state, $rootScope;
+    var app, $state, $rootScope, AuthService;
     var appName = 'HousePointsApp';
     beforeEach(module(appName));
-    beforeEach(inject(function (_$state_, _$rootScope_, $templateCache) {
+    beforeEach(inject(function (_$state_, _$rootScope_, $templateCache, _AuthService_) {
         app = angular.module(appName);
+        AuthService = _AuthService_;
         $state = _$state_;
         $rootScope = _$rootScope_;
         $templateCache.put('main/main.html', '');
@@ -64,24 +65,6 @@ describe("routes", function () {
     it("should have url /login configured for state login", function () {
         expect($state.href('login')).toEqual('/login');
     });
-
-    it("should have controller mainController configured for state main", function () {
-        $state.go('main');
-        $rootScope.$digest();
-        expect($state.current.controller).toEqual('mainController as mainVm');
-    });
-
-    it("should have controller loginController configured for state login", function () {
-        $state.go('login');
-        $rootScope.$digest();
-        expect($state.current.controller).toEqual('loginController as loginVm');
-    });
-
-    it("should have controller adminController configured for state admin", function () {
-        $state.go('admin');
-        $rootScope.$digest();
-        expect($state.current.controller).toEqual('adminController as adminVm');
-    });
 });
 
 describe("interceptor", function () {
@@ -92,7 +75,11 @@ describe("interceptor", function () {
         $httpProvider = _$httpProvider_;
     }));
 
-    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, _$cookieStore_) {
+    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, _$cookieStore_, $templateCache) {
+        $templateCache.put('main/main.html', '');
+        $templateCache.put('admin/admin.html', '');
+        $templateCache.put('login/login.html', '');
+
         $httpBackend = _$httpBackend_;
         authInterceptor = _authInterceptor_;
         AuthService = _AuthService_;
@@ -100,7 +87,6 @@ describe("interceptor", function () {
         $cookieStore = _$cookieStore_;
 
         $httpBackend.when('GET', '/api/users/me').respond(200, {});
-        $httpBackend.flush();
     }));
 
     afterEach(function () {

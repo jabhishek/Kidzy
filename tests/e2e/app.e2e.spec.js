@@ -14,10 +14,17 @@ describe('homepage', function () {
 
     var mainPageObject = require("./PageObjects/MainPage");
     var mainPage = new mainPageObject();
+    var ptor;
+    beforeEach(function () {
+        "use strict";
+        ptor = protractor.getInstance();
+        ptor.manage().deleteAllCookies();
+    });
 
     beforeEach(function () {
         loginPage.login(users.parent);
     });
+
     it('should load the home page', function () {
         mainPage.get();
         expect(browser.getLocationAbsUrl()).toBe('/');

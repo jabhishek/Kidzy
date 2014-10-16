@@ -11,6 +11,12 @@ describe('login', function() {
     var users = require("./config/users");
     var loginPageObject = require("./PageObjects/LoginPage");
     var loginPage = new loginPageObject();
+    var ptor;
+    beforeEach(function () {
+        "use strict";
+        ptor = protractor.getInstance();
+        ptor.manage().deleteAllCookies();
+    });
 
     it('should load the login page', function() {
         loginPage.get();

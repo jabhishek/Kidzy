@@ -1,20 +1,11 @@
-/*describe('angularjs homepage', function() {
- it('should greet the named user', function() {
- browser.get('http://www.angularjs.org');
- element(by.model('yourName')).sendKeys('Julie');
- var greeting = element(by.binding('yourName'));
- expect(greeting.getText()).toEqual('Hello Julie!');
- });
- });*/
-
-describe('homepage', function () {
+describe('app', function () {
     var users = require("./config/users");
     var loginPageObject = require("./PageObjects/LoginPage");
     var loginPage = new loginPageObject();
-
     var mainPageObject = require("./PageObjects/MainPage");
     var mainPage = new mainPageObject();
     var ptor;
+
     beforeEach(function () {
         "use strict";
         ptor = protractor.getInstance();
@@ -38,6 +29,27 @@ describe('homepage', function () {
     it('should load home page if navigated to incorrect url', function () {
         browser.get("/incorrect");
         expect(browser.getLocationAbsUrl()).toEqual('/');
+    });
+
+    it('should load home page if navigated to admin url', function () {
+        browser.get("/admin");
+        expect(browser.getLocationAbsUrl()).toEqual('/');
+    });
+
+    describe("admin", function () {
+        beforeEach(function () {
+            "use strict";
+            ptor.manage().deleteAllCookies();
+        });
+
+        beforeEach(function () {
+            loginPage.login(users.admin);
+        });
+
+        it('should load admin page if navigated to admin url', function () {
+            browser.get("/admin");
+            expect(browser.getLocationAbsUrl()).toEqual('/admin');
+        });
     });
 });
 

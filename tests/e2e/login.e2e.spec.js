@@ -1,16 +1,10 @@
-/*describe('angularjs homepage', function() {
- it('should greet the named user', function() {
- browser.get('http://www.angularjs.org');
- element(by.model('yourName')).sendKeys('Julie');
- var greeting = element(by.binding('yourName'));
- expect(greeting.getText()).toEqual('Hello Julie!');
- });
- });*/
-
 describe('login', function() {
     var users = require("./config/users");
     var loginPageObject = require("./PageObjects/LoginPage");
     var loginPage = new loginPageObject();
+    var headerObject = require("./PageObjects/Header");
+    var header = new headerObject();
+
     var ptor;
     beforeEach(function () {
         "use strict";
@@ -39,6 +33,7 @@ describe('login', function() {
         expect(loginPage.emailErrorSpan.isPresent()).toBe(true);
         expect(loginPage.passwordErrorSpan.isPresent()).toBe(false);
     });
+
     it('should show email error if invalid email passed', function() {
         loginPage.login({email: 'wrongEmail', password: 'hjhjkhkj'});
         expect(loginPage.emailErrorSpan.isPresent()).toBe(true);
@@ -50,5 +45,34 @@ describe('login', function() {
         expect(loginPage.emailErrorSpan.isPresent()).toBe(false);
         expect(loginPage.passwordErrorSpan.isPresent()).toBe(true);
     });
+
+    describe("", function() {
+        "use strict";
+        beforeEach(function () {
+            "use strict";
+            ptor = protractor.getInstance();
+            ptor.manage().deleteAllCookies();
+        });
+
+        beforeEach(function () {
+            loginPage.get();
+        });
+
+        it('should have a navbar-header', function() {
+            expect(header.navbarHeader.isPresent()).toBe(true);
+        });
+
+        it('should not have nav', function() {
+            expect(header.nav.isPresent()).toBe(false);
+        });
+
+        it('should not have user', function() {
+            expect(header.user.isPresent()).toBe(false);
+        });
+
+        it('should not have nav-toggle', function() {
+            expect(header.navToggle.isPresent()).toBe(false);
+        });
+    })
 });
 

@@ -3,10 +3,14 @@
     app.controller('adminController', function (AuthService, UserService) {
         var vm = this;
         vm.Auth = AuthService;
-        vm.users = {};
+        vm.users = [];
+
         UserService.getAllUsers().then(function(data) {
-            console.log(data);
-            vm.users = data;
+            data.forEach(function(user) {
+                vm.users.push(user);
+                vm.users.push(user);
+                vm.users.push(user);
+            })
         });
     });
 })(angular.module('HousePointsApp'));

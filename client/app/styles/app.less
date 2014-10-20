@@ -41,7 +41,7 @@ html {
 
 input {
     outline: none;
-    border: 1px solid #444;
+    border: 0.1rem solid #444;
     font-family: @font-family;
 }
 
@@ -68,12 +68,15 @@ body {
 .view, .container {
     margin: 0 auto;
     @media @tablets {
-        max-width: 90%;
+        max-width: 72rem;
+    }
+    @media @desktop {
+        max-width: 93rem;
     }
 }
 
 .view {
-    padding: 0 5px;
+    padding: 0 0.5rem;
     display: block;
     @media @tablets {
         padding: 0;
@@ -91,9 +94,11 @@ form fieldset {
 form.ng-submitted {
     input.ng-invalid, input.ng-invalid:focus {
         outline: none;
-        border: 1px solid #ff7575;
+        border: 0.1rem solid #ff7575;
     }
 }
 
 @import '/client/app/login/login.less';
 @import '/client/app/NavBar/NavBar.less';
+@import '/client/app/admin/admin.less';
+@import '/client/app/admin/user.less';

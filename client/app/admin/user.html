@@ -1,1 +1,12 @@
-<div>{{ user.name }}</div>
+<div class="user-row">
+    <div class="left">
+        <span>{{ user.name | capitalize }}</span>
+        <span>{{ user.email }}</span>
+    </div>
+    <div class="right">
+        <span>{{ user.role | capitalize}}</span>
+    </div>
+    <div class="actions">
+        <i class="fa fa-trash" title="delete"></i>
+    </div>
+</div>

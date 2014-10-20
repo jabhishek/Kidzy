@@ -1,7 +1,16 @@
 (function (app) {
     'use strict';
-    app.factory('UserService', function (Restangular) {
+    app.factory('UserService', function (Restangular, capitalizeFilter) {
         var users = Restangular.all('api/users');
+
+        Restangular.addResponseInterceptor(function(data, operation, what) {
+            var response = data;
+            if (operation === 'get' && what === 'me') {
+                response.user.name = capitalizeFilter(response.user.name);
+            }
+            return response;
+        });
+
         return {
             getLoggedInUser: getLoggedInUser,
             getAllUsers: getAllUsers

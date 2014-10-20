@@ -8,6 +8,9 @@
             if (operation === 'get' && what === 'me') {
                 response.user.name = capitalizeFilter(response.user.name);
             }
+            if (operation === 'getList') {
+                response = data.users;
+            }
             return response;
         });
 

@@ -37,6 +37,13 @@ html {
     color: #555;
     color: @page-color;
     font-size: 62.5%;
+    height: 100%;
+}
+
+body {
+    .font-size(1.5);
+    line-height: 1.4;
+    height: 100%;
 }
 
 input {
@@ -60,13 +67,12 @@ h2 {
     font-size: 2rem;
 }
 
-body {
-    .font-size(1.5);
-    line-height: 1.4;
-}
 
 .view, .container {
     margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    position: relative;
     @media @tablets {
         max-width: 72rem;
     }

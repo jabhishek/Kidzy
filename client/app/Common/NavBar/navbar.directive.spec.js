@@ -3,7 +3,7 @@ describe("navBar directive", function () {
     var element, scope, $compile;
 
     beforeEach(module('HousePointsApp'));
-    beforeEach(module('NavBar/NavBar.html'));
+    beforeEach(module('Common/NavBar/NavBar.html'));
 
     beforeEach(inject(function ($rootScope, _$compile_, $httpBackend) {
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { role: 'parent'}});
@@ -46,7 +46,7 @@ describe("navBar directive", function () {
         scope.$digest();
         var elem = element[0];
         // converted to uppercase because of the filter
-        expect(angular.element(elem.querySelector('.user')).text()).toEqual('Test');
+        expect(angular.element(elem.querySelector('.user')).text()).toEqual('test');
     });
 
     it("should not display admin tab if user is not logged in", function () {

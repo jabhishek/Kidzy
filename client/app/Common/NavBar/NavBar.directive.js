@@ -4,7 +4,7 @@
     app.directive('ajNavbar', function (AuthService, $state) {
         return {
             restrict: 'EA',
-            templateUrl: 'NavBar/NavBar.html',
+            templateUrl: 'Common/NavBar/NavBar.html',
             controller: function() {
                 var vm = this;
                 vm.isCollapsed = true;

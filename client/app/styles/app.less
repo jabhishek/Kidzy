@@ -67,7 +67,6 @@ h2 {
     font-size: 2rem;
 }
 
-
 .view, .container {
     margin: 0 auto;
     height: 100%;
@@ -84,10 +83,25 @@ h2 {
 .view {
     padding: 0 0.5rem;
     display: block;
+    transition: 0.3s linear all;
     @media @tablets {
         padding: 0;
     }
 }
+
+.view.ng-enter {
+    left: 3%;
+}
+.view.ng-enter.ng-enter-active {
+    left: 0;
+}
+.view.ng-leave {
+    
+}
+.view.ng-leave.ng-leave-active {
+    right: 100%;
+}
+
 
 form fieldset {
     text-align: left;

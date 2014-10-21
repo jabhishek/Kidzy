@@ -27,3 +27,20 @@
         }
     }
 }
+
+.user-animate.ng-move,
+.user-animate.ng-enter,
+.user-animate.ng-leave {
+    transition: 5s linear all;
+}
+
+.user-animate.ng-move,
+.user-animate.ng-enter,
+.user-animate.ng-leave.ng-leave-active {
+    opacity:0;
+}
+.user-animate.ng-move.ng-move-active,
+.user-animate.ng-enter.ng-enter-active,
+.user-animate.ng-leave {
+    opacity:1;
+}

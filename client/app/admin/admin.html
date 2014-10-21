@@ -3,7 +3,7 @@
 {{ adminVm.users.length }} users retrieved!!
 <div class="usersList">
     <ul>
-        <li data-ng-repeat="user in adminVm.users track by $index">
+        <li class="user-animate" data-ng-repeat="user in adminVm.users track by $index">
             <aj-user user="user"></aj-user>
         </li>
     </ul>

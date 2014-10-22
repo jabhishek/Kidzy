@@ -1,5 +1,5 @@
 // Reference:- https://gist.github.com/pgilad/11256601#file-gulpfile-js-L56
-
+var _ = require("lodash");
 var gulp = require('gulp');
 var path = require('path');
 var minify = require('gulp-minify-css');
@@ -23,6 +23,9 @@ var vendorScripts = ['angular/angular.js',
                'angular-cookies/angular-cookies.js']
                .map(prependBowerPath);
 
+var karmaScripts = _.union(vendorScripts, ['client/bower_components/angular-mocks/angular-mocks.js', 'client/app/**/*.js', 'client/app/**/*.html'])
+console.log(karmaScripts);
+
 var appScripts = ['client/app/**/*.js', '!client/app/**/*spec.js'];
 
 gulp.task('clean', ['clean:js', 'clean:css']);
@@ -45,18 +48,7 @@ gulp.task('set-env:test', function () {
 
 gulp.task('karma', ['set-env:test'], function() {
     // Be sure to return the stream
-    return gulp.src([
-        'client/bower_components/angular/angular.js',
-        'client/bower_components/angular-animate/angular-animate.js',
-        'client/bower_components/angular-local-storage/dist/angular-local-storage.js',
-        'client/bower_components/angular-mocks/angular-mocks.js',
-        'client/bower_components/angular-ui-router/release/angular-ui-router.js',
-        'client/bower_components/angular-cookies/angular-cookies.js',
-        'client/bower_components/lodash/dist/lodash.js',
-        'client/bower_components/restangular/dist/restangular.js',
-        'client/app/**/*.js',
-        'client/app/**/*.html'
-    ])
+    return gulp.src(karmaScripts)
         .pipe($gulp.using())
         .pipe($gulp.karma({
             configFile: 'karma.conf.js',

@@ -29,7 +29,8 @@
                     templateUrl: 'login/login.html',
                     controller: 'loginController as loginVm',
                     resolve: {
-                        isLoggedIn: isLoggedIn
+                        // redirect to main page if already logged in
+                        isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
                 });
 
@@ -40,7 +41,7 @@
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isLoggedIn(AuthService, $cookieStore, $q, StateErrorCodes) {
+            function isAlreadyLoggedIn(AuthService, $cookieStore, $q, StateErrorCodes) {
                 var defer = $q.defer();
                 if ($cookieStore.get('token')) {
                     AuthService.isLoggedInPromise().then(function () {
@@ -105,7 +106,6 @@
                     default:
                         break;
                 }
-
             });
         })
         .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
@@ -119,9 +119,6 @@
                     return config;
                 },
                 responseError: function (response) {
-                    console.group('response error');
-                    console.log(response);
-                    console.groupEnd();
                     if (response.status === 401) {
                         $location.path('/login');
                         // remove any stale tokens

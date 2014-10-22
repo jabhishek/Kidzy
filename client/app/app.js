@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate'])
+    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
         .constant('StateErrorCodes', {
             Unauthorized: 'Unauthorized',
             AlreadyLoggedIn: 'AlreadyLoggedIn'
@@ -41,9 +41,9 @@
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isAlreadyLoggedIn(AuthService, $q, StateErrorCodes, CookieService) {
+            function isAlreadyLoggedIn(AuthService, $q, StateErrorCodes, StorageService) {
                 var defer = $q.defer();
-                if (CookieService.getAuthToken()) {
+                if (StorageService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
                         defer.reject(StateErrorCodes.AlreadyLoggedIn);
                     }, function() {
@@ -108,13 +108,13 @@
                 }
             });
         })
-        .factory('authInterceptor', function ($rootScope, $q, CookieService, $location) {
+        .factory('authInterceptor', function ($rootScope, $q, StorageService, $location) {
             return {
                 // Add authorization token to headers
                 request: function (config) {
                     config.headers = config.headers || {};
-                    if (CookieService.getAuthToken()) {
-                        config.headers.Authorization = 'Bearer ' + CookieService.getAuthToken();
+                    if (StorageService.getAuthToken()) {
+                        config.headers.Authorization = 'Bearer ' + StorageService.getAuthToken();
                     }
                     return config;
                 },
@@ -122,7 +122,7 @@
                     if (response.status === 401) {
                         $location.path('/login');
                         // remove any stale tokens
-                        CookieService.removeAuthToken();
+                        StorageService.removeAuthToken();
                         return $q.reject(response);
                     }
                     else {

@@ -17,6 +17,7 @@ var prependBowerPath = function (packageName) {
 var vendorScripts = ['angular/angular.js',
                'angular-animate/angular-animate.js',
                'angular-ui-router/release/angular-ui-router.js',
+               'angular-local-storage/dist/angular-local-storage.js',
                'lodash/dist/lodash.js',
                'restangular/dist/restangular.js',
                'angular-cookies/angular-cookies.js']
@@ -47,6 +48,7 @@ gulp.task('karma', ['set-env:test'], function() {
     return gulp.src([
         'client/bower_components/angular/angular.js',
         'client/bower_components/angular-animate/angular-animate.js',
+        'client/bower_components/angular-local-storage/dist/angular-local-storage.js',
         'client/bower_components/angular-mocks/angular-mocks.js',
         'client/bower_components/angular-ui-router/release/angular-ui-router.js',
         'client/bower_components/angular-cookies/angular-cookies.js',

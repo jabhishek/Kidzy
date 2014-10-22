@@ -68,14 +68,14 @@ describe("routes", function () {
 });
 
 describe("interceptor", function () {
-    var AuthService, authInterceptor, $httpProvider, $httpBackend, $timeout, CookieService;
+    var AuthService, authInterceptor, $httpProvider, $httpBackend, $timeout, StorageService;
     var appName = 'HousePointsApp';
     beforeEach(module(appName, function (_$httpProvider_) {
         "use strict";
         $httpProvider = _$httpProvider_;
     }));
 
-    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, $templateCache, _CookieService_) {
+    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, $templateCache, _StorageService_) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -84,9 +84,9 @@ describe("interceptor", function () {
         authInterceptor = _authInterceptor_;
         AuthService = _AuthService_;
         $timeout = _$timeout_;
-        CookieService = _CookieService_;
+        StorageService = _StorageService_;
 
-        $httpBackend.when('GET', '/api/users/me').respond(200, {});
+        $httpBackend.when('GET', '/api/users/me').respond(200, { user: {name: 'test'}});
     }));
 
     afterEach(function () {
@@ -100,14 +100,15 @@ describe("interceptor", function () {
 
     it("should set the token in authorization header if token set in cookie", function () {
         "use strict";
-        CookieService.putAuthToken("someToken");
+        StorageService.putAuthToken("someToken");
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe("Bearer someToken")
     });
 
     it("should not set the token in authorization header if token not present in cookie", function () {
         "use strict";
-        CookieService.removeAuthToken();
+        $httpBackend.flush();
+        StorageService.removeAuthToken();
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe(undefined);
     });

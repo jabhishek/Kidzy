@@ -1,13 +1,13 @@
 describe("AuthService", function () {
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService, CookieService;
+    var AuthService, $httpBackend, $cookieStore, UserService, StorageService;
     var correctUser = { email: 'correctEmail@email.com'};
     var incorrectUser = { email: 'wrongEmail@email.com'};
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _CookieService_, _UserService_, $templateCache) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _StorageService_, _UserService_, $templateCache) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -16,7 +16,7 @@ describe("AuthService", function () {
         spyOn(UserService, 'getLoggedInUser').and.callThrough();
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
-        CookieService = _CookieService_;
+        StorageService = _StorageService_;
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
@@ -51,25 +51,25 @@ describe("AuthService", function () {
         "use strict";
 
         it('login method should put token in cookieStore if user authenticated', function () {
-            spyOn(CookieService, 'putAuthToken');
+            spyOn(StorageService, 'putAuthToken');
             AuthService.login(correctUser);
             $httpBackend.flush();
-            expect(CookieService.putAuthToken).toHaveBeenCalled();
+            expect(StorageService.putAuthToken).toHaveBeenCalled();
         });
 
         it('login method should not put token in cookieStore if user not authenticated', function () {
-            spyOn(CookieService, 'putAuthToken');
+            spyOn(StorageService, 'putAuthToken');
             AuthService.login(incorrectUser);
             $httpBackend.flush();
-            expect(CookieService.putAuthToken).not.toHaveBeenCalled();
+            expect(StorageService.putAuthToken).not.toHaveBeenCalled();
         });
     });
     describe("logout", function() {
         "use strict";
         it('should delete token from cookieStore', function () {
-            spyOn(CookieService, 'removeAuthToken');
+            spyOn(StorageService, 'removeAuthToken');
             AuthService.logout();
-            expect(CookieService.removeAuthToken).toHaveBeenCalled();
+            expect(StorageService.removeAuthToken).toHaveBeenCalled();
         });
 
         it('should clear currentUser', function () {

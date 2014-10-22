@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.factory('CookieService', function ($cookieStore) {
+    app.factory('StorageService', function (localStorageService) {
         var obj = {
             getAuthToken: getAuthToken,
             removeAuthToken: removeAuthToken,
@@ -10,18 +10,18 @@
 
         // private methods
         function getAuthToken() {
-            return $cookieStore.get('token');
+            return localStorageService.get('token');
         }
 
         function removeAuthToken() {
-            $cookieStore.remove('token');
+            localStorageService.remove('token');
         }
 
         function putAuthToken(value) {
             if (value === null || value === undefined) {
                 return;
             }
-            $cookieStore.put('token', value);
+            localStorageService.set('token', value);
         }
     });
 

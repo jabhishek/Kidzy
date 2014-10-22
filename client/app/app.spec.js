@@ -68,14 +68,14 @@ describe("routes", function () {
 });
 
 describe("interceptor", function () {
-    var AuthService, authInterceptor, $httpProvider, $httpBackend, $timeout, $cookieStore;
+    var AuthService, authInterceptor, $httpProvider, $httpBackend, $timeout, CookieService;
     var appName = 'HousePointsApp';
     beforeEach(module(appName, function (_$httpProvider_) {
         "use strict";
         $httpProvider = _$httpProvider_;
     }));
 
-    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, _$cookieStore_, $templateCache) {
+    beforeEach(inject(function (_$httpBackend_, _authInterceptor_, _AuthService_, _$timeout_, $templateCache, _CookieService_) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -84,7 +84,7 @@ describe("interceptor", function () {
         authInterceptor = _authInterceptor_;
         AuthService = _AuthService_;
         $timeout = _$timeout_;
-        $cookieStore = _$cookieStore_;
+        CookieService = _CookieService_;
 
         $httpBackend.when('GET', '/api/users/me').respond(200, {});
     }));
@@ -100,14 +100,14 @@ describe("interceptor", function () {
 
     it("should set the token in authorization header if token set in cookie", function () {
         "use strict";
-        $cookieStore.put("token", "someToken");
+        CookieService.putAuthToken("someToken");
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe("Bearer someToken")
     });
 
     it("should not set the token in authorization header if token not present in cookie", function () {
         "use strict";
-        $cookieStore.remove("token");
+        CookieService.removeAuthToken();
         var config = authInterceptor.request({ header: {}});
         expect(config.headers["Authorization"]).toBe(undefined);
     });

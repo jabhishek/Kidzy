@@ -1,13 +1,13 @@
 describe("AuthService", function () {
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService;
+    var AuthService, $httpBackend, $cookieStore, UserService, CookieService;
     var correctUser = { email: 'correctEmail@email.com'};
     var incorrectUser = { email: 'wrongEmail@email.com'};
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _CookieService_, _UserService_, $templateCache) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -16,8 +16,7 @@ describe("AuthService", function () {
         spyOn(UserService, 'getLoggedInUser').and.callThrough();
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
-        $cookieStore = _$cookieStore_;
-        $cookieStore.put('token', "someToken");
+        CookieService = _CookieService_;
         $httpBackend.when('POST', '/auth/local', correctUser).respond(200, { token: "someToken"});
         $httpBackend.when('POST', '/auth/local', incorrectUser).respond(404, '');
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
@@ -52,25 +51,25 @@ describe("AuthService", function () {
         "use strict";
 
         it('login method should put token in cookieStore if user authenticated', function () {
-            $cookieStore.remove('token');
+            spyOn(CookieService, 'putAuthToken');
             AuthService.login(correctUser);
             $httpBackend.flush();
-            expect($cookieStore.get('token')).toBe("someToken");
+            expect(CookieService.putAuthToken).toHaveBeenCalled();
         });
 
         it('login method should not put token in cookieStore if user not authenticated', function () {
-            $cookieStore.remove('token');
+            spyOn(CookieService, 'putAuthToken');
             AuthService.login(incorrectUser);
             $httpBackend.flush();
-            expect($cookieStore.get('token')).toBe(undefined);
+            expect(CookieService.putAuthToken).not.toHaveBeenCalled();
         });
     });
     describe("logout", function() {
         "use strict";
         it('should delete token from cookieStore', function () {
-            $cookieStore.put('token', "someToken");
+            spyOn(CookieService, 'removeAuthToken');
             AuthService.logout();
-            expect($cookieStore.get('token')).toBe(undefined);
+            expect(CookieService.removeAuthToken).toHaveBeenCalled();
         });
 
         it('should clear currentUser', function () {
@@ -85,11 +84,11 @@ describe("isLoggedIn", function() {
     "use strict";
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService;
+    var AuthService, $httpBackend, UserService;
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _UserService_, $templateCache) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -97,9 +96,7 @@ describe("isLoggedIn", function() {
         UserService = _UserService_;
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
-        $cookieStore = _$cookieStore_;
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
-//        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();
@@ -120,11 +117,11 @@ describe("hasRole", function() {
     "use strict";
 
     var appName = 'HousePointsApp';
-    var AuthService, $httpBackend, $cookieStore, UserService;
+    var AuthService, $httpBackend, UserService;
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function (_AuthService_, _$httpBackend_, _$cookieStore_, _UserService_, $templateCache) {
+    beforeEach(inject(function (_AuthService_, _$httpBackend_, _UserService_, $templateCache) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('admin/admin.html', '');
         $templateCache.put('login/login.html', '');
@@ -132,9 +129,7 @@ describe("hasRole", function() {
         UserService = _UserService_;
         AuthService = _AuthService_;
         $httpBackend = _$httpBackend_;
-        $cookieStore = _$cookieStore_;
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { name: 'test'}});
-//        $httpBackend.flush();
     }));
     afterEach(function () {
         $httpBackend.verifyNoOutstandingExpectation();

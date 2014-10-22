@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.factory('AuthService', function ($http, $q, $cookieStore, UserService) {
+    app.factory('AuthService', function ($http, $q, UserService, CookieService) {
         var obj, isLoggedInPromise;
         var currUser = {};
 
@@ -40,7 +40,7 @@
         }
 
         function init() {
-            if ($cookieStore.get('token')) {
+            if (CookieService.getAuthToken()) {
                 isLoggedInPromise = UserService.getLoggedInUser();
                 isLoggedInPromise.then(function (userData) {
                     currUser = userData.user;
@@ -50,14 +50,14 @@
 
         function logout() {
             currUser = {};
-            $cookieStore.remove('token');
+            CookieService.removeAuthToken();
         }
 
         function login(user) {
             var deferred = $q.defer();
             $http.post('/auth/local', user)
                 .success(function (data) {
-                    $cookieStore.put('token', data.token);
+                    CookieService.putAuthToken(data.token);
                     isLoggedInPromise = UserService.getLoggedInUser();
                     isLoggedInPromise.then(function (userData) {
                         currUser = userData.user;
@@ -67,7 +67,7 @@
                     });
                 })
                 .error(function (err) {
-                    $cookieStore.remove('token');
+                    CookieService.removeAuthToken();
                     deferred.reject(err);
                 });
             return deferred.promise;

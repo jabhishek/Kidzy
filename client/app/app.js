@@ -41,9 +41,9 @@
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isAlreadyLoggedIn(AuthService, $cookieStore, $q, StateErrorCodes) {
+            function isAlreadyLoggedIn(AuthService, $q, StateErrorCodes, CookieService) {
                 var defer = $q.defer();
-                if ($cookieStore.get('token')) {
+                if (CookieService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
                         defer.reject(StateErrorCodes.AlreadyLoggedIn);
                     }, function() {
@@ -108,13 +108,13 @@
                 }
             });
         })
-        .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+        .factory('authInterceptor', function ($rootScope, $q, CookieService, $location) {
             return {
                 // Add authorization token to headers
                 request: function (config) {
                     config.headers = config.headers || {};
-                    if ($cookieStore.get('token')) {
-                        config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+                    if (CookieService.getAuthToken()) {
+                        config.headers.Authorization = 'Bearer ' + CookieService.getAuthToken();
                     }
                     return config;
                 },
@@ -122,7 +122,7 @@
                     if (response.status === 401) {
                         $location.path('/login');
                         // remove any stale tokens
-                        $cookieStore.remove('token');
+                        CookieService.removeAuthToken();
                         return $q.reject(response);
                     }
                     else {

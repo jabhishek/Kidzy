@@ -1,10 +1,12 @@
 (function (app) {
     'use strict';
-    app.controller('adminController', function (UserService, isAuthenticated, Users) {
+    app.controller('adminController', function (Users) {
         var vm = this;
         vm.users = [];
-        Users.forEach(function(user) {
-            vm.users.push(user);
-        });
+        if (angular.isArray(Users)) {
+            Users.forEach(function(user) {
+                vm.users.push(user);
+            });
+        }
     });
 })(angular.module('HousePointsApp'));

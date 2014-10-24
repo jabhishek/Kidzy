@@ -1,18 +1,21 @@
 (function (app) {
     'use strict';
     app.factory('UserService', function (Restangular, capitalizeFilter) {
-        var users = Restangular.all('api/users');
 
-        Restangular.addResponseInterceptor(function(data, operation, what) {
-            var response = data;
-            if (operation === 'get' && what === 'me') {
-                response.user.name = capitalizeFilter(response.user.name);
-            }
-            if (operation === 'getList') {
-                response = data.users;
-            }
-            return response;
-        });
+        var restAngular =
+            Restangular.withConfig(function(Configurer) {
+                Configurer.addResponseInterceptor(function(data, operation, what) {
+                    var response = data;
+                    if (operation === 'get' && what === 'me') {
+                        response.user.name = capitalizeFilter(response.user.name);
+                    }
+                    if (operation === 'getList') {
+                        response = data.users;
+                    }
+                    return response;
+                });
+            });
+        var users = restAngular.all('api/users');
 
         return {
             getLoggedInUser: getLoggedInUser,

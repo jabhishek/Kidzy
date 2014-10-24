@@ -20,7 +20,10 @@
                     templateUrl: 'admin/admin.html',
                     controller: 'adminController as adminVm',
                     resolve: {
-                        isAuthenticated: isAuthenticated
+                        isAuthenticated: isAuthenticated,
+                        Users: function(UserService) {
+                            return UserService.getAllUsers();
+                        }
                     },
                     role: 'admin'
                 })

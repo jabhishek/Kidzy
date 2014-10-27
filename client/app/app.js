@@ -2,8 +2,8 @@
     'use strict';
     angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
         .constant('StateErrorCodes', {
-            Unauthorized: 'Unauthorized',
-            AlreadyLoggedIn: 'AlreadyLoggedIn'
+            Unauthenticated: 'User not authenticated',
+            Unauthorized: 'Unauthorized'
         })
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
             $stateProvider
@@ -15,13 +15,21 @@
                         isAuthenticated: isAuthenticated
                     }
                 })
+                .state('unauthorized', {
+                    url: '/unauthorized',
+                    templateUrl: 'Unauthorized.html'
+                })
+                .state('404', {
+                    url: '/notFound',
+                    templateUrl: '404.html'
+                })
                 .state('admin', {
                     url: '/admin',
                     templateUrl: 'admin/admin.html',
                     controller: 'adminController as adminVm',
                     resolve: {
                         isAuthenticated: isAuthenticated,
-                        Users: function(UserService) {
+                        Users: function (UserService) {
                             return UserService.getAllUsers();
                         }
                     },
@@ -37,19 +45,20 @@
                     }
                 });
 
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/notFound');
 
             $locationProvider.html5Mode({enabled: true,
                 requireBase: false});
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isAlreadyLoggedIn(AuthService, $q, StateErrorCodes, StorageService) {
+            function isAlreadyLoggedIn(AuthService, $q, StorageService) {
                 var defer = $q.defer();
                 if (StorageService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
-                        defer.reject(StateErrorCodes.AlreadyLoggedIn);
-                    }, function() {
+                        AuthService.logout();
+                        defer.resolve();
+                    }, function () {
                         defer.resolve();
                     });
                 } else {
@@ -63,51 +72,32 @@
                 var defer = $q.defer();
                 var stateTo = this.self;
                 if (!AuthService.isLoggedInPromise()) {
-                    console.log('not authorized 1');
-                    defer.reject(StateErrorCodes.Unauthorized);
-                    //$state.go('login');
+                    console.log('not logged in');
+                    defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login' });
                 } else {
-                    AuthService.isLoggedInPromise().then(function(userData) {
+                    AuthService.isLoggedInPromise().then(function (userData) {
                         if (stateTo && stateTo.role) {
                             if (stateTo.role === userData.user.role) {
                                 defer.resolve();
                             } else {
-                                console.log('not authorized 2');
-                                //            $state.go('login');
-                                defer.reject(StateErrorCodes.Unauthorized);
+                                console.log('not authorized to the page.');
+                                defer.reject({message: StateErrorCodes.Unauthorized, next: 'unauthorized'});
                             }
                         } else {
                             defer.resolve();
                         }
-                    }, function() {
-                        console.log('not authorized 3');
-                        //       $state.go('login');
-                        defer.reject(StateErrorCodes.Unauthorized);
+                    }, function () {
+                        console.log('Loggedin promise returned error');
+                        defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login'});
                     });
                 }
                 return defer.promise;
             }
         })
-        .run(function($rootScope, StateErrorCodes, $state) {
-            $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-                switch (toState.name) {
-                    case 'admin':
-                        if (error === StateErrorCodes.Unauthorized) {
-                            $state.transitionTo('login');
-                        }
-                        break;
-                    case 'main':
-                        if (error === StateErrorCodes.Unauthorized) {
-                            $state.transitionTo('login');
-                        }
-                        break;
-                    case 'login':
-                        if (error === StateErrorCodes.AlreadyLoggedIn) {
-                            $state.transitionTo('main');
-                        }
-                        break;
-                    default:
-                        break;
+        .run(function ($rootScope, StateErrorCodes, $state) {
+            $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+                if (error.next) {
+                    $state.transitionTo(error.next);
                 }
             });
         })
@@ -123,9 +113,7 @@
                 },
                 responseError: function (response) {
                     if (response.status === 401) {
-                        $location.path('/login');
-                        // remove any stale tokens
-                        StorageService.removeAuthToken();
+                        $location.path('/unauthorized');
                         return $q.reject(response);
                     }
                     else {

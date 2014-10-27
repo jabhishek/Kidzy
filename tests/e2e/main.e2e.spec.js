@@ -55,7 +55,7 @@ describe('homepage', function () {
 
     it('should load home page if navigated to admin url', function () {
         browser.get("/admin");
-        expect(browser.getLocationAbsUrl()).toEqual('/');
+        expect(browser.getLocationAbsUrl()).toEqual('/unauthorized');
     });
 
     describe("admin user", function() {

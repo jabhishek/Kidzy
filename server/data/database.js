@@ -14,7 +14,8 @@
                 } else {
                     theDb = {
                         db: db,
-                        users: db.collection("users")
+                        users: db.collection("users"),
+                        kids: db.collection("kids")
                     };
                     next(null, theDb);
                 }

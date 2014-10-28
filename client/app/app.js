@@ -29,7 +29,7 @@
                     controller: 'adminController as adminVm',
                     resolve: {
                         isAuthenticated: isAuthenticated,
-                        Users: function (UserService) {
+                        Users: function (UserService, isAuthenticated) {
                             return UserService.getAllUsers();
                         }
                     },

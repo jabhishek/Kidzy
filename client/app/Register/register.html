@@ -1,1 +1,22 @@
-<div>Register</div>
+<section class="register-section">
+    <form class="form register-form" id="registerform" name="registerform" novalidate ng-submit="registerVm.submit(registerform.$valid, registerVm.user)">
+        <h2>Register</h2>
+        <fieldset>
+            <span class="error-message" ng-if="registerVm.error">{{registerVm.error.message}}</span>
+            <div class="field">
+                <input type="email" id="email" name="email" placeholder="Email" required maxlength="50" ng-model="registerVm.user.email"/>
+                <!--<i class="fa fa-spin fa-spinner"></i>-->
+                <span class="error-message email-error" ng-if="registerform.$submitted && registerform.email.$invalid">Please enter a valid email address.</span>
+            </div>
+            <div class="field">
+                <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="registerVm.user.password"/>
+                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.password.$error.required">Please enter a password.</span>
+            </div>
+            <div class="field">
+                <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Retype Password" required maxlength="50" ng-model="registerVm.user.passwordRepeat"/>
+                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please retype the password.</span>
+            </div>
+            <input type="submit" class="button"/>
+        </fieldset>
+    </form>
+</section>

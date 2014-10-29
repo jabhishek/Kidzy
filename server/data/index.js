@@ -57,30 +57,5 @@ var hasher = require("../api/auth/hasher");
 
     }
 
-    function addKids() {
-        "use strict";
-
-        kids.remove({}, function (err) {
-            if (err)
-                console.log(err);
-        });
-        users.getByEmail('test@test.com', function(err, user) {
-            console.log('user:');
-            console.log(user);
-            kids.add({
-                parentId: user._id,
-                childName: 'test child'
-            }, function(err, response) {
-
-            });
-            kids.add({
-                parentId: user._id,
-                childName: 'test child 2'
-            }, function(err, response) {
-
-            });
-        })
-    }
     //seedDatabase();
-    addKids();
 })(module.exports);

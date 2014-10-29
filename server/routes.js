@@ -1,5 +1,6 @@
 module.exports = function (app) {
     "use strict";
+    app.use('/api/kids', require('./api/kid'));
     app.use('/api/users', require('./api/user'));
     app.use('/auth', require('./api/auth'));
 

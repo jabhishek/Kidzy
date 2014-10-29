@@ -1,2 +1,9 @@
 <h2>Main</h2>
 <div>{{ ::'Hello ' + mainVm.Auth.getCurrentUser().name }}</div>
+
+<div ng-if="mainVm.Auth.hasRole('parent')" class="parent">
+    <span>Parent</span>
+</div>
+<div ng-if="mainVm.Auth.hasRole('child')" class="child">
+    <span>child</span>
+</div>

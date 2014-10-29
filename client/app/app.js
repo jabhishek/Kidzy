@@ -43,6 +43,15 @@
                         // redirect to main page if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
+                })
+                .state('register', {
+                    url: '/register',
+                    templateUrl: 'Register/register.html',
+                    controller: 'registerController as registerVm',
+                    resolve: {
+                        // redirect to main page if already logged in
+                        isAlreadyLoggedIn: isAlreadyLoggedIn
+                    }
                 });
 
             $urlRouterProvider.otherwise('/notFound');

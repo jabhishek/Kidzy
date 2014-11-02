@@ -4,8 +4,13 @@
         <fieldset>
             <span class="error-message" ng-if="registerVm.error">{{registerVm.error.message}}</span>
             <div class="field">
-                <input type="email" id="email" name="email" placeholder="Email" required maxlength="50" ng-model="registerVm.user.email"/>
-                <!--<i class="fa fa-spin fa-spinner"></i>-->
+                <input type="email" id="email" name="email" placeholder="Email" ng-model="registerVm.user.email" ng-model-options="{ debounce: 200 }"
+                       required
+                       maxlength="50"
+                       email-available-validator=""/>
+                <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
+                <i class="fa fa-close invalid"></i>
+                <i class="fa fa-check valid"></i>
                 <span class="error-message email-error" ng-if="registerform.$submitted && registerform.email.$invalid">Please enter a valid email address.</span>
             </div>
             <div class="field">
@@ -13,8 +18,9 @@
                 <span class="error-message password-error" ng-if="registerform.$submitted && registerform.password.$error.required">Please enter a password.</span>
             </div>
             <div class="field">
-                <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Retype Password" required maxlength="50" ng-model="registerVm.user.passwordRepeat"/>
-                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please retype the password.</span>
+                <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm Password" required maxlength="50" ng-model="registerVm.user.passwordRepeat"/>
+                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please confirm the password.</span>
+                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$valid && registerVm.user.passwordRepeat !== registerVm.user.password">Password doesn't match.</span>
             </div>
             <input type="submit" class="button"/>
         </fieldset>

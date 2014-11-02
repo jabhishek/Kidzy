@@ -5,7 +5,7 @@
         input {
             height: 3rem;
         }
-        .fa {
+        i {
             position: absolute;
             right: 1rem;
             top: 0.7rem;
@@ -13,5 +13,19 @@
             font-size: 1.6rem;
             line-height: 1;
         }
+
+        i.valid, i.invalid {
+            display: none;
+        }
+    }
+
+    &.ng-valid-email-available .field i.valid {
+        display: inline-block;
+        color: @success-colour;
+    }
+    &.ng-invalid-email-available .field i.invalid {
+        display: inline-block;
+        color: @error-colour;
     }
 }
+

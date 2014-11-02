@@ -5,7 +5,9 @@
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
         })
-        .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider) {
+            $animateProvider.classNameFilter(/^((?!(fa-)).)*$/);
+
             $stateProvider
                 .state('main', {
                     url: '/',

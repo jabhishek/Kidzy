@@ -51,7 +51,7 @@
                     templateUrl: 'Register/register.html',
                     controller: 'registerController as registerVm',
                     resolve: {
-                        // redirect to main page if already logged in
+                        // clear login data if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
                 });
@@ -124,7 +124,7 @@
                 },
                 responseError: function (response) {
                     if (response.status === 401) {
-                        $location.path('/unauthorized');
+                        $location.path('/login');
                         return $q.reject(response);
                     }
                     else {

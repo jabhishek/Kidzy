@@ -55,6 +55,7 @@ input {
 ul {
     list-style-type: none;
 }
+
 a {
     color: @link-colour;
 }
@@ -84,12 +85,40 @@ h2 {
     display: block;
     transition: 0.3s linear all;
     position: absolute;
-    left: 0; right: 0;
+    left: 0;
+    right: 0;
     @media @tablets {
         padding: 0;
     }
 }
 
+/* leaving animations ----------------------------------------- */
+@keyframes slideOutLeft {
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* entering animations --------------------------------------- */
+/* scale up */
+@keyframes scaleUp {
+    from {
+        opacity: 0.3;
+        -webkit-transform: scale(0.8);
+    }
+}
+
+.view.ng-enter {
+    animation: scaleUp 0.5s both ease-in;
+    z-index: 8888;
+}
+
+.view.ng-leave {
+    animation: slideOutLeft 0.5s both ease-in;
+    z-index: 9999;
+}
+
+/*
 .view.ng-enter {
     opacity: 0;
 }
@@ -102,18 +131,18 @@ h2 {
 .view.ng-leave.ng-leave-active {
     opacity: 0;
 }
+*/
 
 .not-found-page, .unauthorized-page {
     padding: 2rem 0;
-     h1 {
-         margin-bottom: 0.5rem;
-     }
+    h1 {
+        margin-bottom: 0.5rem;
+    }
     .fa-warning {
         color: red;
         margin-right: 1rem;
     }
 }
-
 
 form fieldset {
     text-align: left;

@@ -19,7 +19,8 @@
 
         return {
             getLoggedInUser: getLoggedInUser,
-            getAllUsers: getAllUsers
+            getAllUsers: getAllUsers,
+            checkUser: checkUser
         };
 
         function getLoggedInUser() {
@@ -28,6 +29,10 @@
 
         function getAllUsers() {
             return users.getList();
+        }
+
+        function checkUser(email) {
+            return users.one('checkUser', email).get();
         }
     });
 })(angular.module('HousePointsApp'));

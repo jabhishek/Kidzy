@@ -1,15 +1,21 @@
 (function (app) {
     'use strict';
-    app.directive('emailAvailableValidator', function ($q, $timeout) {
+    app.directive('emailAvailableValidator', function ($q, $timeout, UserService) {
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function(scope, elem, attrs, ngModel) {
-                ngModel.$asyncValidators.emailAvailable = function(username) {
+                ngModel.$asyncValidators.emailAvailable = function(email) {
                     var defer = $q.defer();
-                    $timeout(function() {
-                        defer.resolve();
-                    }, 200);
+                    UserService.checkUser(email)
+                        .then(function(data) {
+                            console.log('isAvailable: ' + data.available);
+                            if (data.available) {
+                                defer.resolve();
+                            } else {
+                                defer.reject();
+                            }
+                        });
                     return defer.promise;
                 };
             }

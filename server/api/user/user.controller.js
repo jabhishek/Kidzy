@@ -22,4 +22,28 @@ users.getLoggedInUser = function (req, res) {
     });
 };
 
+users.checkUser = function (req, res) {
+    console.log("checkUser called");
+    console.log(req.params);
+    console.log(typeof true);
+    if (!req.params.email) {
+        res.json({
+            available: false
+        });
+    } else {
+        data.users.getByEmail(req.params.email, function processResults(err, result) {
+            console.log("user retrieved");
+            console.log(err);
+            console.log(result);
+            var available = true;
+            if (result) {
+                available = false;
+            }
+            res.json({
+                available: available
+            });
+        });
+    }
+};
+
 module.exports = users;

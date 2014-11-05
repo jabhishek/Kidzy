@@ -6,14 +6,14 @@ var testUsers = require('../../../tests/e2e/config/users');
 var should = require("chai").should();
 var parentId, adminId;
 
-before(function() {
+before(function(done) {
     "use strict";
     data.users.getByEmail(testUsers.parent.email, function(err, user) {
         parentId = user._id;
         done();
     })
 });
-before(function() {
+before(function(done) {
     "use strict";
     data.users.getByEmail(testUsers.admin.email, function(err, user) {
         adminId = user._id;

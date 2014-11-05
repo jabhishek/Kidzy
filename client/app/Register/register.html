@@ -11,7 +11,6 @@
                 <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
                 <i class="fa fa-close invalid"></i>
                 <i class="fa fa-check valid"></i>
-                {{ registerform.email.$error }}
                 <span class="error-message email-error" ng-if="registerform.$submitted && (registerform.email.$error.required || registerform.email.$error.email)">Please enter a valid email address.</span>
                 <span class="error-message email-error" ng-if="registerform.$submitted && (registerform.email.$error.emailAvailable)">The email address is already registered.</span>
             </div>

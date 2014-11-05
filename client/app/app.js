@@ -6,7 +6,7 @@
             Unauthorized: 'Unauthorized'
         })
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider) {
-            $animateProvider.classNameFilter(/^((?!(fa-)).)*$/);
+            $animateProvider.classNameFilter(/animate/);
 
             $stateProvider
                 .state('main', {
@@ -67,6 +67,7 @@
                 var defer = $q.defer();
                 if (StorageService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
+                        // clear login data if already logged in and navigating to login
                         AuthService.logout();
                         defer.resolve();
                     }, function () {

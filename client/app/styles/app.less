@@ -73,33 +73,35 @@ h2 {
     height: 100%;
     width: 100%;
     @media @tablets {
-        max-width: 72rem;
+        width: 72rem;
     }
     @media @desktop {
-        max-width: 93rem;
+        width: 93rem;
     }
 }
 
 .view {
-    padding: 0 0.5rem;
+    padding: 5rem 0.5rem 0 0.5rem;
     display: block;
-    transition: 0.3s linear all;
     position: absolute;
     left: 0;
     right: 0;
+    bottom:0;
+    top:0;
+
     @media @tablets {
-        padding: 0;
+        padding: 5rem 0 0 0;
     }
 }
 
 /* leaving animations ----------------------------------------- */
-@keyframes slideOutLeft {
-    to {
-        transform: translateX(-100%);
-    }
-}
 
 /* entering animations --------------------------------------- */
+@keyframes slideInRight {
+    from 	{ transform:translateX(5%); }
+    to 		{ transform: translateX(0); }
+}
+
 /* scale up */
 @keyframes scaleUp {
     from {
@@ -109,29 +111,13 @@ h2 {
 }
 
 .view.ng-enter {
-    animation: scaleUp 0.5s both ease-in;
+    animation: slideInRight 0.3s both ease-in;
     z-index: 8888;
 }
 
 .view.ng-leave {
-    animation: slideOutLeft 0.5s both ease-in;
-    z-index: 9999;
+    transform: translateX(-100%)
 }
-
-/*
-.view.ng-enter {
-    opacity: 0;
-}
-.view.ng-enter.ng-enter-active {
-    opacity: 1;
-}
-.view.ng-leave {
-    opacity: 0;
-}
-.view.ng-leave.ng-leave-active {
-    opacity: 0;
-}
-*/
 
 .not-found-page, .unauthorized-page {
     padding: 2rem 0;

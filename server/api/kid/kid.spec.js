@@ -4,15 +4,32 @@ var auth = require('../auth/auth.service');
 var data = require("../../data");
 var testUsers = require('../../../tests/e2e/config/users');
 var should = require("chai").should();
+var parentId, adminId;
+
+before(function() {
+    "use strict";
+    data.users.getByEmail(testUsers.parent.email, function(err, user) {
+        parentId = user._id;
+        done();
+    })
+});
+before(function() {
+    "use strict";
+    data.users.getByEmail(testUsers.admin.email, function(err, user) {
+        adminId = user._id;
+        done();
+    })
+});
 
 describe('GET /api/kids', function() {
     var kidsApiPath = '/api/kids';
     beforeEach(function(done) {
         // Clear users before testing
         data.kids.remove({}, function (err) {
-
+            done();
         });
-
+    });
+    beforeEach(function(done) {
         data.users.getByEmail(testUsers.parent.email, function(err, user) {
             console.log('user:');
             console.log(user);
@@ -36,7 +53,7 @@ describe('GET /api/kids', function() {
     });
 
     it('should respond with 200 if a parent user passed', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+        var token = auth.signToken(parentId);
         request(app)
             .get(kidsApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -47,8 +64,9 @@ describe('GET /api/kids', function() {
             });
     });
 
+
     it('should return kids for logged in user', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+        var token = auth.signToken(parentId);
         request(app)
             .get(kidsApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -61,7 +79,7 @@ describe('GET /api/kids', function() {
     });
 
     it('should return kids of type array for logged in user', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+        var token = auth.signToken(parentId);
         request(app)
             .get(kidsApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -73,8 +91,8 @@ describe('GET /api/kids', function() {
             });
     });
 
-    it.only('should return correct number of kids for logged in user - 1', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+    it('should return correct number of kids for logged in user - 1', function(done) {
+        var token = auth.signToken(parentId);
         request(app)
             .get(kidsApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -86,8 +104,8 @@ describe('GET /api/kids', function() {
             });
     });
 
-    it.only('should return correct number of kids for logged in user - 2', function(done) {
-        var token = auth.signToken(testUsers.admin.id);
+    it('should return correct number of kids for logged in user - 2', function(done) {
+        var token = auth.signToken(adminId);
         request(app)
             .get(kidsApiPath)
             .set('Authorization', 'Bearer ' + token)

@@ -2,7 +2,30 @@ var app = require('../../app');
 var auth = require('../auth/auth.service');
 var request = require('supertest');
 var testUsers = require('../../../tests/e2e/config/users');
+var data = require("../../data");
 
+var parentId, adminId, childId;
+before(function() {
+    "use strict";
+    data.users.getByEmail(testUsers.parent.email, function(err, user) {
+        parentId = user._id;
+        done();
+    })
+});
+before(function() {
+    "use strict";
+    data.users.getByEmail(testUsers.admin.email, function(err, user) {
+        adminId = user._id;
+        done();
+    })
+});
+before(function() {
+    "use strict";
+    data.users.getByEmail(testUsers.child.email, function(err, user) {
+        childId = user._id;
+        done();
+    })
+});
 
 describe('GET /api/users', function() {
     var usersApiPath = '/api/users';
@@ -17,7 +40,7 @@ describe('GET /api/users', function() {
     });
 
     it('should respond with 401 if a parent user passed', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+        var token = auth.signToken(parentId);
         request(app)
             .get(usersApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -29,7 +52,7 @@ describe('GET /api/users', function() {
     });
 
     it('should respond with 401 if a child user passed', function(done) {
-        var token = auth.signToken(testUsers.child.id);
+        var token = auth.signToken(childId);
         request(app)
             .get(usersApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -41,7 +64,7 @@ describe('GET /api/users', function() {
     });
 
     it('should respond with 200 if an admin user passed', function(done) {
-        var token = auth.signToken(testUsers.admin.id);
+        var token = auth.signToken(adminId);
         request(app)
             .get(usersApiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -66,7 +89,7 @@ describe('GET /api/users/me', function() {
     });
 
     it('should respond with 401 if a parent user passed', function(done) {
-        var token = auth.signToken(testUsers.parent.id);
+        var token = auth.signToken(parentId);
         request(app)
             .get(apiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -79,7 +102,7 @@ describe('GET /api/users/me', function() {
     });
 
     it('should respond with 401 if a child user passed', function(done) {
-        var token = auth.signToken(testUsers.child.id);
+        var token = auth.signToken(childId);
         request(app)
             .get(apiPath)
             .set('Authorization', 'Bearer ' + token)
@@ -91,7 +114,7 @@ describe('GET /api/users/me', function() {
     });
 
     it('should respond with 200 if an admin user passed', function(done) {
-        var token = auth.signToken(testUsers.admin.id);
+        var token = auth.signToken(adminId);
         request(app)
             .get(apiPath)
             .set('Authorization', 'Bearer ' + token)

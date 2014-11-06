@@ -15,6 +15,10 @@
                 <span class="error-message email-error" ng-if="registerform.$submitted && (registerform.email.$error.emailAvailable)">The email address is already registered.</span>
             </div>
             <div class="field">
+                <input type="text" id="name" name="name" placeholder="Name" required maxlength="50" ng-model="registerVm.user.name"/>
+                <span class="error-message name-error" ng-if="registerform.$submitted && registerform.name.$error.required">Please enter a name.</span>
+            </div>
+            <div class="field">
                 <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="registerVm.user.password"/>
                 <span class="error-message password-error" ng-if="registerform.$submitted && registerform.password.$error.required">Please enter a password.</span>
             </div>

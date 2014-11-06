@@ -29,6 +29,15 @@ describe("registerController", function () {
         expect(RegisterCtrl.user).toBeDefined();
         expect(angular.isObject(RegisterCtrl.user)).toBeTruthy();
     });
+    it('user should have property email', function () {
+        expect(RegisterCtrl.user.hasOwnProperty('email')).toBeTruthy();
+    });
+    it('user should have property password', function () {
+        expect(RegisterCtrl.user.hasOwnProperty('password')).toBeTruthy();
+    });
+    it('user should have property name', function () {
+        expect(RegisterCtrl.user.hasOwnProperty('name')).toBeTruthy();
+    });
     it('should have submit function defined', function () {
         expect(RegisterCtrl.submit).toBeDefined();
         expect(angular.isFunction(RegisterCtrl.submit)).toBeTruthy();

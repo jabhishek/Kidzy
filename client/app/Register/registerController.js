@@ -25,7 +25,8 @@
         function init() {
             vm.user = {
                 email: '',
-                password: ''
+                password: '',
+                name: ''
             };
             vm.error = undefined;
         }

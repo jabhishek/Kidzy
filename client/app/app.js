@@ -112,6 +112,6 @@
                     $state.transitionTo(error.next);
                 }
             });
-        })
+        });
 
 })();

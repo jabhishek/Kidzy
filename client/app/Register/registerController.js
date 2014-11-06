@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.controller('registerController', function (AuthService, $state) {
+    app.controller('registerController', function () {
         var vm = this;
 
         vm.user = {};

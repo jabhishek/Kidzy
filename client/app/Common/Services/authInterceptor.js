@@ -1,4 +1,5 @@
 (function (app) {
+    'use strict';
     app.factory('authInterceptor', function ($rootScope, $q, StorageService, $location) {
         return {
             // Add authorization token to headers

@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.factory('UserService', function (Restangular, capitalizeFilter) {
+    app.factory('UserService', function (Restangular, capitalizeFilter, $q) {
 
         var restAngular =
             Restangular.withConfig(function(Configurer) {
@@ -20,11 +20,15 @@
         return {
             getLoggedInUser: getLoggedInUser,
             getAllUsers: getAllUsers,
-            checkUser: checkUser
+            checkUser: checkUser,
+            createUser: createUser
         };
 
         function getLoggedInUser() {
             return users.one('me').get();
+        }
+
+        function createUser(user) {
         }
 
         function getAllUsers() {

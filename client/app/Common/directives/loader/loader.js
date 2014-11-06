@@ -3,6 +3,8 @@
     app.directive('loader', function ($rootScope, $timeout) {
         return {
             restrict: 'A',
+            replace: true,
+            templateUrl: 'Common/directives/loader/loader.html',
             link: function (scope, elem, attrs) {
                 var hideLoaderTimeout;
                 var minLoaderDisplayTime = attrs.minLoaderDisplay || 300;

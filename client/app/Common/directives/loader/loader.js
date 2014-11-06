@@ -3,8 +3,9 @@
     app.directive('loader', function ($rootScope, $timeout) {
         return {
             restrict: 'A',
-            link: function (scope, elem) {
+            link: function (scope, elem, attrs) {
                 var hideLoaderTimeout;
+                var minLoaderDisplayTime = attrs.minLoaderDisplay || 300;
                 scope.data = {
                     startTime: undefined
                 };
@@ -22,10 +23,15 @@
                 var unregisterSuccess = $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
                     console.group('loader - $stateChangeSuccess');
                     console.log('from ' + fromState.name + ' to ' + toState.name);
-                    console.log('state Transition time: ' + (new Date() - scope.data.startTime) + ' ms');
+                    var transitionTime = new Date() - scope.data.startTime;
+                    console.log('state Transition time: ' + transitionTime + ' ms');
+
+                    var loaderTimeout = minLoaderDisplayTime - transitionTime;
+                    loaderTimeout = loaderTimeout > 0 ? loaderTimeout : 0;
+                    console.log(loaderTimeout);
                     hideLoaderTimeout = $timeout(function() {
                         elem.addClass('ng-hide');
-                    }, 300);
+                    }, loaderTimeout);
 
                     console.groupEnd('$stateChangeSuccess');
                 });

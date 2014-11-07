@@ -11,7 +11,7 @@
                 <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="loginVm.user.password"/>
                 <span class="error-message password-error" ng-if="loginform.$submitted && loginform.password.$error.required">Please enter a password.</span>
             </div>
-            <input type="submit" class="button"/>
+            <input type="submit" class="button" value="Login"/>
         </fieldset>
     </form>
     <div class="register"> or <a ui-sref="register">Sign up</a> if you are a new user</div>

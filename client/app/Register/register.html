@@ -27,7 +27,7 @@
                 <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please confirm the password.</span>
                 <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$valid && registerVm.user.passwordRepeat !== registerVm.user.password">Password doesn't match.</span>
             </div>
-            <input type="submit" class="button"/>
+            <input type="submit" class="button" value="Register"/>
         </fieldset>
     </form>
 </section>

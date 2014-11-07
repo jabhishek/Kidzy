@@ -1,16 +1,17 @@
 describe("registerController", function () {
 
     var appName = 'HousePointsApp';
-    var RegisterCtrl, UserService, $q, $state, $timeout;
+    var RegisterCtrl, UserService, $q, $state, $timeout, AuthService;
 
     beforeEach(module(appName));
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, _UserService_, _$q_, _$state_, _$timeout_, _$rootScope_, $templateCache) {
+    beforeEach(inject(function ($controller, _UserService_, _$q_, _$state_, _$timeout_, _$rootScope_, $templateCache, _AuthService_) {
         $templateCache.put('main/main.html', '');
         $templateCache.put('login/login.html', '');
         $rootScope = _$rootScope_;
         UserService = _UserService_;
+        AuthService = _AuthService_;
         $q = _$q_;
 
         $state = _$state_;
@@ -56,9 +57,11 @@ describe("registerController", function () {
 
     it('should navigate to main view if successfully registered', function () {
         spyOn($state, 'go').and.callThrough();
+        spyOn(AuthService, 'login').and.returnValue($q.defer().promise);
 
         RegisterCtrl.submit(true, {});
         $rootScope.$digest();
+        expect(AuthService.login).toHaveBeenCalled();
         expect($state.go).toHaveBeenCalledWith('main');
     });
 });

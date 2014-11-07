@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.controller('registerController', function (UserService, $state) {
+    app.controller('registerController', function (UserService, $state, AuthService) {
         var vm = this;
 
         vm.user = {};
@@ -16,8 +16,10 @@
             }
             UserService.createUser(user)
                 .then(function () {
-                    console.log('user created');
-                    $state.go('main');
+                    console.log('redirecting to main');
+                    AuthService.login(user).then(function() {
+                        $state.go('main');
+                    });
                 }, function(err) {
                     console.log('error creating user');
                 });

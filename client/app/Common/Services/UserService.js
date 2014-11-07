@@ -29,6 +29,14 @@
         }
 
         function createUser(user) {
+            var defer = $q.defer();
+            users.post(user).then(function resolved() {
+                defer.resolve();
+            }, function rejected() {
+                defer.reject();
+            });
+
+            return defer.promise;
         }
 
         function getAllUsers() {

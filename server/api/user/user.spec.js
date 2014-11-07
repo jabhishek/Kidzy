@@ -180,3 +180,76 @@ describe('GET /api/users/checkUser', function() {
     });
 });
 
+describe('POST /api/users', function() {
+    var createUserApiPath = '/api/users';
+    it('should respond with 400 if no user passed', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should respond with 400 if no email passed in user', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .send({password: 'a'})
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should respond with 400 if no password passed in user', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .send({email: 'a@a.com'})
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should respond with 400 if no name passed in user', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .send({email: 'a@a.com', password: 'aaa'})
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    it('should respond with 400 if email already registered', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .send({email: 'test@test.com', password: 'test'})
+            .expect(400)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+
+    before(function(done) {
+        "use strict";
+        data.users.remove({ email: 'a@a.com'}, function() {
+            done();
+        })
+    });
+    it('should respond with 200 if valid user passed', function(done) {
+        request(app)
+            .post(createUserApiPath)
+            .send({email: 'a@a.com', password: 'test', name: 'temp'})
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
+    });
+});

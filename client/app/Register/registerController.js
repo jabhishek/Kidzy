@@ -16,12 +16,12 @@
             }
             UserService.createUser(user)
                 .then(function () {
-                    console.log('redirecting to main');
+                    logger.logMessage({message: 'redirecting to main', caller: 'registerController.submit'});
                     AuthService.login(user).then(function() {
                         $state.go('main');
                     });
                 }, function(err) {
-                    console.log('error creating user');
+                    logger.logMessage({message: 'error creating user', caller: 'registerController.submit'});
                 });
         }
         function init() {

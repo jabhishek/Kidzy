@@ -54,20 +54,28 @@
                         // clear login data if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
+                })
+                .state('log', {
+                    url: '/log',
+                    templateUrl: 'log/log.html',
+                    controller: 'logController as logVm'
                 });
 
             $urlRouterProvider.otherwise('/notFound');
 
-            $locationProvider.html5Mode({enabled: true,
-                requireBase: false});
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            });
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isAlreadyLoggedIn(AuthService, $q, StorageService) {
+            function isAlreadyLoggedIn(AuthService, $q, StorageService, logger) {
                 var defer = $q.defer();
                 if (StorageService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
                         // clear login data if already logged in and navigating to login
+                        logger.logMessage({message: 'logging out', caller: 'app - isAlreadyLoggedIn'});
                         AuthService.logout();
                         defer.resolve();
                     }, function () {
@@ -84,22 +92,22 @@
                 var defer = $q.defer();
                 var stateTo = this.self;
                 if (!AuthService.isLoggedInPromise()) {
-                    console.log('not logged in');
-                    defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login' });
+                    logger.logMessage({message: 'not logged in', caller: 'app - isAuthenticated'});
+                    defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login'});
                 } else {
                     AuthService.isLoggedInPromise().then(function (userData) {
                         if (stateTo && stateTo.role) {
                             if (stateTo.role === userData.user.role) {
                                 defer.resolve();
                             } else {
-                                console.log('not authorized to the page.');
+                                logger.logMessage({message: 'not authorized to the page.', caller: 'app - isAuthenticated'});
                                 defer.reject({message: StateErrorCodes.Unauthorized, next: 'unauthorized'});
                             }
                         } else {
                             defer.resolve();
                         }
                     }, function () {
-                        console.log('Loggedin promise returned error');
+                        logger.logMessage({message: 'Loggedin promise returned error', caller: 'app - isAuthenticated'});
                         defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login'});
                     });
                 }

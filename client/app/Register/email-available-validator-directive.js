@@ -9,7 +9,7 @@
                     var defer = $q.defer();
                     UserService.checkUser(email)
                         .then(function(data) {
-                            console.log('isAvailable: ' + data.available);
+                            logger.logMessage({message: 'isAvailable: ' + data.available, caller: 'emailAvailableValidator'});
                             if (data.available) {
                                 defer.resolve();
                             } else {

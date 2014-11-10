@@ -36,7 +36,7 @@ html {
     background-color: @page-background;
     color: #555;
     color: @page-color;
-    font-size: 50%;
+    font-size: 62.5%;
     height: 100%;
 }
 
@@ -86,8 +86,8 @@ h2 {
     position: absolute;
     left: 0;
     right: 0;
-    bottom:0;
-    top:0;
+    bottom: 0;
+    top: 0;
 
     @media @tablets {
         padding: 5rem 0 0 0;
@@ -98,8 +98,12 @@ h2 {
 
 /* entering animations --------------------------------------- */
 @keyframes slideInRight {
-    from 	{ transform:translateX(5%); }
-    to 		{ transform: translateX(0); }
+    from {
+        transform: translateX(5%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 /* scale up */
@@ -144,6 +148,37 @@ form.ng-submitted {
         border: 0.1rem solid #ff7575;
     }
 }
+
+.button {
+    background: @button-colour;
+    border: 1px solid @page-background;
+    transition: 0.3s;
+
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background: darken(@button-colour, 10%);
+        cursor: pointer;
+    }
+}
+
+.log {
+    tr {
+        td {
+            border-collapse: collapse;
+            border: 1px solid #aaa;
+            padding: .3rem;
+        }
+    }
+
+    .button {
+        padding: 5px 10px;
+        font-size: 1.5rem;
+    }
+}
+
+
 
 @import '/client/app/login/login.less';
 @import '/client/app/Register/register.less';

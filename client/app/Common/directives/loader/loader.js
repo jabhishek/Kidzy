@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.directive('loader', function ($rootScope, $timeout) {
+    app.directive('loader', function ($rootScope, $timeout, logger) {
         return {
             restrict: 'A',
             replace: true,
@@ -11,39 +11,30 @@
                 scope.data = {
                     startTime: undefined
                 };
+
                 var unregisterStart = $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
-                    console.group('loader - $stateChangeStart');
-                    console.log('from ' + fromState.name + ' to ' + toState.name);
                     scope.data.startTime = new Date();
-                    console.log('start time');
-                    console.log(scope.data.startTime);
-
                     elem.removeClass('ng-hide');
-                    console.groupEnd('$stateChangeStart');
-
                 });
+
                 var unregisterSuccess = $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-                    console.group('loader - $stateChangeSuccess');
-                    console.log('from ' + fromState.name + ' to ' + toState.name);
+                    logger.logMessage({message: 'from ' + fromState.name + ' to ' + toState.name, caller: 'loader - $stateChangeSuccess'});
                     var transitionTime = new Date() - scope.data.startTime;
-                    console.log('state Transition time: ' + transitionTime + ' ms');
+                    logger.logMessage({message: 'state Transition time: ' + transitionTime + ' ms', caller: 'loader - $stateChangeSuccess'});
 
                     var loaderTimeout = minLoaderDisplayTime - transitionTime;
                     loaderTimeout = loaderTimeout > 0 ? loaderTimeout : 0;
-                    console.log(loaderTimeout);
-                    hideLoaderTimeout = $timeout(function() {
+                    hideLoaderTimeout = $timeout(function () {
                         elem.addClass('ng-hide');
                     }, loaderTimeout);
-
-                    console.groupEnd('$stateChangeSuccess');
                 });
 
                 var unregisterError = $rootScope.$on('$stateChangeError', function () {
                     elem.addClass('ng-hide');
                 });
 
-                scope.$on('destroy', function() {
-                    console.log('unregistering');
+                scope.$on('destroy', function () {
+                    logger.logMessage({message: 'unregistering', caller: 'loader - destroy'});
                     unregisterStart();
                     unregisterSuccess();
                     unregisterError();

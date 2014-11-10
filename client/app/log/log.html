@@ -1,0 +1,20 @@
+<div class="log">
+    <input type="button" class="button" value="Clear Log" ng-click="logVm.logger.clear()"/>
+    <table>
+        <thead>
+            <tr>
+                <td>Message</td>
+                <td>Caller</td>
+                <td>Time</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="log-entry" data-ng-repeat="log in logVm.logger.messageLog track by $index">
+                <td>{{ log.message }}</td>
+                <td>{{ log.caller }}</td>
+                <td>{{ log.time | date:'mm:ss.sss'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

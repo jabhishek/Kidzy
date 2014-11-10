@@ -87,7 +87,7 @@
                 return defer.promise;
             }
 
-            function isAuthenticated(AuthService, $q, StateErrorCodes) {
+            function isAuthenticated(AuthService, $q, StateErrorCodes, logger) {
                 /*jshint validthis: true */
                 var defer = $q.defer();
                 var stateTo = this.self;

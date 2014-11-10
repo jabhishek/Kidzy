@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.directive('emailAvailableValidator', function ($q, $timeout, UserService) {
+    app.directive('emailAvailableValidator', function ($q, $timeout, UserService, logger) {
         return {
             restrict: 'A',
             require: 'ngModel',

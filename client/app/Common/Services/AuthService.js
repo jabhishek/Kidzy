@@ -40,8 +40,7 @@
         }
 
         function init() {
-            logger.logMessage({caller: 'AuthService.init'});
-
+            logger.logMessage({caller: 'AuthService.init', message: 'calling StorageService.getAuthToken'});
             if (StorageService.getAuthToken()) {
                 isLoggedInPromise = UserService.getLoggedInUser();
                 isLoggedInPromise.then(function (userData) {
@@ -72,6 +71,7 @@
                     });
                 })
                 .error(function (err) {
+                    logger.logMessage({caller: 'AuthService.login', message: 'auth/local rejected'});
                     StorageService.removeAuthToken();
                     deferred.reject(err);
                 });

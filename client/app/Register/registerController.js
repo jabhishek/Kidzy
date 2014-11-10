@@ -20,7 +20,7 @@
                     AuthService.login(user).then(function() {
                         $state.go('main');
                     });
-                }, function(err) {
+                }, function() {
                     logger.logMessage({message: 'error creating user', caller: 'registerController.submit'});
                 });
         }

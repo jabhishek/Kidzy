@@ -1,6 +1,6 @@
-(function (app, _) {
-    "use strict";
-    app.factory('logger', function logger() {
+(function (app) {
+    'use strict';
+    app.factory('logger', function () {
         var logger = {};
         logger.messageLog = [];
         logger.logMessage = logMessage;
@@ -23,4 +23,4 @@
             this.time = new Date();
         }
     });
-})(angular.module('HousePointsApp'), _);
+})(angular.module('HousePointsApp'));

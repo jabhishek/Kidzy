@@ -28,6 +28,7 @@ users.getLoggedInUser = function (req, res) {
     console.log("getLoggedInUser called");
     data.users.getById(req.user._id, function processResults(err, result) {
         console.log("user retrieved");
+        res.set('Cache-Control', 'no-cache');
         res.json({
             err: err,
             user: result

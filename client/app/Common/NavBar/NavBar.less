@@ -1,7 +1,7 @@
 .navbar.flex {
     background: @header-background;
     color: @header-color;
-    line-height: 5rem;
+    line-height: @navbar-height;
     position: relative;
     z-index: 999;
 
@@ -32,7 +32,7 @@
             cursor: pointer;
             background: @button-colour;
             padding: 0 1.5rem;
-            height: 5rem;
+            height: @navbar-height;
             @media @tablets {
                 display: none;
             }
@@ -53,7 +53,7 @@
             line-height: 3rem;
             border-top: 0.1rem solid @header-background;
             @media @tablets {
-                line-height: 5rem;
+                line-height: @navbar-height;
                 border-top: none;
             }
             li {

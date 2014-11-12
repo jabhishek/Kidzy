@@ -10,17 +10,17 @@
 
         // private methods
         function getAuthToken() {
-            logger.logMessage({caller: 'StorageService.getAuthToken'});
+            logger.logMessage({message: 'StorageService.getAuthToken'});
             return localStorageService.get('token');
         }
 
         function removeAuthToken() {
-            logger.logMessage({caller: 'StorageService.removeAuthToken'});
+            logger.logMessage({message: 'StorageService.removeAuthToken'});
             localStorageService.remove('token');
         }
 
         function putAuthToken(value) {
-            logger.logMessage({caller: 'StorageService.putAuthToken'});
+            logger.logMessage({message: 'StorageService.putAuthToken'});
             if (value === null || value === undefined) {
                 return;
             }

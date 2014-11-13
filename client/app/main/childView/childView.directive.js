@@ -3,7 +3,7 @@
     app.directive('childView', function () {
         return {
             restrict: 'E',
-            templateUrl: 'main/childView.html'
+            templateUrl: 'main/childView/childView.html'
         };
     });
 })(angular.module('HousePointsApp'));

@@ -5,7 +5,7 @@ describe("parentView directive", function () {
     var element, scope, $compile, KidsService, $q, controller, injector;
 
     beforeEach(module('HousePointsApp'));
-    beforeEach(module('main/parentView.html'));
+    beforeEach(module('main/parentView/parentView.html'));
 
     function simulateGetKidsPromise(obj) {
         "use strict";

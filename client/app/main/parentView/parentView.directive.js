@@ -3,7 +3,7 @@
     app.directive('parentView', function () {
         return {
             restrict: 'E',
-            templateUrl: 'main/parentView.html',
+            templateUrl: 'main/parentView/parentView.html',
             controller: function(KidsService) {
                 var vm = this;
                 vm.kids = [];

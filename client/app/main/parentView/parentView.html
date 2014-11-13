@@ -1,9 +1,8 @@
 
-{{ kidsVm.kids.length }} kids retrieved!!
 <div class="kidsList">
     <ul>
         <li data-ng-repeat="kid in kidsVm.kids track by $index">
-            {{ kid.name }}
+            <child kid="kid"></child>
         </li>
     </ul>
 </div>

@@ -1,1 +1,10 @@
-<div>Parent</div>
+
+{{ kidsVm.kids.length }} kids retrieved!!
+<div class="kidsList">
+    <ul>
+        <li data-ng-repeat="kid in kidsVm.kids track by $index">
+            {{ kid.name }}
+        </li>
+    </ul>
+</div>
+

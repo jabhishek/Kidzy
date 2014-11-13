@@ -35,7 +35,7 @@ describe('GET /api/kids', function() {
             console.log(user);
             data.kids.add({
                 parentId: user._id,
-                childName: 'test child 2'
+                name: 'test child 2'
             }, function(err, response) {
                 done();
             });

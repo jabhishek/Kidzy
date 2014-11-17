@@ -1,8 +1,13 @@
 
 <div class="kidsList">
     <ul>
-        <li data-ng-repeat="kid in kidsVm.kids track by $index">
+        <li class="child" data-ng-repeat="kid in kidsVm.kids track by $index">
             <child kid="kid"></child>
+        </li><li class="add-kid">
+            <div>
+                <i class="fa fa-plus"></i>
+                <a>Add Child</a>
+            </div>
         </li>
     </ul>
 </div>

@@ -9,7 +9,9 @@
                 vm.kids = [];
 
                 KidsService.getAll().then(function(kids) {
-                    vm.kids = kids;
+                    _.forEach(kids, function(kid) {
+                        vm.kids.push(kid);
+                    });
                     console.log(vm.kids);
                 });
             },

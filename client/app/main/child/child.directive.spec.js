@@ -1,6 +1,6 @@
 // reference: https://code.angularjs.org/1.2.18/docs/api/ng/function/angular.element#jquery-jqlite-extras
 
-describe("parentView directive", function () {
+describe("childView directive", function () {
     "use strict";
     var element, scope, $compile, controller;
 
@@ -22,13 +22,10 @@ describe("parentView directive", function () {
         console.log(element);
         expect(element).toBeDefined();
     });
-    it("should have a div with class child", function () {
-        console.log(element);
-        expect(angular.element(element[0].querySelector('div.child')).length).toEqual(1);
-    });
+
     it("should have the name converted to upper case", function () {
         console.log(element);
-        var nameElement = angular.element(element[0].querySelector('div.child span.name'));
+        var nameElement = angular.element(element[0].querySelector('span.name'));
         console.log(nameElement);
         expect(nameElement.length).toEqual(1);
         expect(nameElement.text()).toEqual('Vatsal');

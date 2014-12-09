@@ -10,11 +10,26 @@
             setCachedKids: setCachedKids,
             clearCachedKids: clearCachedKids,
             getCachedKids: getCachedKids,
-            getKidsFromServer: getKidsFromServer
+            getKidsFromServer: getKidsFromServer,
+            addKid: addKid
         };
         return obj;
 
         // private functions
+        function addKid(kid) {
+            var defer = $q.defer();
+            if (!kid || !angular.isObject(kid)) {
+                defer.reject("Invalid parameters passed");
+            }
+            kidsUrl.post(kid).then(function kidsPostResolved(data) {
+                defer.resolve(data);
+            }, function kidsPostRejected(err) {
+                defer.reject(err);
+            });
+
+            return defer.promise;
+        }
+
         function clearCachedKids() {
             setCachedKids(undefined);
         }

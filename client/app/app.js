@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
+    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule', 'ngAria', 'ngMaterial'])
         .constant('StateErrorCodes', {
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'

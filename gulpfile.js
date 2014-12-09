@@ -14,13 +14,18 @@ var ngAnnotate = require('gulp-ng-annotate');
 var prependBowerPath = function (packageName) {
     return path.join('./client/bower_components/', packageName);
 };
+var vendorStyles = ['angular-material/angular-material.css']
+    .map(prependBowerPath);
 var vendorScripts = ['angular/angular.js',
                'angular-animate/angular-animate.js',
                'angular-ui-router/release/angular-ui-router.js',
                'angular-local-storage/dist/angular-local-storage.js',
                'lodash/dist/lodash.js',
                'restangular/dist/restangular.js',
-               'angular-cookies/angular-cookies.js']
+               'angular-cookies/angular-cookies.js',
+               'angular-aria/angular-aria.js',
+               'hammerjs/hammer.js',
+               'angular-material/angular-material.js']
                .map(prependBowerPath);
 
 var karmaScripts = _.union(vendorScripts, ['client/bower_components/angular-mocks/angular-mocks.js', 'client/app/**/*.js', 'client/app/**/*.html'])
@@ -92,7 +97,14 @@ gulp.task('clean:css', function () {
     return gulp.src(['./build/css'], {read: false})
         .pipe($gulp.rimraf());
 });
-
+gulp.task('vendors:css', ['clean:css'], function () {
+    return gulp.src(vendorStyles)
+        .pipe($gulp.concat('vendors.min.css'))
+        .pipe(minify())
+        .pipe($gulp.rev())
+        .pipe(gulp.dest('build/css/'))
+        .pipe($gulp.size({showFiles: true}));
+});
 gulp.task('css', ['clean:css'], function () {
     return gulp.src(['client/app/styles/app.less'])
         .pipe($gulp.less())
@@ -156,8 +168,12 @@ gulp.task('server:restart', ['build'], function () {
     restart();
 });
 
-gulp.task('html', ['css', 'vendors:js', 'js', 'templates'], function () {
+gulp.task('html', ['vendors:css', 'css', 'vendors:js', 'js', 'templates'], function () {
     return gulp.src('./client/index.html')
+        .pipe($gulp.inject(gulp.src(['./build/css/vendors*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'build', name: 'cssvendors'
+        }))
         .pipe($gulp.inject(gulp.src(['./build/css/app*'], { read: false }), {
             addRootSlash: false,
             ignorePath: 'build'

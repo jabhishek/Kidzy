@@ -1,31 +1,17 @@
-.navbar.flex {
+.navbar {
     background: @header-background;
     color: @header-color;
     line-height: @navbar-height;
     position: relative;
     z-index: 999;
 
-    .container {
-        .display(flex);
-        .flex-direction(column);
-        @media @tablets {
-            .flex-direction(row);
-        }
-    }
-
     .navbar-header {
         padding-left: .5rem;
-        .display(flex);
-        .flex-grow(1);
-        @media @tablets {
+        @media @desktop {
             padding-left: 0;
         }
         .user {
             margin-right: 1rem;
-        }
-
-        .left {
-            .flex-grow(1);
         }
 
         .nav-toggle {
@@ -33,16 +19,12 @@
             background: @button-colour;
             padding: 0 1.5rem;
             height: @navbar-height;
-            @media @tablets {
-                display: none;
-            }
         }
     }
 
     nav {
         @media @tablets {
-            display: inline-block !important;
-            float: right;
+            display: block !important;
         }
 
         &.collapsed {

@@ -1,15 +1,16 @@
-<header class="navbar flex">
-    <div class="container">
-        <div class="navbar-header clearfix">
-            <h1 class="left">Kidzy</h1>
-            <div class="right" ng-if="navBarVm.Auth.isLoggedIn()">
+<header class="navbar">
+    <div class="container" layout="row" layout-sm="column">
+        <div class="navbar-header clearfix" layout="row" flex>
+            <h1 flex>Kidzy</h1>
+
+            <div hide-gt-sm ng-if="navBarVm.Auth.isLoggedIn()">
                 <span class="user">{{ ::navBarVm.Auth.getCurrentUser().name}}</span>
-            <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
-                 <i class="fa fa-lg fa-bars"></i>
-            </span>
+                <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
+                     <i class="fa fa-lg fa-bars"></i>
+                </span>
             </div>
         </div>
-        <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}"  ng-if="navBarVm.Auth.isLoggedIn()">
+        <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}" ng-if="navBarVm.Auth.isLoggedIn()">
             <ul class="items">
                 <li class="main">
                     <a ui-sref="main" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Main</a>

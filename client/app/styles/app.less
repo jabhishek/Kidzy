@@ -10,27 +10,6 @@
     }
 }
 
-.visible-desktop {
-    display: none;
-    @media @desktop {
-        display: inline-block;
-    }
-}
-
-.visible-tablet {
-    display: none;
-    @media @tablets {
-        display: inline-block;
-    }
-}
-
-.visible-mobile {
-    display: inline-block;
-    @media @tablets {
-        display: none;
-    }
-}
-
 html {
     font-family: @font-family;
     background-color: @page-background;
@@ -75,7 +54,7 @@ h2 {
     width: 100%;
     min-width: 300px;
     @media @tablets {
-        width: 72rem;
+        width: 100%;
     }
     @media @desktop {
         width: 93rem;
@@ -93,7 +72,7 @@ h2 {
     top: 0;
     height: calc(~'100% - @{navbar-height}');
 
-    @media @tablets {
+    @media @desktop {
         padding: 0;
     }
 }

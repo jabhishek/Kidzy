@@ -1,9 +1,9 @@
-<div class="user-row">
-    <div class="left">
-        <span>{{ user.name | capitalize }}</span>
+<div class="user-row" layout="row" layout-align="center center">
+    <div class="left" layout="column" flex>
+        <h4>{{ user.name | capitalize }}</h4>
         <span>{{ user.email }}</span>
     </div>
-    <div class="right">
+    <div>
         <span>{{ user.role | capitalize}}</span>
     </div>
     <div class="actions">

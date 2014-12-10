@@ -45,7 +45,7 @@
                     controller: 'LoginController as loginVm',
                     controllerAs: 'loginVm',
                     resolve: {
-                        // redirect to main page if already logged in
+                        // clear login data if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
                 })

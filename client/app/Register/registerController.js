@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.controller('registerController', function (UserService, $state, AuthService, logger) {
+    app.controller('RegisterController', function (UserService, $state, AuthService, logger) {
         var vm = this;
 
         vm.user = {};
@@ -16,12 +16,12 @@
             }
             UserService.createUser(user)
                 .then(function () {
-                    logger.logMessage({message: 'redirecting to main', caller: 'registerController.submit'});
+                    logger.logMessage({message: 'redirecting to main', caller: 'RegisterController.submit'});
                     AuthService.login(user).then(function() {
                         $state.go('main');
                     });
                 }, function() {
-                    logger.logMessage({message: 'error creating user', caller: 'registerController.submit'});
+                    logger.logMessage({message: 'error creating user', caller: 'RegisterController.submit'});
                 });
         }
         function init() {

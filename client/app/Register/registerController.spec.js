@@ -1,4 +1,4 @@
-describe("registerController", function () {
+describe("RegisterController", function () {
 
     var appName = 'HousePointsApp';
     var RegisterCtrl, UserService, $q, $state, $timeout, AuthService;
@@ -17,7 +17,7 @@ describe("registerController", function () {
         $state = _$state_;
 
         $timeout = _$timeout_;
-        RegisterCtrl = $controller('registerController', {UserService: UserService, $state: $state});
+        RegisterCtrl = $controller('RegisterController', {UserService: UserService, $state: $state});
     }));
 
     function simulateCreateUserPromise (obj) {

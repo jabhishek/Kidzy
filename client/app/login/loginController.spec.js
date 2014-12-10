@@ -1,4 +1,4 @@
-describe("loginController", function () {
+describe("LoginController", function () {
 
     var appName = 'HousePointsApp';
     var LoginCtrl, AuthService, $q, $state, $timeout;
@@ -12,7 +12,7 @@ describe("loginController", function () {
         $q = _$q_;
         $state = _$state_;
         $timeout = _$timeout_;
-        LoginCtrl = $controller('loginController');
+        LoginCtrl = $controller('LoginController');
     }));
 
     it('should have user defined', function () {

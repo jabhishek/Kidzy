@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.controller('logController', function (logger) {
+    app.controller('LogController', function (logger) {
         var vm = this;
         vm.logger = logger;
     });

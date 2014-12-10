@@ -129,7 +129,7 @@ gulp.task('js', ['clean:js', 'jshint'], function () {
     return gulp.src(appScripts)
         .pipe($gulp.using())
         .pipe(ngAnnotate())
-        .pipe($gulp.uglify())
+        //.pipe($gulp.uglify())
         .pipe($gulp.concat('app.min.js'))
         .pipe($gulp.rev())
 

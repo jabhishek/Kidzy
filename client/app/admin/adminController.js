@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.controller('adminController', function (Users) {
+    app.controller('AdminController', function (Users) {
         var vm = this;
         vm.users = [];
         if (angular.isArray(Users)) {

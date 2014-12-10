@@ -12,7 +12,8 @@
                 .state('main', {
                     url: '/',
                     templateUrl: 'main/main.html',
-                    controller: 'mainController as mainVm',
+                    controller: 'MainController as mainVm',
+                    controllerAs: 'mainVm',
                     resolve: {
                         isAuthenticated: isAuthenticated
                     }
@@ -28,7 +29,8 @@
                 .state('admin', {
                     url: '/admin',
                     templateUrl: 'admin/admin.html',
-                    controller: 'adminController as adminVm',
+                    controller: 'AdminController as adminVm',
+                    controllerAs: 'adminVm',
                     resolve: {
                         isAuthenticated: isAuthenticated,
                         Users: function (UserService, isAuthenticated) {
@@ -40,7 +42,8 @@
                 .state('login', {
                     url: '/login',
                     templateUrl: 'login/login.html',
-                    controller: 'loginController as loginVm',
+                    controller: 'LoginController as loginVm',
+                    controllerAs: 'loginVm',
                     resolve: {
                         // redirect to main page if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
@@ -49,7 +52,8 @@
                 .state('register', {
                     url: '/register',
                     templateUrl: 'Register/register.html',
-                    controller: 'registerController as registerVm',
+                    controller: 'RegisterController as registerVm',
+                    controllerAs: 'registerVm',
                     resolve: {
                         // clear login data if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
@@ -58,7 +62,8 @@
                 .state('log', {
                     url: '/log',
                     templateUrl: 'log/log.html',
-                    controller: 'logController as logVm'
+                    controller: 'LogController as logVm',
+                    controllerAs: 'logVm'
                 });
 
             $urlRouterProvider.otherwise('/notFound');

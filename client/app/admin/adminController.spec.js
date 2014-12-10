@@ -1,4 +1,4 @@
-describe("adminController", function () {
+describe("AdminController", function () {
 
     var appName = 'HousePointsApp';
     var adminCtrl, UserService, $controller;
@@ -15,17 +15,17 @@ describe("adminController", function () {
         }));
 
         it('should have user defined', function () {
-            adminCtrl = $controller('adminController', {Users: [ { name: 'Abhi' }]});
+            adminCtrl = $controller('AdminController', {Users: [ { name: 'Abhi' }]});
             expect(adminCtrl).toBeDefined();
         });
 
         it('should initialize users', function () {
-            adminCtrl = $controller('adminController', {Users: [ { name: 'Abhi' }]});
+            adminCtrl = $controller('AdminController', {Users: [ { name: 'Abhi' }]});
             expect(adminCtrl.users.length).toBe(1);
         });
 
         it('should not populate users if injected Users is not an array', function () {
-            adminCtrl = $controller('adminController', {Users: {}});
+            adminCtrl = $controller('AdminController', {Users: {}});
             expect(adminCtrl.users.length).toBe(0);
         });
     });

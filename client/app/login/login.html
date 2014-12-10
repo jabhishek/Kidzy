@@ -1,4 +1,7 @@
+
+
 <section class="login-section">
+    {{ loginVm.user }}
     <form class="form login-form" id="loginform" name="loginform" novalidate ng-submit="loginVm.submit(loginform.$valid, loginVm.user)">
         <h2>Login</h2>
         <fieldset>

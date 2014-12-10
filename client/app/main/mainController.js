@@ -1,8 +1,8 @@
 (function (app) {
     'use strict';
-    app.controller('mainController', mainController);
+    app.controller('MainController', MainController);
 
-    function mainController(AuthService) {
+    function MainController(AuthService) {
         var vm = this;
         vm.Auth = AuthService;
     }

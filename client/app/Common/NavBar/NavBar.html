@@ -3,9 +3,9 @@
         <div class="navbar-header clearfix" layout="row" flex>
             <h1 flex>Kidzy</h1>
 
-            <div hide-gt-sm ng-if="navBarVm.Auth.isLoggedIn()">
+            <div ng-if="navBarVm.Auth.isLoggedIn()">
                 <span class="user">{{ ::navBarVm.Auth.getCurrentUser().name}}</span>
-                <span class="nav-toggle visible-mobile" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
+                <span hide-gt-sm class="nav-toggle" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
                      <i class="fa fa-lg fa-bars"></i>
                 </span>
             </div>

@@ -6,9 +6,10 @@
     bottom: 0;
     margin: auto;
     height: 30rem;
-    width: 100%;
+    width: 95%;
     text-align: center;
     padding: 1rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 
     @media @tablets {
         width: 40rem;
@@ -30,18 +31,15 @@
 
     form {
         &.login-form, &.register-form {
-            margin: auto;
-            width: 100%;
-            @media @largeMobile {
+            /*margin: auto;*/
+           /* @media @largeMobile {
                 width: 40rem;
+            }*/
+            input, button {
+                width: 30rem;
             }
-            input {
-                display: block;
-                font-size: 1.6rem;
-                width: 100%;
-                padding: 0.5rem;
-                margin-top: 1.5rem;
-
+            button {
+                margin-top: 20px;
             }
         }
     }

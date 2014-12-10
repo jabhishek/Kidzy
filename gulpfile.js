@@ -14,7 +14,7 @@ var ngAnnotate = require('gulp-ng-annotate');
 var prependBowerPath = function (packageName) {
     return path.join('./client/bower_components/', packageName);
 };
-var vendorStyles = ['angular-material/angular-material.css']
+var vendorStyles = ['angular-material/angular-material.css', 'angular-material/themes/*']
     .map(prependBowerPath);
 var vendorScripts = ['angular/angular.js',
                'angular-animate/angular-animate.js',
@@ -28,7 +28,7 @@ var vendorScripts = ['angular/angular.js',
                'angular-material/angular-material.js']
                .map(prependBowerPath);
 
-var karmaScripts = _.union(vendorScripts, ['client/bower_components/angular-mocks/angular-mocks.js', 'client/app/**/*.js', 'client/app/**/*.html'])
+var karmaScripts = _.union(vendorScripts, ['client/bower_components/angular-mocks/angular-mocks.js', 'client/app/**/*.js', 'client/app/**/*.html']);
 console.log(karmaScripts);
 
 var appScripts = ['client/app/**/*.js', '!client/app/**/*spec.js'];

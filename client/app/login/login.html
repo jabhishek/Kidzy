@@ -1,20 +1,27 @@
 
 
-<section class="login-section">
-    {{ loginVm.user }}
+<section class="login-section" layout="column">
     <form class="form login-form" id="loginform" name="loginform" novalidate ng-submit="loginVm.submit(loginform.$valid, loginVm.user)">
         <h2>Login</h2>
         <fieldset>
             <span class="error-message" ng-if="loginVm.error">{{loginVm.error.message}}</span>
-            <div class="field">
-                <input type="email" id="email" name="email" placeholder="Email" required maxlength="50" ng-model="loginVm.user.email"/>
+            <div class="field" layout="column" layout-align="center center">
+                <md-input-group tabindex="-1" class="md-pink-theme">
+                    <label for="email">Email</label>
+                    <md-input type="email" id="email" name="email" required maxlength="50" ng-model="loginVm.user.email"></md-input>
+                </md-input-group>
                 <span class="error-message email-error" ng-if="loginform.$submitted && loginform.email.$invalid">Please enter a valid email address.</span>
             </div>
-            <div class="field">
-                <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="loginVm.user.password"/>
+            <div class="field" layout="column" layout-align="center center">
+                <md-input-group tabindex="-1" class="md-pink-theme">
+                    <label for="password">Password</label>
+                    <md-input type="password" id="password" name="password" required maxlength="50" ng-model="loginVm.user.password"></md-input>
+                </md-input-group>
                 <span class="error-message password-error" ng-if="loginform.$submitted && loginform.password.$error.required">Please enter a password.</span>
             </div>
-            <input type="submit" class="button" value="Login"/>
+            <div layout="row" layout-align="center center">
+                <md-button type="submit" class="md-raised md-primary button">Login</md-button>
+            </div>
         </fieldset>
     </form>
     <div class="register"> or <a ui-sref="register">Sign up</a> if you are a new user</div>

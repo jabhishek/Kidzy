@@ -128,12 +128,12 @@ form fieldset {
 form.ng-submitted {
     input.ng-invalid, input.ng-invalid:focus {
         outline: none;
-        border: 0.1rem solid #ff7575;
+        border-bottom: 0.1rem solid #ff7575;
     }
 }
 
 .button {
-    background: @button-colour;
+    background: @accent-colour;
     border: 1px solid @page-background;
     transition: 0.3s;
 
@@ -141,7 +141,7 @@ form.ng-submitted {
         outline: none;
     }
     &:hover {
-        background: darken(@button-colour, 10%);
+        background: darken(@accent-colour, 10%);
         cursor: pointer;
     }
 }
@@ -167,7 +167,9 @@ form.ng-submitted {
     }
 }
 
-
+md-input-group.md-pink-theme input {
+    border-color: rgba(0,0,0,.5);
+}
 
 @import '/client/app/login/login.less';
 @import '/client/app/Register/register.less';

@@ -1,33 +1,61 @@
-<section class="register-section">
-    <form class="form register-form" id="registerform" name="registerform" novalidate ng-submit="registerVm.submit(registerform.$valid, registerVm.user)">
-        <h2>Register</h2>
-        <fieldset>
-            <span class="error-message" ng-if="registerVm.error">{{registerVm.error.message}}</span>
-            <div class="field">
-                <input type="email" id="email" name="email" placeholder="Email" ng-model="registerVm.user.email" ng-model-options="{ debounce: 200 }"
-                       required
-                       maxlength="50"
-                       email-available-validator=""/>
-                <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
-                <i class="fa fa-close invalid"></i>
-                <i class="fa fa-check valid"></i>
-                <span class="error-message email-error" ng-if="registerform.$submitted && (registerform.email.$error.required || registerform.email.$error.email)">Please enter a valid email address.</span>
-                <span class="error-message email-error" ng-if="registerform.$submitted && (registerform.email.$error.emailAvailable)">The email address is already registered.</span>
-            </div>
-            <div class="field">
-                <input type="text" id="name" name="name" placeholder="Name" required maxlength="50" ng-model="registerVm.user.name"/>
-                <span class="error-message name-error" ng-if="registerform.$submitted && registerform.name.$error.required">Please enter a name.</span>
-            </div>
-            <div class="field">
-                <input type="password" id="password" name="password" placeholder="Password" required maxlength="50" ng-model="registerVm.user.password"/>
-                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.password.$error.required">Please enter a password.</span>
-            </div>
-            <div class="field">
-                <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Confirm Password" required maxlength="50" ng-model="registerVm.user.passwordRepeat"/>
-                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please confirm the password.</span>
-                <span class="error-message password-error" ng-if="registerform.$submitted && registerform.passwordRepeat.$valid && registerVm.user.passwordRepeat !== registerVm.user.password">Password doesn't match.</span>
-            </div>
-            <input type="submit" class="button" value="Register"/>
-        </fieldset>
-    </form>
-</section>
+<div class="register-section-container" layout="column" layout-align="center center">
+    <section class="register-section">
+        <form class="form register-form" id="registerform" name="registerform" novalidate
+              ng-submit="registerVm.submit(registerform.$valid, registerVm.user)">
+            <h2>Register</h2>
+            <fieldset>
+                <span class="error-message" ng-if="registerVm.error">{{registerVm.error.message}}</span>
+
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group class="md-pink-theme">
+                        <label for="email">Email</label>
+                        <md-input type="email" id="email" name="email" required maxlength="50"
+                                  ng-model="registerVm.user.email" ng-model-options="{ debounce: 200 }"
+                                  email-available-validator=""></md-input>
+                        <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
+                        <i class="fa fa-close invalid"></i>
+                        <i class="fa fa-check valid"></i>
+                    </md-input-group>
+                        <span class="error-message email-error"
+                              ng-if="registerform.$submitted && (registerform.email.$error.required || registerform.email.$error.email)">Please enter a valid email address.</span>
+                        <span class="error-message email-error"
+                              ng-if="registerform.$submitted && (registerform.email.$error.emailAvailable)">The email address is already registered.</span>
+
+                </div>
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group class="md-pink-theme">
+                        <label for="name">Name</label>
+                        <md-input type="text" id="name" name="name" required maxlength="50"
+                                  ng-model="registerVm.user.name"></md-input>
+                    </md-input-group>
+
+                    <span class="error-message name-error"
+                          ng-if="registerform.$submitted && registerform.name.$error.required">Please enter a name.</span>
+                </div>
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group class="md-pink-theme">
+                        <label for="password">Password</label>
+                        <md-input type="password" id="password" name="password" required maxlength="50"
+                                  ng-model="registerVm.user.password"></md-input>
+                    </md-input-group>
+                    <span class="error-message password-error"
+                          ng-if="registerform.$submitted && registerform.password.$error.required">Please enter a password.</span>
+                </div>
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group class="md-pink-theme">
+                        <label for="passwordRepeat">Confirm Password</label>
+                        <md-input type="password" id="passwordRepeat" name="passwordRepeat" required maxlength="50"
+                                  ng-model="registerVm.user.passwordRepeat"></md-input>
+                    </md-input-group>
+                    <span class="error-message password-error"
+                          ng-if="registerform.$submitted && registerform.passwordRepeat.$error.required">Please confirm the password.</span>
+                    <span class="error-message password-error"
+                          ng-if="registerform.$submitted && registerform.passwordRepeat.$valid && registerVm.user.passwordRepeat !== registerVm.user.password">Password doesn't match.</span>
+                </div>
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-raised md-primary button">Register</md-button>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+</div>

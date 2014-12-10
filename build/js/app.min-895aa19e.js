@@ -132,6 +132,31 @@
 })();
 (function (app) {
     'use strict';
+    app.controller('AdminController', ["Users", function (Users) {
+        var vm = this;
+        vm.users = [];
+        if (angular.isArray(Users)) {
+            Users.forEach(function(user) {
+                vm.users.push(user);
+            });
+        }
+    }]);
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
+    app.directive('ajUser', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+              user: '='
+            },
+            templateUrl: 'admin/user.html'
+        };
+    });
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
     app.directive('emailAvailableValidator', ["$q", "$timeout", "UserService", "logger", function ($q, $timeout, UserService, logger) {
         return {
             restrict: 'A',
@@ -192,31 +217,6 @@
 })(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
-    app.controller('AdminController', ["Users", function (Users) {
-        var vm = this;
-        vm.users = [];
-        if (angular.isArray(Users)) {
-            Users.forEach(function(user) {
-                vm.users.push(user);
-            });
-        }
-    }]);
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
-    app.directive('ajUser', function () {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: {
-              user: '='
-            },
-            templateUrl: 'admin/user.html'
-        };
-    });
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
     app.controller('LoginController', ["AuthService", "$state", function (AuthService, $state) {
         var vm = this;
 
@@ -252,13 +252,6 @@
 })(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
-    app.controller('LogController', ["logger", function (logger) {
-        var vm = this;
-        vm.logger = logger;
-    }]);
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
     app.controller('MainController', MainController);
 
     function MainController(AuthService) {
@@ -266,6 +259,13 @@
         vm.Auth = AuthService;
     }
     MainController.$inject = ["AuthService"];
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
+    app.controller('LogController', ["logger", function (logger) {
+        var vm = this;
+        vm.logger = logger;
+    }]);
 })(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
@@ -599,18 +599,6 @@
 })(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
-    app.directive('child', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'main/child/child.html',
-            scope: {
-                kid: '='
-            }
-        };
-    });
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
     app.directive('parentView', function () {
         return {
             restrict: 'E',
@@ -627,6 +615,18 @@
                 });
             }],
             controllerAs: 'kidsVm'
+        };
+    });
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
+    app.directive('child', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'main/child/child.html',
+            scope: {
+                kid: '='
+            }
         };
     });
 })(angular.module('HousePointsApp'));

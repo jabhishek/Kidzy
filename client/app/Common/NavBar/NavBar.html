@@ -1,7 +1,7 @@
 <header class="navbar">
     <div class="container" layout="row" layout-sm="column">
         <div class="navbar-header clearfix" layout="row" flex>
-            <h1 flex>Kidzy</h1>
+            <h1 flex><a ui-sref="main">Kidzy</a></h1>
 
             <div ng-if="navBarVm.Auth.isLoggedIn()">
                 <span class="user">{{ ::navBarVm.Auth.getCurrentUser().name}}</span>

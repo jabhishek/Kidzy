@@ -58,10 +58,6 @@ describe("routes", function () {
         expect($state.href('main')).toEqual('/');
     });
 
-    it("should have url /admin configured for state admin", function () {
-        expect($state.href('admin')).toEqual('/admin');
-    });
-
     it("should have url /login configured for state login", function () {
         expect($state.href('login')).toEqual('/login');
     });

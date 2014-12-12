@@ -1,11 +1,6 @@
 
-<parent-view ng-if="mainVm.Auth.hasRole('parent')" class="parent-view"></parent-view>
+<parent-view ng-if="mainVm.showParentView" class="parent-view"></parent-view>
 
-<child-view ng-if="mainVm.Auth.hasRole('child')" class="child-view"></child-view>
+<child-view ng-if="mainVm.showChildView" class="child-view"></child-view>
 
-<admin-view ng-if="mainVm.Auth.hasRole('admin')" class="admin-view"></admin-view>
-<!--
-
-<div ng-if="mainVm.Auth.hasRole('admin')" class="admin-view">
-    <span>Admin</span>
-</div>-->
+<admin-view ng-if="mainVm.showAdminView" class="admin-view"></admin-view>

@@ -49,27 +49,6 @@ describe("navBar directive", function () {
         expect(angular.element(elem.querySelector('.user')).text()).toEqual('test');
     });
 
-    it("should not display admin tab if user is not logged in", function () {
-        scope.navBarVm.Auth.setCurrentUser({});
-        scope.$digest();
-        var elem = element[0];
-        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(0);
-    });
-
-    it("should display admin tab if user is admin", function () {
-        scope.navBarVm.Auth.setCurrentUser({ name: 'test', role: 'admin'});
-        scope.$digest();
-        var elem = element[0];
-        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(1);
-    });
-
-    it("should not display admin tab if user is logged in but not admin", function () {
-        scope.navBarVm.Auth.setCurrentUser({ name: 'test', role: 'parent'});
-        scope.$digest();
-        var elem = element[0];
-        expect(angular.element(elem.querySelector('nav .admin')).length).toEqual(0);
-    });
-
     it("should display main tab if user is logged in", function () {
         scope.navBarVm.Auth.setCurrentUser({ name: 'test', role: 'admin'});
         scope.$digest();

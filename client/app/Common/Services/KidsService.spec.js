@@ -59,7 +59,7 @@ describe("KidsService", function () {
         expect(kidsService.addKid).toBeDefined();
     });
 
-    iit("addKid should send a post request to /api/kids", function () {
+    it("addKid should send a post request to /api/kids", function () {
         $httpBackend.expectPOST('/api/kids');
         var promiseObject = kidsService.addKid({ name: 'Vatsal'});
         $httpBackend.flush();

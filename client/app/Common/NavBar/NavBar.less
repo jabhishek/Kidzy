@@ -49,17 +49,22 @@
                     color: @header-color;
                     display: block;
                     text-decoration: none;
-                    padding: 0 0.5rem;
+                    padding: 0.5rem 0.5rem;
                     @media @tablets {
                         display: inline-block;
                         padding: 0 1rem;
                         border-right: 0.1rem solid #333;
                         transition: 0.3s;
+                        transition-delay: 0.1s;
+
+                        &:hover {
+                            box-shadow: 0px -6px 0px 0px #C51162 inset;
+                            padding: 0 2rem
+                        }
                     }
 
                     &.active {
                         background: @accent-colour;
-                        color: @page-color;
                     }
                 }
             }

@@ -26,19 +26,6 @@
                     url: '/notFound',
                     templateUrl: '404.html'
                 })
-                .state('admin', {
-                    url: '/admin',
-                    templateUrl: 'admin/admin.html',
-                    controller: 'AdminController as adminVm',
-                    controllerAs: 'adminVm',
-                    resolve: {
-                        isAuthenticated: isAuthenticated,
-                        Users: function (UserService, isAuthenticated) {
-                            return UserService.getAllUsers();
-                        }
-                    },
-                    role: 'admin'
-                })
                 .state('login', {
                     url: '/login',
                     templateUrl: 'login/login.html',
@@ -103,13 +90,13 @@
                     AuthService.isLoggedInPromise().then(function (userData) {
                         if (stateTo && stateTo.role) {
                             if (stateTo.role === userData.user.role) {
-                                defer.resolve();
+                                defer.resolve(userData.user.role);
                             } else {
                                 logger.logMessage({message: 'not authorized to the page.', caller: 'app - isAuthenticated'});
                                 defer.reject({message: StateErrorCodes.Unauthorized, next: 'unauthorized'});
                             }
                         } else {
-                            defer.resolve();
+                            defer.resolve(userData.user.role);
                         }
                     }, function () {
                         logger.logMessage({message: 'Loggedin promise returned error', caller: 'app - isAuthenticated'});

@@ -14,14 +14,9 @@
             <ul class="items">
                 <li class="main">
                     <a ui-sref="main" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Main</a>
-                </li>
-                <li class="admin" ng-if="navBarVm.Auth.hasRole('admin')">
-                    <a ui-sref="admin" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Admin</a>
-                </li>
-                <li class="log" ng-if="navBarVm.Auth.hasRole('admin')">
-                    <a ui-sref="log" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Log</a>
-                </li>
-                <li class="logout">
+                </li><li class="log" ng-if="navBarVm.Auth.hasRole('admin')">
+                    <a ui-sref="log" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true" >Log</a>
+                </li><li class="logout">
                     <a href="#" ng-click="navBarVm.logout()">Logout</a>
                 </li>
             </ul>

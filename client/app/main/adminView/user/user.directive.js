@@ -7,7 +7,7 @@
             scope: {
               user: '='
             },
-            templateUrl: 'admin/user.html'
+            templateUrl: 'main/adminView/user/user.html'
         };
     });
 })(angular.module('HousePointsApp'));

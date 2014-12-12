@@ -4,6 +4,8 @@ describe('homepage', function () {
     var loginPage = new loginPageObject();
     var headerObject = require("./PageObjects/Header");
     var header = new headerObject();
+    var mainpageObject = require("./PageObjects/MainPage");
+    var mainPage = new mainpageObject();
     var ptor;
 
     beforeEach(function () {
@@ -36,10 +38,6 @@ describe('homepage', function () {
         expect(header.nav.isPresent()).toBe(true);
     });
 
-    it('admin tab is not present', function() {
-        expect(header.adminTab.isPresent()).toBe(false);
-    });
-
     it('main tab is present', function() {
         expect(header.mainTab.isPresent()).toBe(true);
     });
@@ -53,11 +51,6 @@ describe('homepage', function () {
         expect(browser.getLocationAbsUrl()).toBe('/login');
     });
 
-    it('should load home page if navigated to admin url', function () {
-        browser.get("/admin");
-        expect(browser.getLocationAbsUrl()).toEqual('/unauthorized');
-    });
-
     describe("admin user", function() {
         beforeEach(function () {
             "use strict";
@@ -68,18 +61,43 @@ describe('homepage', function () {
             loginPage.login(users.admin);
         });
 
-        it('admin tab is present', function() {
-            expect(header.adminTab.isPresent()).toBe(true);
+        it('should load home page', function () {
+            expect(browser.getLocationAbsUrl()).toEqual('/');
+            expect(mainPage.childView.isPresent()).not.toBe(true);
+            expect(mainPage.parentView.isPresent()).not.toBe(true);
+        });
+    });
+
+    describe("parent user", function() {
+        beforeEach(function () {
+            "use strict";
+            ptor.manage().deleteAllCookies();
         });
 
-        it('should go to admin page if admin tab clicked', function() {
-            header.adminTab.click();
-            expect(browser.getLocationAbsUrl()).toBe('/admin');
+        beforeEach(function () {
+            loginPage.login(users.parent);
         });
 
-        it('should load home page if navigated to admin url', function () {
-            browser.get("/admin");
-            expect(browser.getLocationAbsUrl()).toEqual('/admin');
+        iit('should have the parent view', function () {
+            expect(mainPage.adminView.isPresent()).not.toBe(true);
+            expect(mainPage.childView.isPresent()).not.toBe(true);
+            expect(mainPage.parentView.isPresent()).toBe(true);
+        });
+    });
+
+    describe("child user", function() {
+        beforeEach(function () {
+            "use strict";
+            ptor.manage().deleteAllCookies();
+        });
+
+        beforeEach(function () {
+            loginPage.login(users.child);
+        });
+        iit('should have the child view', function () {
+            expect(mainPage.childView.isPresent()).toBe(true);
+            expect(mainPage.adminView.isPresent()).not.toBe(true);
+            expect(mainPage.parentView.isPresent()).not.toBe(true);
         });
     });
 

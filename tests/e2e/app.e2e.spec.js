@@ -31,11 +31,6 @@ describe('app', function () {
         expect(browser.getLocationAbsUrl()).toEqual('/notFound');
     });
 
-    it('should load home page if navigated to admin url', function () {
-        browser.get("/admin");
-        expect(browser.getLocationAbsUrl()).toEqual('/unauthorized');
-    });
-
     describe("admin", function () {
         beforeEach(function () {
             "use strict";
@@ -46,9 +41,8 @@ describe('app', function () {
             loginPage.login(users.admin);
         });
 
-        it('should load admin page if navigated to admin url', function () {
-            browser.get("/admin");
-            expect(browser.getLocationAbsUrl()).toEqual('/admin');
+        it('should load home page', function () {
+            expect(browser.getLocationAbsUrl()).toEqual('/');
         });
     });
 });

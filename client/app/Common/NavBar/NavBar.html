@@ -4,7 +4,7 @@
             <h1 flex><a ui-sref="main">Kidzy</a></h1>
 
             <div ng-if="navBarVm.Auth.isLoggedIn()">
-                <span class="user">{{ ::navBarVm.Auth.getCurrentUser().name}}</span>
+                <span class="user-info">{{ ::navBarVm.Auth.getCurrentUser().name}}</span>
                 <span hide-gt-sm class="nav-toggle" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
                      <i class="fa fa-lg fa-bars"></i>
                 </span>

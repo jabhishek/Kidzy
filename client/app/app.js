@@ -5,8 +5,11 @@
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
         })
-        .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider, $compileProvider) {
             $animateProvider.classNameFilter(/animate/);
+
+            // disable debug info in html (example, disables insertion of classes like ng-scope, ng-binding)
+            $compileProvider.debugInfoEnabled(false);
 
             $stateProvider
                 .state('main', {

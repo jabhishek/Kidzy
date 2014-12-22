@@ -5,8 +5,11 @@
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
         })
-        .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider", "$animateProvider", function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider) {
+        .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider", "$animateProvider", "$compileProvider", function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider, $compileProvider) {
             $animateProvider.classNameFilter(/animate/);
+
+            // disable debug info in html (example, disables insertion of classes like ng-scope, ng-binding)
+            $compileProvider.debugInfoEnabled(false);
 
             $stateProvider
                 .state('main', {
@@ -26,26 +29,13 @@
                     url: '/notFound',
                     templateUrl: '404.html'
                 })
-                .state('admin', {
-                    url: '/admin',
-                    templateUrl: 'admin/admin.html',
-                    controller: 'AdminController as adminVm',
-                    controllerAs: 'adminVm',
-                    resolve: {
-                        isAuthenticated: isAuthenticated,
-                        Users: ["UserService", "isAuthenticated", function (UserService, isAuthenticated) {
-                            return UserService.getAllUsers();
-                        }]
-                    },
-                    role: 'admin'
-                })
                 .state('login', {
                     url: '/login',
                     templateUrl: 'login/login.html',
                     controller: 'LoginController as loginVm',
                     controllerAs: 'loginVm',
                     resolve: {
-                        // redirect to main page if already logged in
+                        // clear login data if already logged in
                         isAlreadyLoggedIn: isAlreadyLoggedIn
                     }
                 })
@@ -104,13 +94,13 @@
                     AuthService.isLoggedInPromise().then(function (userData) {
                         if (stateTo && stateTo.role) {
                             if (stateTo.role === userData.user.role) {
-                                defer.resolve();
+                                defer.resolve(userData.user.role);
                             } else {
                                 logger.logMessage({message: 'not authorized to the page.', caller: 'app - isAuthenticated'});
                                 defer.reject({message: StateErrorCodes.Unauthorized, next: 'unauthorized'});
                             }
                         } else {
-                            defer.resolve();
+                            defer.resolve(userData.user.role);
                         }
                     }, function () {
                         logger.logMessage({message: 'Loggedin promise returned error', caller: 'app - isAuthenticated'});
@@ -130,31 +120,6 @@
         }]);
 
 })();
-(function (app) {
-    'use strict';
-    app.controller('AdminController', ["Users", function (Users) {
-        var vm = this;
-        vm.users = [];
-        if (angular.isArray(Users)) {
-            Users.forEach(function(user) {
-                vm.users.push(user);
-            });
-        }
-    }]);
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
-    app.directive('ajUser', function () {
-        return {
-            restrict: 'E',
-            replace: true,
-            scope: {
-              user: '='
-            },
-            templateUrl: 'admin/user.html'
-        };
-    });
-})(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
     app.directive('emailAvailableValidator', ["$q", "$timeout", "UserService", "logger", function ($q, $timeout, UserService, logger) {
@@ -257,6 +222,10 @@
     function MainController(AuthService) {
         var vm = this;
         vm.Auth = AuthService;
+
+        vm.showAdminView = vm.Auth.hasRole('admin');
+        vm.showChildView = vm.Auth.hasRole('child');
+        vm.showParentView = vm.Auth.hasRole('parent');
     }
     MainController.$inject = ["AuthService"];
 })(angular.module('HousePointsApp'));
@@ -590,6 +559,38 @@
 })(angular.module('HousePointsApp'));
 (function (app) {
     'use strict';
+    app.directive('adminView', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'main/adminView/adminView.html',
+            controller: ["UserService", function(UserService) {
+                var vm = this;
+                vm.users = [];
+
+                UserService.getAllUsers().then(function(users) {
+                    _.forEach(users, function(user) {
+                        vm.users.push(user);
+                    });
+                });
+            }],
+            controllerAs: 'adminVm'
+        };
+    });
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
+    app.directive('child', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'main/child/child.html',
+            scope: {
+                kid: '='
+            }
+        };
+    });
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
     app.directive('childView', function () {
         return {
             restrict: 'E',
@@ -615,18 +616,6 @@
                 });
             }],
             controllerAs: 'kidsVm'
-        };
-    });
-})(angular.module('HousePointsApp'));
-(function (app) {
-    'use strict';
-    app.directive('child', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'main/child/child.html',
-            scope: {
-                kid: '='
-            }
         };
     });
 })(angular.module('HousePointsApp'));
@@ -675,4 +664,17 @@
             }
         };
     }]);
+})(angular.module('HousePointsApp'));
+(function (app) {
+    'use strict';
+    app.directive('ajUser', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+              user: '='
+            },
+            templateUrl: 'main/adminView/user/user.html'
+        };
+    });
 })(angular.module('HousePointsApp'));

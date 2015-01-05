@@ -11,6 +11,11 @@ describe("KidsService", function () {
         $httpBackend.when('POST' , '/api/kids').respond({ err: null, kids: []});
     }));
 
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+
     it("should be defined", function () {
         expect(kidsService).toBeDefined();
     });
@@ -69,12 +74,14 @@ describe("KidsService", function () {
 
     it("addKid should reject the promise if no kid passed", function () {
         var promiseObject = kidsService.addKid();
+        $httpBackend.flush();
         // expect promise to be rejected
         expect(promiseObject.$$state.status).toEqual(2);
     });
 
     it("addKid should reject the promise if kid is not an object", function () {
         var promiseObject = kidsService.addKid("someName");
+        $httpBackend.flush();
         // expect promise to be rejected
         expect(promiseObject.$$state.status).toEqual(2);
     });

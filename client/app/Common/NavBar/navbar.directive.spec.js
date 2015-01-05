@@ -1,11 +1,14 @@
 describe("navBar directive", function () {
     "use strict";
-    var element, scope, $compile;
+    var element, scope, $compile, $httpBackend;
 
     beforeEach(module('HousePointsApp'));
     beforeEach(module('Common/NavBar/NavBar.html'));
+    beforeEach(inject(function ($rootScope, _$compile_, _$httpBackend_, $templateCache) {
+        $templateCache.put('main/main.html', '');
+        $templateCache.put('login/login.html', '');
 
-    beforeEach(inject(function ($rootScope, _$compile_, $httpBackend) {
+        $httpBackend = _$httpBackend_;
         $httpBackend.when('GET', '/api/users/me').respond(200, { user: { role: 'parent'}});
         scope = $rootScope.$new();
 
@@ -15,6 +18,11 @@ describe("navBar directive", function () {
         element = $compile(template)(scope);
         scope.$digest();
     }));
+
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
 
     it("should have a header", function () {
         expect(element.find('header')).toBeDefined();
@@ -35,18 +43,23 @@ describe("navBar directive", function () {
     });
 
     it("nav should not have class collapsed if isCollapsed is false", function () {
-        scope.navBarVm.isCollapsed = false;
-        scope.navBarVm.Auth.setCurrentUser({ name: 'test', role: 'admin'});
-        scope.$digest();
-        expect(element.find('nav').attr('class')).not.toContain('collapsed');
+        inject(function(AuthService) {
+            spyOn(AuthService, 'isLoggedIn').and.returnValue(true);
+            scope.navBarVm.isCollapsed = false;
+            scope.$digest();
+            var className = element.find('nav').attr('class') || '';
+            expect(className).not.toContain('collapsed');
+        });
+
     });
 
     it("should have user name populated if user is logged in", function () {
+
         scope.navBarVm.Auth.setCurrentUser({ name: 'test', role: 'admin'});
         scope.$digest();
         var elem = element[0];
         // converted to uppercase because of the filter
-        expect(angular.element(elem.querySelector('.user')).text()).toEqual('test');
+        expect(angular.element(elem.querySelector('.user-info')).text()).toEqual('test');
     });
 
     it("should display main tab if user is logged in", function () {

@@ -12,12 +12,14 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 if (app.get("env") === "development") {
     app.use(morgan('dev'));
     app.use(require('connect-livereload')());
 };
 
+if (app.get("env") === "production") {
+    appPath = path.join(rootPath, 'dist');
+}
 
 app.use(express.static(appPath));
 app.set("appPath", appPath);

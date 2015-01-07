@@ -10,6 +10,7 @@ var protractor = require("gulp-protractor").protractor;
 var templateCache = require('gulp-angular-templatecache');
 var server = require('gulp-develop-server');
 var ngAnnotate = require('gulp-ng-annotate');
+var runSequence = require('run-sequence');
 
 var prependBowerPath = function (packageName) {
     return path.join('./client/bower_components/', packageName);
@@ -29,7 +30,6 @@ var vendorScripts = ['angular/angular.js',
                .map(prependBowerPath);
 
 var karmaScripts = _.union(vendorScripts, ['client/bower_components/angular-mocks/angular-mocks.js', 'client/app/**/*.js', 'client/app/**/*.html']);
-console.log(karmaScripts);
 
 var appScripts = ['client/app/**/*.js', '!client/app/**/*spec.js'];
 
@@ -219,6 +219,52 @@ gulp.task('html', ['vendors:css', 'css', 'vendors:js', 'js', 'templates'], funct
         .pipe($gulp.size({showFiles: true}));
 });
 
-gulp.task('build', ['html']);
+gulp.task('build', function() {
+    "use strict";
+    return runSequence('html', ['buildStyles', 'buildScripts'], 'buildHtml');
+});
+
+gulp.task('buildScripts', function() {
+    "use strict";
+    return gulp.src('build/js/*')
+        .pipe($gulp.rev())
+        .pipe(gulp.dest('dist/js/'))
+        .pipe($gulp.size({showFiles: true}));
+});
+
+gulp.task('buildStyles', function() {
+    "use strict";
+    return gulp.src('build/css/*')
+        .pipe($gulp.rev())
+        .pipe(gulp.dest('dist/css/'))
+        .pipe($gulp.size({showFiles: true}));
+});
+gulp.task('buildHtml', function() {
+    "use strict";
+    return gulp.src('./client/index.html')
+        .pipe($gulp.inject(gulp.src(['./dist/css/vendors*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'dist', name: 'cssvendors'
+        }))
+        .pipe($gulp.inject(gulp.src(['./dist/css/app*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'dist'
+        }))
+        .pipe($gulp.inject(gulp.src(['./dist/js/vendors*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'dist', name: 'jsvendors'
+        }))
+        .pipe($gulp.inject(gulp.src(['./dist/js/templates*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'dist', name: 'templates'
+        }))
+        .pipe($gulp.inject(gulp.src(['./dist/js/app*'], { read: false }), {
+            addRootSlash: false,
+            ignorePath: 'dist', name: 'app'
+        }))
+        .pipe($gulp.htmlmin({collapseWhitespace: true, removeComments: true }))
+        .pipe(gulp.dest('./dist/'))
+        .pipe($gulp.size({showFiles: true}));
+});
 
 gulp.task('default', ['server:start', 'watch']);

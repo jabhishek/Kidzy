@@ -33,7 +33,7 @@ console.log(karmaScripts);
 
 var appScripts = ['client/app/**/*.js', '!client/app/**/*spec.js'];
 
-gulp.task('clean', ['clean:js', 'clean:css']);
+gulp.task('clean', ['clean:jsApp','clean:jsTemplates','clean:jsVendors', 'clean:css']);
 
 gulp.task('jshint', function () {
     return gulp.src(appScripts)
@@ -54,7 +54,7 @@ gulp.task('set-env:test', function () {
 gulp.task('karma', ['set-env:test'], function() {
     // Be sure to return the stream
     return gulp.src(karmaScripts)
-        .pipe($gulp.using())
+        //.pipe($gulp.using())
         .pipe($gulp.karma({
             configFile: 'karma.conf.js',
             action: 'watch'
@@ -68,7 +68,7 @@ gulp.task('karma', ['set-env:test'], function() {
 gulp.task('protractor', ['set-env:test'], function () {
     server.listen({ env: { NODE_ENV: 'test'}, path: 'server/app.js'});
     return gulp.src(["./tests/e2e/PageObjects/*.js", "./tests/e2e/**/*e2e.spec.js"])
-        .pipe($gulp.using())
+        //.pipe($gulp.using())
         .pipe(protractor({
             configFile: "protractor.config.js"
         }));
@@ -89,77 +89,101 @@ gulp.task('test:server:watch', function() {
 
 gulp.task('tests', ['karma', 'test:server:watch']);
 
-gulp.task('clean:js', function () {
-    return gulp.src(['./build/js'], {read: false})
+gulp.task('clean:jsTemplates', function () {
+    return gulp.src(['./build/js/templates*'], {read: false})
         .pipe($gulp.rimraf());
 });
-gulp.task('clean:css', function () {
-    return gulp.src(['./build/css'], {read: false})
+
+gulp.task('clean:jsApp', function () {
+    return gulp.src(['./build/js/app*'], {read: false})
         .pipe($gulp.rimraf());
 });
-gulp.task('vendors:css', ['clean:css'], function () {
+gulp.task('clean:jsVendors', function () {
+    return gulp.src(['./build/js/vendors*'], {read: false})
+        .pipe($gulp.rimraf());
+});
+gulp.task('clean:cssApp', function () {
+    return gulp.src(['./build/css/app*'], {read: false})
+        .pipe($gulp.rimraf());
+});
+gulp.task('clean:cssVendors', function () {
+    return gulp.src(['./build/css/vendors*'], {read: false})
+        .pipe($gulp.rimraf());
+});
+gulp.task('vendors:css', ['clean:cssVendors'], function () {
     return gulp.src(vendorStyles)
         .pipe($gulp.concat('vendors.min.css'))
         .pipe(minify())
-        .pipe($gulp.rev())
+        //.pipe($gulp.rev())
         .pipe(gulp.dest('build/css/'))
         .pipe($gulp.size({showFiles: true}));
 });
-gulp.task('css', ['clean:css'], function () {
+gulp.task('css', ['clean:cssApp'], function () {
     return gulp.src(['client/app/styles/app.less'])
         .pipe($gulp.less())
         .pipe($gulp.autoprefixer())
         .pipe(minify())
-        .pipe($gulp.rev())
+        //.pipe($gulp.rev())
         .pipe(gulp.dest('build/css/'))
         .pipe($gulp.size({showFiles: true}));
 });
 
-gulp.task('vendors:js', ['clean:js'], function () {
+gulp.task('vendors:js', ['clean:jsVendors'], function () {
     return gulp.src(vendorScripts)
-        .pipe($gulp.using())
+     //   .pipe($gulp.using())
         .pipe($gulp.uglify())
         .pipe($gulp.concat('vendors.min.js'))
-        .pipe($gulp.rev())
+        //.pipe($gulp.rev())
         .pipe(gulp.dest('build/js/'))
         .pipe($gulp.size({showFiles: true}));
 });
 
-gulp.task('js', ['clean:js', 'jshint'], function () {
+gulp.task('js', ['clean:jsApp', 'jshint'], function () {
     return gulp.src(appScripts)
-        .pipe($gulp.using())
+     //   .pipe($gulp.using())
         .pipe(ngAnnotate())
         //.pipe($gulp.uglify())
         .pipe($gulp.concat('app.min.js'))
-        .pipe($gulp.rev())
+        //.pipe($gulp.rev())
 
         .pipe(gulp.dest('build/js/'))
         .pipe($gulp.size({showFiles: true}));
 });
 
-gulp.task('templates', ['clean:js'], function () {
+gulp.task('templates', ['clean:jsTemplates'], function () {
     return gulp.src('client/app/**/*.html')
-        .pipe($gulp.using())
+  //      .pipe($gulp.using())
         .pipe(templateCache({ module: 'HousePointsApp' }))
         .pipe(ngAnnotate())
         .pipe($gulp.uglify())
-        .pipe($gulp.rev())
+       // .pipe($gulp.rev())
         .pipe(gulp.dest('build/js'));
 });
 
 
-gulp.task('server:start', ['build'], function() {
+gulp.task('server:start', ['html'], function() {
     "use strict";
     server.listen({path: 'server/app.js'}, $gulp.livereload.listen);
 });
 
 // restart server if app.js changed
 gulp.task('watch', function () {
-    gulp.watch([ 'server/**/*.js', 'client/app/**/*', 'client/index.html' ], ['server:restart']);
+    gulp.watch([ 'server/**/*.js'], ['server:restart']);
+    gulp.watch([ 'client/app/**/*.js' ], ['js']);
+    gulp.watch([ 'client/app/**/*.css' ], ['css']);
+    gulp.watch([ 'client/app/**/*.html' ], ['templates']);
+    gulp.watch([ 'client/*.html' ], ['html']);
+
+    gulp.watch([
+        'client/*.html',
+        'build/**/*'
+    ]).on('change', function (file) {
+        $gulp.livereload.changed(file.path);
+    });
 });
 
 // restart server if app.js changed
-gulp.task('server:restart', ['build'], function () {
+gulp.task('server:restart', function () {
     function restart() {
         server.changed( function( error ) {
             if( ! error ) $gulp.livereload.changed();
@@ -190,11 +214,11 @@ gulp.task('html', ['vendors:css', 'css', 'vendors:js', 'js', 'templates'], funct
             addRootSlash: false,
             ignorePath: 'build', name: 'app'
         }))
-        .pipe($gulp.htmlmin({collapseWhitespace: true, removeComments: true }))
+        //.pipe($gulp.htmlmin({collapseWhitespace: true, removeComments: true }))
         .pipe(gulp.dest('./build/'))
         .pipe($gulp.size({showFiles: true}));
 });
 
 gulp.task('build', ['html']);
 
-gulp.task('default', ['build', 'server:start', 'watch']);
+gulp.task('default', ['server:start', 'watch']);

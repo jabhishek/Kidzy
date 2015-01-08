@@ -13,7 +13,6 @@ var validateJwt = expressJwt({ secret: config.secrets.session });
             // Validate jwt
             .use(function (req, res, next) {
                 // allow access_token to be passed through query parameter as well
-                console.log("validating user");
                 if (req.query && req.query.hasOwnProperty('access_token')) {
                     req.headers.authorization = 'Bearer ' + req.query.access_token;
                 }
@@ -21,8 +20,6 @@ var validateJwt = expressJwt({ secret: config.secrets.session });
             })
             // Attach user to request
             .use(function (req, res, next) {
-                console.log("attaching user");
-
                 data.users.getById(req.user._id, function (err, user) {
                     if (err) return next(err);
                     if (!user) return res.send(401);
@@ -39,7 +36,6 @@ var validateJwt = expressJwt({ secret: config.secrets.session });
             // Validate jwt
             .use(this.isAuthenticated())
             .use(function(req, res, next) {
-                console.log("validating role");
                 if (req.user.role !== roleRequired) {
                     return res.status(401).end();
                 }

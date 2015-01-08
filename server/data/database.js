@@ -2,8 +2,6 @@
     'use strict';
     var uri = require('../config/environment').mongo.uri;
 
-    console.log(uri);
-
     var mongoDb = require('mongodb');
     var theDb = null;
     database.getDb = function(next) {

@@ -31,8 +31,6 @@ describe('GET /api/kids', function() {
     });
     beforeEach(function(done) {
         data.users.getByEmail(testUsers.parent.email, function(err, user) {
-            console.log('user:');
-            console.log(user);
             data.kids.add({
                 parentId: user._id,
                 name: 'test child 2'

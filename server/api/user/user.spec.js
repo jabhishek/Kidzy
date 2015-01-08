@@ -95,7 +95,6 @@ describe('GET /api/users/me', function() {
             .set('Authorization', 'Bearer ' + token)
             .expect(200)
             .end(function(err, res) {
-                console.log(err);
                 if (err) return done(err);
                 done();
             });

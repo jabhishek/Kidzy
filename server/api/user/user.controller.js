@@ -25,9 +25,7 @@ users.index = function (req, res) {
 };
 
 users.getLoggedInUser = function (req, res) {
-    console.log("getLoggedInUser called");
     data.users.getById(req.user._id, function processResults(err, result) {
-        console.log("user retrieved");
         res.set('Cache-Control', 'no-cache');
         res.json({
             err: err,
@@ -38,8 +36,6 @@ users.getLoggedInUser = function (req, res) {
 
 users.createUser = function (req, res) {
     var newUser = req.body;
-    console.log('newUser');
-    console.log(newUser);
     if (newUser.email && newUser.password && newUser.name) {
         data.users.getByEmail(newUser.email, function(err, user) {
             "use strict";
@@ -52,15 +48,12 @@ users.createUser = function (req, res) {
                     if (err)
                         console.log(err);
                     else {
-                        console.log("created user:");
-                        console.log(userCreated);
                         res.status(200).json({});
                     }
                 });
             }
         });
     } else {
-        console.log('bad!!');
         res.status(400).json('Invalid user passed!!');
     }
 };

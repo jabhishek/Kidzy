@@ -110,10 +110,14 @@ gulp.task('clean:cssVendors', function () {
     return gulp.src(['./build/css/vendors*'], {read: false})
         .pipe($gulp.rimraf());
 });
+gulp.task('clean:dist', function () {
+    return gulp.src(['./dist/**/*'], {read: false})
+        .pipe($gulp.rimraf());
+});
 gulp.task('vendors:css', ['clean:cssVendors'], function () {
     return gulp.src(vendorStyles)
-        .pipe($gulp.concat('vendors.css'))
-        //.pipe(minify())
+        .pipe($gulp.concat('vendors.min.css'))
+        .pipe(minify())
         //.pipe($gulp.rev())
         .pipe(gulp.dest('build/css/'))
         .pipe($gulp.size({showFiles: true}));
@@ -122,7 +126,7 @@ gulp.task('css', ['clean:cssApp'], function () {
     return gulp.src(['client/app/styles/app.less'])
         .pipe($gulp.less())
         .pipe($gulp.autoprefixer())
-        //.pipe(minify())
+        .pipe(minify())
         //.pipe($gulp.rev())
         .pipe(gulp.dest('build/css/'))
         .pipe($gulp.size({showFiles: true}));
@@ -131,8 +135,8 @@ gulp.task('css', ['clean:cssApp'], function () {
 gulp.task('vendors:js', ['clean:jsVendors'], function () {
     return gulp.src(vendorScripts)
      //   .pipe($gulp.using())
-       // .pipe($gulp.uglify())
-        .pipe($gulp.concat('vendors.js'))
+        .pipe($gulp.uglify())
+        .pipe($gulp.concat('vendors.min.js'))
         //.pipe($gulp.rev())
         .pipe(gulp.dest('build/js/'))
         .pipe($gulp.size({showFiles: true}));
@@ -142,8 +146,8 @@ gulp.task('js', ['clean:jsApp', 'jshint'], function () {
     return gulp.src(appScripts)
      //   .pipe($gulp.using())
         .pipe(ngAnnotate())
-       // .pipe($gulp.uglify())
-        .pipe($gulp.concat('app.js'))
+        //.pipe($gulp.uglify())
+        .pipe($gulp.concat('app.min.js'))
         //.pipe($gulp.rev())
 
         .pipe(gulp.dest('build/js/'))
@@ -155,7 +159,7 @@ gulp.task('templates', ['clean:jsTemplates'], function () {
   //      .pipe($gulp.using())
         .pipe(templateCache({ module: 'HousePointsApp' }))
         .pipe(ngAnnotate())
-    //    .pipe($gulp.uglify())
+        .pipe($gulp.uglify())
        // .pipe($gulp.rev())
         .pipe(gulp.dest('build/js'));
 });
@@ -222,11 +226,6 @@ gulp.task('html', ['vendors:css', 'css', 'vendors:js', 'js', 'templates'], funct
 gulp.task('build', function() {
     "use strict";
     return runSequence('clean:dist', 'html', ['buildStyles', 'buildScripts'], 'buildHtml');
-});
-
-gulp.task('clean:dist', function () {
-    return gulp.src(['./dist/**/*'], {read: false})
-        .pipe($gulp.rimraf());
 });
 
 gulp.task('buildScripts', function() {

@@ -7,8 +7,6 @@ describe("KidsService", function () {
         $templateCache.put('login/login.html', '');
         kidsService = _KidsService_;
         $httpBackend = _$httpBackend_;
-        $httpBackend.when('GET' , '/api/kids').respond({ err: null, kids: []});
-        $httpBackend.when('POST' , '/api/kids').respond({ err: null, kids: []});
     }));
 
     afterEach(function () {
@@ -20,69 +18,54 @@ describe("KidsService", function () {
         expect(kidsService).toBeDefined();
     });
 
-    it("should have getAllForParent method defined", function () {
+    it("should have getAll method defined", function () {
         expect(kidsService.getAll).toBeDefined();
     });
 
-    it("should get setCachedKids to be defined", function () {
-        expect(kidsService.setCachedKids).toBeDefined();
-    });
-
-    it("should get getCachedKids to be defined", function () {
-        expect(kidsService.setCachedKids).toBeDefined();
-    });
-
-    it("should get clearCachedKids to be defined", function () {
-        expect(kidsService.setCachedKids).toBeDefined();
-    });
-
-    it("setCachedKids should set value to kids", function () {
-        kidsService.setCachedKids([]);
-        expect(kidsService.getCachedKids()).toEqual([]);
-    });
-
-    it("clearCachedKids should set kids to undefined", function () {
-        kidsService.setCachedKids([]);
-        kidsService.clearCachedKids();
-        expect(kidsService.getCachedKids()).toBeUndefined();
-    });
-
-    it("should get data from server if local kids not defined", function () {
+    it("should do a GET request to api/kids", function () {
+        $httpBackend.when('GET' , '/api/kids').respond({ err: null, kids: [ { name: 'Vatsal' }]});
         $httpBackend.expectGET('/api/kids');
-        kidsService.setCachedKids();
         kidsService.getAll();
         $httpBackend.flush();
     });
 
-    it("should get data from cache if local kids defined", function () {
-        kidsService.setCachedKids([{ name: 'Abhi'}]);
-        kidsService.getAll();
-        expect(kidsService.getCachedKids()).toEqual([{ name: 'Abhi'}]);
-    });
-
-    it("addKid should be defined", function () {
-        expect(kidsService.addKid).toBeDefined();
-    });
-
-    it("addKid should send a post request to /api/kids", function () {
-        $httpBackend.expectPOST('/api/kids');
-        var promiseObject = kidsService.addKid({ name: 'Vatsal'});
+    it("should return a promise object that resolves an array of kids", function () {
+        $httpBackend.when('GET' , '/api/kids').respond({ err: null, kids: [ { name: 'Vatsal' }]});
+        var response = kidsService.getAll();
         $httpBackend.flush();
-        // expect promise to be resolved
-        expect(promiseObject.$$state.status).toEqual(1);
+        expect(response.$$state.status).toEqual(1);
+        expect(response.$$state.value).toEqual([ { name: 'Vatsal' }]);
+        expect(angular.isArray(response.$$state.value)).toBeTruthy();
     });
 
-    it("addKid should reject the promise if no kid passed", function () {
-        var promiseObject = kidsService.addKid();
-        $httpBackend.flush();
-        // expect promise to be rejected
-        expect(promiseObject.$$state.status).toEqual(2);
-    });
+    describe("addKid", function () {
+        it("addKid should be defined", function () {
+            expect(kidsService.addKid).toBeDefined();
+        });
 
-    it("addKid should reject the promise if kid is not an object", function () {
-        var promiseObject = kidsService.addKid("someName");
-        $httpBackend.flush();
-        // expect promise to be rejected
-        expect(promiseObject.$$state.status).toEqual(2);
+        it("addKid should send a post request to /api/kids", function () {
+            $httpBackend.when('POST' , '/api/kids').respond({ err: null, kids: []});
+            $httpBackend.expectPOST('/api/kids');
+            var promiseObject = kidsService.addKid({ name: 'Vatsal'});
+            $httpBackend.flush();
+            // expect promise to be resolved
+            expect(promiseObject.$$state.status).toEqual(1);
+        });
+
+        it("addKid should reject the promise if no kid passed", function () {
+            $httpBackend.when('POST' , '/api/kids').respond({ err: null, kids: []});
+            var promiseObject = kidsService.addKid();
+            $httpBackend.flush();
+            // expect promise to be rejected
+            expect(promiseObject.$$state.status).toEqual(2);
+        });
+
+        it("addKid should reject the promise if kid is not an object", function () {
+            $httpBackend.when('POST' , '/api/kids').respond({ err: null, kids: []});
+            var promiseObject = kidsService.addKid("someName");
+            $httpBackend.flush();
+            // expect promise to be rejected
+            expect(promiseObject.$$state.status).toEqual(2);
+        });
     });
 });

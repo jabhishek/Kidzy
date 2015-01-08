@@ -173,7 +173,7 @@ gulp.task('server:start', ['html'], function() {
 // restart server if app.js changed
 gulp.task('watch', function () {
     gulp.watch([ 'server/**/*.js'], ['server:restart']);
-    gulp.watch([ 'client/app/**/*.js' ], ['js']);
+    gulp.watch([ 'client/app/**/*.js' ], ['js', 'karma']);
     gulp.watch([ 'client/app/**/*.css' ], ['css']);
     gulp.watch([ 'client/app/**/*.html' ], ['templates']);
     gulp.watch([ 'client/*.html' ], ['html']);

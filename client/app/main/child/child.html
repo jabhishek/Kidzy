@@ -1,3 +1,5 @@
 <div>
-    <span class="name">{{ kid.name | capitalize }}</span>
+    <a ui-sref="kids.display({kidId: kid._id})">
+        <span class="name">{{ kid.name | capitalize }}</span>
+    </a>
 </div>

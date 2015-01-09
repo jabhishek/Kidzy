@@ -8,11 +8,11 @@ describe("parentView directive", function () {
     beforeEach(module('main/parentView/parentView.html'));
     beforeEach(module('main/child/child.html'));
 
-    function simulateGetKidsPromise(obj) {
+    function simulateGetKidsPromise(obj, data) {
         "use strict";
         var deferred = $q.defer();
         if (obj.resolve) {
-            deferred.resolve([{name: 'Vatsal'}, {name: 'Avni'}]);
+            deferred.resolve(data);
         } else {
             deferred.reject();
         }
@@ -23,10 +23,11 @@ describe("parentView directive", function () {
     beforeEach(inject(function ($rootScope, _$compile_, _KidsService_, _$q_) {
         KidsService = _KidsService_;
         $q = _$q_;
-        simulateGetKidsPromise({resolve: true});
+        $compile = _$compile_;
+
+        simulateGetKidsPromise({resolve: true}, [{name: 'Vatsal'}, {name: 'Avni'}]);
 
         scope = $rootScope.$new();
-        $compile = _$compile_;
         var template = angular.element('<parent-view></parent-view>');
         element = $compile(template)(scope);
         scope.$digest();

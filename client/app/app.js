@@ -54,6 +54,19 @@
                     templateUrl: 'log/log.html',
                     controller: 'LogController as logVm',
                     controllerAs: 'logVm'
+                })
+                .state('kids', {
+                    abstract: true,
+                    url: '/child',
+                    template: '<ui-view/>'
+                })
+                .state('kids.add', {
+                    url: '/add',
+                    template: '<div>Add child - To do</div>'
+                })
+                .state('kids.display', {
+                    url: '/:childId',
+                    template: '<div>Child Details - To do</div>'
                 });
 
             $urlRouterProvider.otherwise('/notFound');

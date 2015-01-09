@@ -6,13 +6,13 @@
             templateUrl: 'main/parentView/parentView.html',
             controller: function(KidsService) {
                 var vm = this;
+                //vm.kids = [{name: 'Vatsal', totalPoints: 150}];
                 vm.kids = [];
 
                 KidsService.getAll().then(function(kids) {
                     _.forEach(kids, function(kid) {
                         vm.kids.push(kid);
                     });
-                    console.log(vm.kids);
                 });
             },
             controllerAs: 'kidsVm'

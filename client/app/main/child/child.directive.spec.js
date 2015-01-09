@@ -19,14 +19,11 @@ describe("childView directive", function () {
     }));
 
     it("should be defined", function () {
-        console.log(element);
         expect(element).toBeDefined();
     });
 
     it("should have the name converted to upper case", function () {
-        console.log(element);
         var nameElement = angular.element(element[0].querySelector('span.name'));
-        console.log(nameElement);
         expect(nameElement.length).toEqual(1);
         expect(nameElement.text()).toEqual('Vatsal');
     });

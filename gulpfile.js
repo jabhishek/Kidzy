@@ -174,15 +174,15 @@ gulp.task('server:start', ['html'], function() {
 gulp.task('watch', function () {
     gulp.watch([ 'server/**/*.js'], ['server:restart']);
     gulp.watch([ 'client/app/**/*.js' ], ['js', 'karma']);
-    gulp.watch([ 'client/app/**/*.css' ], ['css']);
+    gulp.watch([ 'client/app/**/*.less' ], ['css']);
     gulp.watch([ 'client/app/**/*.html' ], ['templates']);
     gulp.watch([ 'client/*.html' ], ['html']);
 
     gulp.watch([
         'client/*.html',
         'build/**/*'
-    ]).on('change', function (file) {
-        $gulp.livereload.changed(file.path);
+    ]).on('change', function () {
+        $gulp.livereload.changed();
     });
 });
 

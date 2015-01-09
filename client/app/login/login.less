@@ -1,15 +1,13 @@
-.login-section-container, .register-section-container {
+.view-container {
     height: 100%;
 }
 
-.login-section, .register-section {
-//    position: absolute;
+.form-section {
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     margin: auto;
-//    height: 30rem;
     width: 95%;
     text-align: center;
     padding: 3rem 1rem;
@@ -34,16 +32,16 @@
     }
 
     form {
-        &.login-form, &.register-form {
-            /*margin: auto;*/
-           /* @media @largeMobile {
-                width: 40rem;
-            }*/
-            input, button {
-                width: 30rem;
-            }
+        input, button {
+            width: 30rem;
+        }
+        button {
+            margin-top: 20px;
+        }
+
+        &.child-form {
             button {
-                margin-top: 20px;
+                width: 15rem;
             }
         }
     }

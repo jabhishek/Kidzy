@@ -6,7 +6,7 @@
 
     <div class="kidsList">
         <ul>
-            <li class="child" data-ng-repeat="kid in kidsVm.kids track by $index">
+            <li class="child" data-ng-repeat="kid in kidsVm.kids track by $index" ng-click="kidsVm.viewDetails({ data: kid})">
                 <child kid="kid"></child>
             </li>
         </ul>

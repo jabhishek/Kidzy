@@ -62,7 +62,9 @@
                 })
                 .state('kids.add', {
                     url: '/add',
-                    template: '<div>Add child - To do</div>'
+                    templateUrl: 'main/AddChild/add-child.html',
+                    controller: 'addChildController as childCtrl',
+                    controllerAs: 'childCtrl'
                 })
                 .state('kids.display', {
                     url: '/:childId',

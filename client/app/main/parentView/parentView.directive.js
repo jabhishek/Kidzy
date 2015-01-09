@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.directive('parentView', function () {
+    app.directive('parentView', function ($state) {
         return {
             restrict: 'E',
             templateUrl: 'main/parentView/parentView.html',
@@ -8,6 +8,9 @@
                 var vm = this;
                 //vm.kids = [{name: 'Vatsal', totalPoints: 150}];
                 vm.kids = [];
+                vm.viewDetails = function(kid) {
+                    $state.go('kids.display', {'childId': kid.data._id});
+                }
 
                 KidsService.getAll().then(function(kids) {
                     _.forEach(kids, function(kid) {

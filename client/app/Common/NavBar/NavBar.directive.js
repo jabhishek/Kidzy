@@ -1,6 +1,5 @@
 (function (app) {
     'use strict';
-    // todo-abhi - show navbar conditionslly
     app.directive('ajNavbar', function (AuthService, $state) {
         return {
             restrict: 'EA',

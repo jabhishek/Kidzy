@@ -53,6 +53,16 @@
         });
     };
 
+    users.getByUserName = function (username, next) {
+        database.getDb(function getDbBack (err, theDb) {
+            if (err) {
+                next(err);
+            } else {
+                theDb.users.findOne({username: username}, next);
+            }
+        });
+    };
+
     users.getById = function (id, next) {
         id = id.toString();
         database.getDb(function getDbBack (err, theDb) {
@@ -60,6 +70,16 @@
                 next(err);
             } else {
                 theDb.users.findOne({'_id': new ObjectID(id)}, next);
+            }
+        });
+    };
+
+    users.updateUserNameWithEmail = function (email, next) {
+        database.getDb(function getDbBack (err, theDb) {
+            if (err) {
+                next(err);
+            } else {
+                theDb.users.update({ 'email': email }, { $set: { "username": email } }, next);
             }
         });
     };

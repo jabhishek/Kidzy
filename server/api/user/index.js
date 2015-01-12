@@ -5,7 +5,8 @@ var auth = require('../auth/auth.service');
 
 router.get('/me', auth.isAuthenticated(), controller.getLoggedInUser);
 router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/updateUserName', controller.updateUserName);
 router.post('/', controller.createUser);
-router.get('/checkUser/:email', controller.checkUser);
+router.get('/checkUser/:username', controller.checkUser);
 
 module.exports = router;

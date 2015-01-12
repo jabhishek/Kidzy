@@ -28,7 +28,8 @@
             vm.user = {
                 email: '',
                 password: '',
-                name: ''
+                name: '',
+                username: ''
             };
             vm.error = undefined;
         }

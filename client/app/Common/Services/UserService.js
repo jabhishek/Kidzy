@@ -43,8 +43,8 @@
             return users.getList();
         }
 
-        function checkUser(email) {
-            return users.one('checkUser', email).get();
+        function checkUser(username) {
+            return users.one('checkUser', username).get();
         }
     });
 })(angular.module('HousePointsApp'));

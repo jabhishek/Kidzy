@@ -12,6 +12,7 @@ function User(user) {
     this.provider = 'local';
     this.role = 'parent';
     this.salt = salt;
+    this.username = user.username;
 }
 
 // Get list of users
@@ -36,8 +37,8 @@ users.getLoggedInUser = function (req, res) {
 
 users.createUser = function (req, res) {
     var newUser = req.body;
-    if (newUser.email && newUser.password && newUser.name) {
-        data.users.getByEmail(newUser.email, function(err, user) {
+    if (newUser.email && newUser.password && newUser.name && newUser.username) {
+        data.users.getByUserName(newUser.username, function(err, user) {
             "use strict";
             if (user) {
                 // User already present
@@ -60,14 +61,15 @@ users.createUser = function (req, res) {
 
 
 users.checkUser = function (req, res) {
-    if (!req.params.email) {
+    if (!req.params.username) {
         res.json({
             available: false
         });
     } else {
-        data.users.getByEmail(req.params.email, function processResults(err, result) {
+        data.users.getByUserName(req.params.username, function processResults(err, result) {
             var available = true;
             if (result) {
+                console.log(result);
                 available = false;
             }
             res.json({

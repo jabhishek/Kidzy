@@ -1,15 +1,14 @@
 (function (app) {
     'use strict';
-    app.directive('emailAvailableValidator', function ($q, $timeout, UserService, logger) {
+    app.directive('usernameAvailableValidator', function ($q, $timeout, UserService) {
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function(scope, elem, attrs, ngModel) {
-                ngModel.$asyncValidators.emailAvailable = function(email) {
+                ngModel.$asyncValidators.usernameAvailable = function(username) {
                     var defer = $q.defer();
-                    UserService.checkUser(email)
+                    UserService.checkUser(username)
                         .then(function(data) {
-                            logger.logMessage({message: 'isAvailable: ' + data.available, caller: 'emailAvailableValidator'});
                             if (data.available) {
                                 defer.resolve();
                             } else {

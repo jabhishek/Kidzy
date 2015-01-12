@@ -8,19 +8,30 @@
 
                 <div class="field" layout="column" layout-align="center center">
                     <md-input-group class="md-pink-theme">
-                        <label for="email">Email</label>
-                        <md-input type="email" id="email" name="email" required maxlength="50"
-                                  ng-model="registerVm.user.email" ng-model-options="{ debounce: 200 }"
-                                  email-available-validator=""></md-input>
-                        <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
+                        <label for="username">UserName</label>
+                        <md-input type="text" id="username" name="username" required maxlength="50" minlength="6"
+                                  ng-model="registerVm.user.username" ng-model-options="{ debounce: 200 }" username-available-validator=""></md-input>
+                        <i ng-if="registerform.username.$pending" class="fa fa-spin fa-spinner"></i>
                         <i class="fa fa-close invalid"></i>
                         <i class="fa fa-check valid"></i>
                     </md-input-group>
                         <span class="error-message email-error"
-                              ng-if="registerform.$submitted && (registerform.email.$error.required || registerform.email.$error.email)">Please enter a valid email address.</span>
+                              ng-if="registerform.$submitted && (registerform.username.$error.required)">Please enter a user name.</span>
                         <span class="error-message email-error"
-                              ng-if="registerform.$submitted && (registerform.email.$error.emailAvailable)">The email address is already registered.</span>
+                              ng-if="registerform.$submitted && (registerform.username.$error.minlength)">User name should be at least 6 characters long.</span>
+                        <span class="error-message email-error"
+                              ng-if="registerform.$submitted && (registerform.username.$error.usernameAvailable)">The username is already registered.</span>
 
+                </div>
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group class="md-pink-theme">
+                        <label for="email">Email</label>
+                        <md-input type="email" id="email" name="email" required maxlength="50"
+                                  ng-model="registerVm.user.email" ng-model-options="{ debounce: 200 }"></md-input>
+                        <i ng-if="registerform.email.$pending" class="fa fa-spin fa-spinner"></i>
+                    </md-input-group>
+                        <span class="error-message email-error"
+                              ng-if="registerform.$submitted && (registerform.email.$error.required || registerform.email.$error.email)">Please enter a valid email address.</span>
                 </div>
                 <div class="field" layout="column" layout-align="center center">
                     <md-input-group class="md-pink-theme">

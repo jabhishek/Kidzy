@@ -12,9 +12,10 @@
         /// Private methods ///
 
         function submit(valid, user) {
-            if (!valid) {
+            if (!valid || !user.username || !user.password) {
                 return;
             }
+
             AuthService.login(user)
                 .then(function () {
                     $state.go('main');
@@ -25,8 +26,8 @@
 
         function init() {
             vm.user = {
-                email: '',
-                password: ''
+                password: '',
+                username: ''
             };
             vm.error = undefined;
             //vm.Auth.logout();

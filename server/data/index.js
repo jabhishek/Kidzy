@@ -19,6 +19,7 @@ var hasher = require("../api/auth/hasher");
         var salt = hasher.createSalt(8);
         users.add({
             email: 'test@test.com',
+            username: 'test@test.com',
             provider: 'local',
             role: 'parent',
             name: 'test user',
@@ -32,6 +33,7 @@ var hasher = require("../api/auth/hasher");
         salt = hasher.createSalt(8);
         users.add({
             email: 'admin@admin.com',
+            username: 'admin@admin.com',
             provider: 'local',
             role: 'admin',
             name: 'admin',
@@ -45,6 +47,7 @@ var hasher = require("../api/auth/hasher");
         salt = hasher.createSalt(8);
         users.add({
             email: 'child@child.com',
+            username: 'child@child.com',
             provider: 'local',
             role: 'child',
             name: 'kiddo',

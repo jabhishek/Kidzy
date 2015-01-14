@@ -17,15 +17,8 @@ describe("LoginController", function () {
 
     it('should have user defined', function () {
         expect(LoginCtrl.user).toBeDefined();
-    });
-
-    it('should call AuthService.login if form is valid', function () {
-        var deferred = $q.defer();
-        deferred.resolve();
-        spyOn(AuthService, 'login').and.returnValue(deferred.promise);
-        var valid = true;
-        LoginCtrl.submit(valid, {});
-        expect(AuthService.login).toHaveBeenCalled();
+        expect(LoginCtrl.user.hasOwnProperty('username')).toBeTruthy();
+        expect(LoginCtrl.user.hasOwnProperty('password')).toBeTruthy();
     });
 
     it('should not call AuthService.login if form is invalid', function () {
@@ -34,5 +27,26 @@ describe("LoginController", function () {
         LoginCtrl.submit(valid, {});
         expect(AuthService.login).not.toHaveBeenCalled();
     });
+
+    it('should not call AuthService.login if form is valid but user is incorrect', function () {
+        var incorrectUser = { };
+        var deferred = $q.defer();
+        deferred.resolve();
+        spyOn(AuthService, 'login').and.returnValue(deferred.promise);
+        var valid = true;
+        LoginCtrl.submit(valid, incorrectUser);
+        expect(AuthService.login).not.toHaveBeenCalled();
+    });
+
+    it('should call AuthService.login if form is valid and correct user is passed', function () {
+        var correctUser = { username: "username", password: "password"}
+        var deferred = $q.defer();
+        deferred.resolve();
+        spyOn(AuthService, 'login').and.returnValue(deferred.promise);
+        var valid = true;
+        LoginCtrl.submit(valid, correctUser);
+        expect(AuthService.login).toHaveBeenCalled();
+    });
+
 });
 

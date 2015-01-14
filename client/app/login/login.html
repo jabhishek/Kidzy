@@ -8,11 +8,11 @@
 
                 <div class="field" layout="column" layout-align="center center">
                     <md-input-group tabindex="-1" class="md-pink-theme">
-                        <label for="email">Email</label>
-                        <md-input type="email" id="email" name="email" required maxlength="50"
-                                  ng-model="loginVm.user.email"></md-input>
+                        <label for="username">UserName</label>
+                        <md-input type="text" id="username" name="username" required maxlength="50" minlength="6"
+                                  ng-model="loginVm.user.username"></md-input>
                     </md-input-group>
-                    <span class="error-message email-error" ng-if="loginform.$submitted && loginform.email.$invalid">Please enter a valid email address.</span>
+                    <span class="error-message username-error" ng-if="loginform.$submitted && loginform.username.$invalid">Please enter a valid user name.</span>
                 </div>
                 <div class="field" layout="column" layout-align="center center">
                     <md-input-group tabindex="-1" class="md-pink-theme">

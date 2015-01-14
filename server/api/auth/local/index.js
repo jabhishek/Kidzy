@@ -6,14 +6,15 @@ var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var auth = require("../auth.service");
 
-function authenticateUser(email, password, next) {
+function authenticateUser(username, password, next) {
     "use strict";
-    data.users.getByEmail(email, function (err, user) {
+    data.users.getByUserName(username, function (err, user) {
         if (!err && user) {
             var hash = hasher.computeHash(password, user.salt);
             if (hash === user.hashedPassword) {
                 next(null, user);
                 return;
+            } else {
             }
         }
         next(null, false, {message: "Invalid credentials!!"});
@@ -21,7 +22,7 @@ function authenticateUser(email, password, next) {
 }
 
 passport.use(new localStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passwordField: 'password'
     },
     authenticateUser
@@ -29,7 +30,7 @@ passport.use(new localStrategy({
 
 // auth/local
 router.post('/', function (req, res, next) {
-    if (req.body.email && req.body.password) {
+    if (req.body.username && req.body.password) {
         passport.authenticate('local', function (err, user, info) {
             var error = err || info;
             if (error) return res.json(401, error);

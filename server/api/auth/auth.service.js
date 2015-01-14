@@ -39,7 +39,6 @@ var validateJwt = expressJwt({ secret: config.secrets.session });
                 if (req.user.role !== roleRequired) {
                     return res.status(401).end();
                 }
-
                 next();
             });
     };

@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.factory('AuthService', function ($http, $q, UserService, StorageService, logger) {
+    app.factory('AuthService', function ($http, $q, UserService, StorageService) {
         var obj, isLoggedInPromise;
         var currUser = {};
 
@@ -40,7 +40,6 @@
         }
 
         function init() {
-            logger.logMessage({caller: 'AuthService.init', message: 'calling StorageService.getAuthToken'});
             if (StorageService.getAuthToken()) {
                 isLoggedInPromise = UserService.getLoggedInUser();
                 isLoggedInPromise.then(function (userData) {
@@ -50,14 +49,12 @@
         }
 
         function logout() {
-            logger.logMessage({caller: 'AuthService.logout'});
             currUser = {};
             isLoggedInPromise = undefined;
             StorageService.removeAuthToken();
         }
 
         function login(user) {
-            logger.logMessage({caller: 'AuthService.login'});
             var deferred = $q.defer();
             $http.post('/auth/local', user)
                 .success(function (data) {
@@ -71,7 +68,6 @@
                     });
                 })
                 .error(function (err) {
-                    logger.logMessage({caller: 'AuthService.login', message: 'auth/local rejected'});
                     StorageService.removeAuthToken();
                     deferred.reject(err);
                 });

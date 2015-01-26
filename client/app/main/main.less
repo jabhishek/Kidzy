@@ -10,6 +10,13 @@
         padding: 0.5rem;
         border-bottom: 1px solid @primary-colour;
 
+        &:hover {
+            //  transform: scale(0.98);
+            //background: @primary-colour;
+            box-shadow: 0px 2px 0 #eee;
+            border-bottom-width: 3px;
+        }
+
         @media @tablets {
             width: 49%;
             display:  inline-block;
@@ -19,13 +26,6 @@
             }
             &:nth-of-type(2n+1) {
                 margin-right: 2%;
-            }
-
-            &:hover {
-              //  transform: scale(0.98);
-                //background: @primary-colour;
-                box-shadow: 0px 2px 0 #eee;
-                border-bottom-width: 3px;
             }
         }
 

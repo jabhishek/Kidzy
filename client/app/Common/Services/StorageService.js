@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.factory('StorageService', function (localStorageService, logger) {
+    app.factory('StorageService', function (localStorageService) {
         var obj = {
             getAuthToken: getAuthToken,
             removeAuthToken: removeAuthToken,
@@ -10,17 +10,14 @@
 
         // private methods
         function getAuthToken() {
-            logger.logMessage({message: 'StorageService.getAuthToken'});
             return localStorageService.get('token');
         }
 
         function removeAuthToken() {
-            logger.logMessage({message: 'StorageService.removeAuthToken'});
             localStorageService.remove('token');
         }
 
         function putAuthToken(value) {
-            logger.logMessage({message: 'StorageService.putAuthToken'});
             if (value === null || value === undefined) {
                 return;
             }

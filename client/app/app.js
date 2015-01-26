@@ -80,12 +80,11 @@
 
             $httpProvider.interceptors.push('authInterceptor');
 
-            function isAlreadyLoggedIn(AuthService, $q, StorageService, logger) {
+            function isAlreadyLoggedIn(AuthService, $q, StorageService) {
                 var defer = $q.defer();
                 if (StorageService.getAuthToken()) {
                     AuthService.isLoggedInPromise().then(function () {
                         // clear login data if already logged in and navigating to login
-                        logger.logMessage({message: 'logging out', caller: 'app - isAlreadyLoggedIn'});
                         AuthService.logout();
                         defer.resolve();
                     }, function () {
@@ -97,12 +96,11 @@
                 return defer.promise;
             }
 
-            function isAuthenticated(AuthService, $q, StateErrorCodes, logger) {
+            function isAuthenticated(AuthService, $q, StateErrorCodes) {
                 /*jshint validthis: true */
                 var defer = $q.defer();
                 var stateTo = this.self;
                 if (!AuthService.isLoggedInPromise()) {
-                    logger.logMessage({message: 'not logged in', caller: 'app - isAuthenticated'});
                     defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login'});
                 } else {
                     AuthService.isLoggedInPromise().then(function (userData) {
@@ -110,17 +108,16 @@
                             if (stateTo.role === userData.user.role) {
                                 defer.resolve(userData.user.role);
                             } else {
-                                logger.logMessage({message: 'not authorized to the page.', caller: 'app - isAuthenticated'});
                                 defer.reject({message: StateErrorCodes.Unauthorized, next: 'unauthorized'});
                             }
                         } else {
                             defer.resolve(userData.user.role);
                         }
                     }, function () {
-                        logger.logMessage({message: 'Loggedin promise returned error', caller: 'app - isAuthenticated'});
                         defer.reject({message: StateErrorCodes.Unauthenticated, next: 'login'});
                     });
                 }
+
                 return defer.promise;
             }
         })

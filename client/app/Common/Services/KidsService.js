@@ -14,7 +14,7 @@
         function addKid(kid) {
             var defer = $q.defer();
             if (!kid || !angular.isObject(kid)) {
-                defer.reject("Invalid parameters passed");
+                defer.reject('Invalid parameters passed');
             }
             kidsUrl.post(kid).then(function kidsPostResolved(data) {
                 defer.resolve(data);

@@ -10,7 +10,7 @@
                 vm.kids = [];
                 vm.viewDetails = function(kid) {
                     $state.go('kids.display', {'childId': kid.data._id});
-                }
+                };
 
                 KidsService.getAll().then(function(kids) {
                     _.forEach(kids, function(kid) {

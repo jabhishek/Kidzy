@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.directive('loader', function ($rootScope, $timeout, logger) {
+    app.directive('loader', function ($rootScope, $timeout) {
         return {
             restrict: 'A',
             replace: true,
@@ -18,10 +18,7 @@
                 });
 
                 var unregisterSuccess = $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-                    logger.logMessage({message: 'from ' + fromState.name + ' to ' + toState.name, caller: 'loader - $stateChangeSuccess'});
                     var transitionTime = new Date() - scope.data.startTime;
-                    logger.logMessage({message: 'state Transition time: ' + transitionTime + ' ms', caller: 'loader - $stateChangeSuccess'});
-
                     var loaderTimeout = minLoaderDisplayTime - transitionTime;
                     loaderTimeout = loaderTimeout > 0 ? loaderTimeout : 0;
                     hideLoaderTimeout = $timeout(function () {
@@ -34,7 +31,6 @@
                 });
 
                 scope.$on('destroy', function () {
-                    logger.logMessage({message: 'unregistering', caller: 'loader - destroy'});
                     unregisterStart();
                     unregisterSuccess();
                     unregisterError();

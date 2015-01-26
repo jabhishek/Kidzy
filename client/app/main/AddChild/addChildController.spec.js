@@ -17,13 +17,12 @@ describe("addChild", function () {
 		addChildController = $controller('addChildController');
 		$state = _$state_;
 		KidsService = _KidsService_;
-
 	}));
 
-	it("to be  defined", function () {
+	it("to be defined", function () {
 		expect(addChildController).toBeDefined();
 	})
-	it("child property to be  defined", function () {
+	it("child property to be defined", function () {
 		expect(addChildController.child).toBeDefined();
 		expect(addChildController.child.hasOwnProperty('name')).toBeTruthy();
 	})

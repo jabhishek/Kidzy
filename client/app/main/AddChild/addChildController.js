@@ -1,10 +1,11 @@
 (function (app) {
+	'use strict';
     app.controller('addChildController', function($state, $log, KidsService) {
-        "use strict";
         var vm = this;
         vm.child = {
-            name: 'Vatsal'
+            name: ''
         };
+
 
         vm.submit = function(isFormValid, child) {
             $log.info(child);
@@ -14,6 +15,6 @@
                     $state.go('main');
                 });
             }
-        }
-    })
+        };
+    });
 })(angular.module('HousePointsApp'));

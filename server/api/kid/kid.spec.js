@@ -26,6 +26,9 @@ describe("kid controller", function () {
 					return this;
 				}
 			};
+			statusCode = null;
+			err = null;
+			sentData = null;
 		});
 		it("should return error if no user in request", function () {
 			req = {};
@@ -70,6 +73,10 @@ describe("kid controller", function () {
 					return this;
 				}
 			};
+
+			statusCode = null;
+			err = null;
+			sentData = null;
 		});
 
 		it("should return error if no user in request", function () {
@@ -106,6 +113,50 @@ describe("kid controller", function () {
 			kidsController.addKid(req, res);
 			expect(data.kids.add.calledOnce).to.equal(true);
 		});
+	});
+
+	describe("addPoints", function () {
+		beforeEach(function () {
+			res = {
+				json: function (resp) {
+					err = resp.err;
+					sentData = resp.data;
+				},
+				status: function (status) {
+					statusCode = status;
+					return this;
+				}
+			};
+
+			statusCode = null;
+			err = null;
+			sentData = null;
+		});
+		it("should return error if child id is not passed", function () {
+			var req = {};
+			kidsController.addPoints(req, res);
+			expect(err).to.equal("No child id passed.");
+			expect(statusCode).to.equal(400);
+		});
+		it("should return error if no housePointData object in body", function () {
+			var req = {params: {kidId: 1}, body: {}};
+			kidsController.addPoints(req, res);
+			expect(err).to.equal("No house point data passed.");
+			expect(statusCode).to.equal(400);
+		});
+		it("should add housePoint Data if data is correct", function () {
+			var req = {params: {kidId: 1}, body: {housePoint: {}}};
+			data.kids = {
+				addHousePoint: function (kidId, housePointObject, callback) {
+					console.log("added");
+					callback(null, [])
+				}
+			};
+			sinon.spy(data.kids, "addHousePoint");
+			kidsController.addPoints(req, res);
+			expect(data.kids.addHousePoint.calledOnce).to.equal(true);
+			expect(sentData).to.deep.equal([]);
+		});
 	})
-})
+});
 

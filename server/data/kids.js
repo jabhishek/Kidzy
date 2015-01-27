@@ -30,6 +30,22 @@
         });
     };
 
+    kids.addHousePoint = function (childId, housePointObject, next) {
+        database.getDb(function getDbBack (err, theDb) {
+            if (err) {
+                next(err);
+            } else {
+                theDb.kids.update({ '_id':  new ObjectID(childId)},
+					{
+						$push: {
+							housePoints: housePointObject
+						}
+					},
+					next);
+            }
+        });
+    };
+
     kids.remove = function (kid, next) {
         database.getDb(function getDbBack (err, theDb) {
             if (err) {

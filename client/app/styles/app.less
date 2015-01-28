@@ -82,7 +82,7 @@ h2 {
 /* entering animations --------------------------------------- */
 @keyframes slideInRight {
     from {
-        transform: translateX(5%);
+        transform: translateX(3%);
     }
     to {
         transform: translateX(0);
@@ -93,12 +93,12 @@ h2 {
 @keyframes scaleUp {
     from {
         opacity: 0.3;
-        -webkit-transform: scale(0.8);
+        -webkit-transform: scale(0.97);
     }
 }
 
 .view-animate.ng-enter {
-    animation: slideInRight 0.3s both ease-in;
+    animation: scaleUp 0.2s both ease-in;
     z-index: 8888;
 }
 

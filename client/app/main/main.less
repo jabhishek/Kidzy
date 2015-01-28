@@ -7,13 +7,9 @@
         outline: none;
         transition: border 0.3s ease;
      //   background: lighten(@primary-colour, 10%);
-        padding: 0.5rem;
+     //   padding: 0.5rem;
         border-bottom: 1px solid @primary-colour;
 
-        .name, .points {
-            font-weight: bold;
-            font-size: 1.8rem;
-        }
         &:hover {
             //  transform: scale(0.98);
             //background: @primary-colour;
@@ -23,11 +19,12 @@
 
         @media @tablets {
             width: 49%;
-            display:  inline-block;
+            display: inline-block;
 
             &:nth-of-type(2n) {
                 margin-right: 0;
             }
+
             &:nth-of-type(2n+1) {
                 margin-right: 2%;
             }
@@ -38,29 +35,40 @@
             cursor: pointer;
             color: @accent-colour;
         }
+    }
+}
 
-        &.child {
-            cursor: pointer;
+.parent-view {
+    .kidsList {
+        margin-top: 1rem;
+
+        ul {
+            li {
+                &.child {
+                    cursor: pointer;
+
+                    .name, .points {
+                        font-weight: bold;
+                        font-size: 1.8rem;
+                        line-height: 2;
+                    }
+
+                    .points {
+                        width: 7rem;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    button.add-kid {
+        i, span {
+            line-height: 2.5rem;
+            font-size: 1.6rem;
         }
     }
 }
-
-
-.kidsList {
-    margin-top: 1rem;
-
-
-}
-
-button.add-kid {
-    cursor: pointer;
-
-    i, span {
-        line-height: 2.5rem;
-        font-size: 1.6rem;
-    }
-}
-
 
 .user-animate.ng-move,
 .user-animate.ng-enter,
@@ -71,10 +79,11 @@ button.add-kid {
 .user-animate.ng-move,
 .user-animate.ng-enter,
 .user-animate.ng-leave.ng-leave-active {
-    opacity:0;
+    opacity: 0;
 }
+
 .user-animate.ng-move.ng-move-active,
 .user-animate.ng-enter.ng-enter-active,
 .user-animate.ng-leave {
-    opacity:1;
+    opacity: 1;
 }

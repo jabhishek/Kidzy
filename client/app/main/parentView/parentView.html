@@ -2,12 +2,11 @@
     <md-button class="md-raised md-primary add-kid" aria-label="Add Kid" ui-sref="kids.add">
         <i class="fa fa-user-plus fa-fw"></i>
         <span>Add Child</span>
-
     </md-button>
 
     <div class="kidsList">
         <ul>
-            <li class="child" data-ng-repeat="kid in kidsVm.kids track by $index" ng-click="kidsVm.viewDetails({ data: kid})">
+            <li class="child user-animate" data-ng-repeat="kid in kidsVm.kids track by $index" ng-click="kidsVm.viewDetails({ data: kid})">
                 <child kid="kid"></child>
             </li>
         </ul>

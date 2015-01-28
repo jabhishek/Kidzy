@@ -1,3 +1,17 @@
-<div>
-    <span class="name">{{ kid.name | capitalize }}</span>
+<div data-kid-id="{{ kid._id }}" layout="row">
+    <div flex><span class="name">{{ kid.name | capitalize }}</span>
+        ( <span class="points"><span>{{ kid.totalPoints }}</span></span>  points )
+    </div>
+
+    <div class="actions">
+        <md-button class="md-primary" md-theme="pink">
+            <i class="fa fa-pencil fa-fw"></i>
+        </md-button>
+        <md-button class="md-primary" md-theme="pink">
+            <i class="fa fa-plus fa-fw"></i>
+        </md-button>
+        <md-button class="md-primary" md-theme="pink">
+            <i class="fa fa-list fa-fw"></i>
+        </md-button>
+    </div>
 </div>

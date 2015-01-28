@@ -134,7 +134,7 @@ describe("user controller", function () {
 			delete testUser.password;
 			expectStatus(testUser, 400, 'Invalid user passed!!');
 		})
-		it("should return 200 if user already exists", function () {
+		it("should return 400 if user already exists", function () {
 			// overwrite mock getByUserName to return user, ie user already exists
 			data.users.getByUserName = function (username, callback) {
 				callback(null, testUser);

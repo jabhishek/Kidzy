@@ -157,6 +157,6 @@ describe("kid controller", function () {
 			expect(data.kids.addHousePoint.calledOnce).to.equal(true);
 			expect(sentData).to.deep.equal([]);
 		});
-	})
+	});
 });
 

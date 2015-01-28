@@ -1,6 +1,6 @@
 (function (app) {
     'use strict';
-    app.directive('parentView', function ($state) {
+    app.directive('parentView', function ($state, $log) {
         return {
             restrict: 'E',
             templateUrl: 'main/parentView/parentView.html',
@@ -14,6 +14,10 @@
 
                 KidsService.getAll().then(function(kids) {
                     _.forEach(kids, function(kid) {
+						kid.totalPoints = _.reduce(kid.housePoints, function(result, hp) {
+							return result + hp.points;
+						}, 0);
+						$log.info(kid);
                         vm.kids.push(kid);
                     });
                 });

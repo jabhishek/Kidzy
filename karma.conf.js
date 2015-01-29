@@ -32,7 +32,7 @@ module.exports = function (config) {
         preprocessors: {
             "client/app/Common/NavBar/NavBar.html": ["ng-html2js"],
             "client/app/main/parentView/parentView.html": ["ng-html2js"],
-            "client/app/main/child/child.html": ["ng-html2js"]
+            "client/app/main/parentView/child/child.html": ["ng-html2js"]
         },
 
         ngHtml2JsPreprocessor: {

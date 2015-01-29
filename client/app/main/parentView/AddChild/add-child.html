@@ -1,0 +1,24 @@
+<div class="view-container" layout="column" layout-align="center center">
+    <section class="form-section">
+        <form class="form child-form" id="childform" name="childform" novalidate
+              ng-submit="childCtrl.submit(childform.$valid, childCtrl.child)">
+            <h2>Add Child</h2>
+            <fieldset>
+                <span class="error-message" ng-if="childCtrl.error">{{childCtrl.error.message}}</span>
+
+                <div class="field" layout="column" layout-align="center center">
+                    <md-input-group tabindex="-1" class="md-pink-theme">
+                        <label for="name">Name</label>
+                        <md-input type="text" id="name" name="name" required maxlength="50"
+                                  ng-model="childCtrl.child.name"></md-input>
+                    </md-input-group>
+                    <span class="error-message name-error" ng-if="childform.$submitted && childform.name.$invalid">Please enter a valid name.</span>
+                </div>
+                <div layout="row" layout-align="center center">
+                    <md-button type="submit" class="md-raised md-primary button">Add</md-button>
+                    <md-button type="reset" class="md-raised md-primary button">Reset</md-button>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+</div>

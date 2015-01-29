@@ -5,6 +5,10 @@
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
         })
+		.constant("configData", {
+			// expiry in minutes
+			kidsDataLifeSpan: 1*60*1000
+		})
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider, $compileProvider) {
             $animateProvider.classNameFilter(/animate/);
 

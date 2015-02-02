@@ -1,8 +1,11 @@
 (function (app) {
-	app.controller('childDetailsController', function(childDetails) {
-		"use strict";
+	'use strict';
+	app.controller('childDetailsController', function(childDetails, $stateParams) {
 		var vm = this;
-		vm.childDetails = childDetails;
-		vm.message = 'Hello World!!'
-	})
+		var childId = $stateParams.childId;
+
+		vm.details = _.find(childDetails, function(child) {
+			return child._id === childId;
+		});
+	});
 })(angular.module('HousePointsApp'));

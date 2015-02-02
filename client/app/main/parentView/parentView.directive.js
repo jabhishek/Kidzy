@@ -14,9 +14,9 @@
 
                 KidsService.getAll().then(function(kids) {
                     _.forEach(kids, function(kid) {
-						kid.totalPoints = _.reduce(kid.housePoints, function(result, hp) {
+						/*kid.totalPoints = _.reduce(kid.housePoints, function(result, hp) {
 							return result + hp.points;
-						}, 0);
+						}, 0);*/
 						$log.info(kid);
                         vm.kids.push(kid);
                     });

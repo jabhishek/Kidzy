@@ -37,7 +37,7 @@ describe("KidsService", function () {
 		var response = kidsService.getAll();
 		$httpBackend.flush();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Vatsal'}]);
+		expect(response.$$state.value).toEqual([{name: 'Vatsal', housePoints: [],  totalPoints: 0 }]);
 		expect(angular.isArray(response.$$state.value)).toBeTruthy();
 	});
 
@@ -55,25 +55,28 @@ describe("KidsService", function () {
 		var response = kidsService.getAll();
 		$httpBackend.flush();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Vatsal'}]);
-		expect(localStorageService.get('kids').data).toEqual([{name: 'Vatsal'}]);
+		expect(response.$$state.value).toEqual([{name: 'Vatsal', housePoints: [], totalPoints: 0 }]);
+		expect(localStorageService.get('kids').data).toEqual([{name: 'Vatsal', housePoints: [], totalPoints: 0 }]);
 	});
 
 	it("should get data from localstorage if data in localstorage and not expired", function () {
 		var baseTime = new Date();
-		localStorageService.set('kids', {data: [{name: 'Avni'}], creationTime: baseTime});
+		localStorageService.set('kids', {data: [{name: 'Avni', totalPoints: 0 }], creationTime: baseTime});
 		jasmine.clock().install().mockDate(baseTime);
 		jasmine.clock().tick(config.kidsDataLifeSpan - 2);
 
 		var response = kidsService.getAll();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Avni'}]);
+		expect(response.$$state.value).toEqual([{name: 'Avni', totalPoints: 0 }]);
 
 		jasmine.clock().uninstall();
 	});
 
 	it("should get data from server if data in localstorage but expired", function () {
-		$httpBackend.when('GET', '/api/kids').respond({err: null, kids: [{name: 'Avni'}]});
+		$httpBackend.when('GET', '/api/kids').respond({
+			err: null,
+			kids: [{name: 'Avni', housePoints: [{points: 100}]}]
+		});
 		$httpBackend.expectGET('/api/kids');
 
 		var baseTime = new Date();
@@ -84,8 +87,8 @@ describe("KidsService", function () {
 		var response = kidsService.getAll();
 		$httpBackend.flush();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Avni'}]);
-		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni'}]);
+		expect(response.$$state.value).toEqual([{name: 'Avni', housePoints: [{points: 100}], totalPoints: 100 }]);
+		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni', housePoints: [{points: 100}], totalPoints: 100 }]);
 
 		jasmine.clock().uninstall();
 	});
@@ -102,9 +105,9 @@ describe("KidsService", function () {
 		var response = kidsService.getAll();
 		$httpBackend.flush();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Avni'}]);
+		expect(response.$$state.value).toEqual([{name: 'Avni', housePoints: [], totalPoints: 0 }]);
 
-		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni'}]);
+		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni', housePoints: [], totalPoints: 0 }]);
 		jasmine.clock().uninstall();
 	});
 
@@ -120,8 +123,8 @@ describe("KidsService", function () {
 		var response = kidsService.getAll();
 		$httpBackend.flush();
 		expect(response.$$state.status).toEqual(1);
-		expect(response.$$state.value).toEqual([{name: 'Avni'}]);
-		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni'}]);
+		expect(response.$$state.value).toEqual([{name: 'Avni', housePoints: [], totalPoints: 0 }]);
+		expect(localStorageService.get('kids').data).toEqual([{name: 'Avni', housePoints: [], totalPoints: 0 }]);
 		jasmine.clock().uninstall();
 	});
 

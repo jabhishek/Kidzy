@@ -1,3 +1,10 @@
 <div class="child-details">
-    {{ childDetailsVm.message }}
+    To-do
+    <div class="housePoints">
+        <ul ng-if="childDetailsVm.details.housePoints && childDetailsVm.details.housePoints.length > 0">
+            <li ng-repeat="hp in childDetailsVm.details.housePoints">
+                {{hp.points}}
+            </li>
+        </ul>
+    </div>
 </div>
